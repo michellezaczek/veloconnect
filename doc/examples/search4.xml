@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<SearchResultResponse xmlns="urn:veloconnect:catalog-1.1" xmlns:vct="urn:veloconnect:transaction-1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0">
+ <vct:BuyersID>B127645</vct:BuyersID>
+ <vct:ResponseCode>200</vct:ResponseCode>
+ <vct:TransactionID>2</vct:TransactionID>
+ <vct:StatusCode>2</vct:StatusCode>
+ <vct:IsTest>false</vct:IsTest>
+
+ <StartIndex>3</StartIndex>
+ <Count>2</Count>
+ <TotalCount>6</TotalCount>
+ <ResultFormat>ITEM_TYPE</ResultFormat>
+ <cac:Item>
+   <cbc:Description>KOOL-STOP MTB contoured (Chart Index C1) gebogene Canti-Bremsschuhe, dual compound</cbc:Description>
+
+   <cac:SellersItemIdentification>
+     <cac:ID>221-98</cac:ID>
+   </cac:SellersItemIdentification>
+   <cac:ManufacturersItemIdentification>
+     <cac:ID>RE 397 KS</cac:ID>
+     <cac:IssuerParty><cac:PartyName><cbc:Name>KOOL STOP</cbc:Name></cac:PartyName></cac:IssuerParty>
+   </cac:ManufacturersItemIdentification>
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">6.50</cbc:PriceAmount>
+
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+   </cac:BasePrice>
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">6.30</cbc:PriceAmount>
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     <cbc:MinimumQuantity quantityUnitCode="EA">25</cbc:MinimumQuantity>
+   </cac:BasePrice>
+
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">6.17</cbc:PriceAmount>
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     <cbc:MinimumQuantity quantityUnitCode="EA">50</cbc:MinimumQuantity>
+   </cac:BasePrice>
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">5.98</cbc:PriceAmount>
+
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     <cbc:MinimumQuantity quantityUnitCode="EA">100</cbc:MinimumQuantity>
+   </cac:BasePrice>
+ </cac:Item>
+ <cac:Item>
+   <cbc:Description>KOOL-STOP MTB contoured (Chart Index T1) gebogene Schraub-Bremsschuhe, dual compound</cbc:Description>
+   <cac:SellersItemIdentification>
+
+     <cac:ID>222-98</cac:ID>
+   </cac:SellersItemIdentification>
+   <cac:ManufacturersItemIdentification>
+     <cac:ID>RE 387 KS</cac:ID>
+     <cac:IssuerParty><cac:PartyName><cbc:Name>KOOL STOP</cbc:Name></cac:PartyName></cac:IssuerParty>
+   </cac:ManufacturersItemIdentification>
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">7.75</cbc:PriceAmount>
+
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+   </cac:BasePrice>
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">7.52</cbc:PriceAmount>
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     <cbc:MinimumQuantity quantityUnitCode="EA">25</cbc:MinimumQuantity>
+   </cac:BasePrice>
+
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">7.36</cbc:PriceAmount>
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     <cbc:MinimumQuantity quantityUnitCode="EA">50</cbc:MinimumQuantity>
+   </cac:BasePrice>
+   <cac:BasePrice>
+     <cbc:PriceAmount amountCurrencyID="EUR">7.13</cbc:PriceAmount>
+
+     <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     <cbc:MinimumQuantity quantityUnitCode="EA">100</cbc:MinimumQuantity>
+   </cac:BasePrice>
+ </cac:Item>
+</SearchResultResponse>

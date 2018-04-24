@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<OrderResponse  xmlns="urn:veloconnect:order-1.1"
+xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+xmlns:vct="urn:veloconnect:transaction-1.0">
+<vct:BuyersID>B127645</vct:BuyersID>
+<vct:ResponseCode>200</vct:ResponseCode>
+<vct:TransactionID>online-basket</vct:TransactionID>
+<vct:StatusCode>2</vct:StatusCode>
+<OrderResponseLine>
+   <cbc:Quantity quantityUnitCode="PK">5</cbc:Quantity>
+   <cac:Item>
+     <cbc:Description>Speichen DD 2,0x1,8x 263 mm, silber
+Race,Niro, mit Messingnippel</cbc:Description>
+     <cbc:PackQuantity quantityUnitCode="EA">100</cbc:PackQuantity>
+     <cac:BuyersItemIdentification>
+	<cac:ID>7285</cac:ID>
+     </cac:BuyersItemIdentification>
+     <cac:SellersItemIdentification>
+       <cac:ID>42213526300</cac:ID>
+     </cac:SellersItemIdentification>
+     <cac:StandardItemIdentification>
+       <cac:ID identificationSchemeID="EAN/UCC-13">4032191511108</cac:ID>
+     </cac:StandardItemIdentification>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">34.90</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+     </cac:BasePrice>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">29.50</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+	<cbc:MinimumQuantity quantityUnitCode="PK">10</cbc:MinimumQuantity>
+     </cac:BasePrice>
+     <cac:RecommendedRetailPrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">0.70</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     </cac:RecommendedRetailPrice>
+  </cac:Item>
+  <cac:UnitPrice amountCurrencyID="EUR">29.50</cac:UnitPrice>
+  <Availability>
+      <Code>available</Code>
+  </Availability>
+</OrderResponseLine>
+<OrderResponseLine>
+  <cbc:Quantity quantityUnitCode="PK">2</cbc:Quantity>
+  <cac:Item>
+     <cbc:Description>Bremsinnenzug 1800 mm mit Quernippel</cbc:Description>
+     <cbc:PackSizeNumeric>10</cbc:PackSizeNumeric>
+     <cac:BuyersItemIdentification>
+	<cac:ID>7290</cac:ID>
+     </cac:BuyersItemIdentification>
+     <cac:SellersItemIdentification>
+       <cac:ID>42038057500</cac:ID>
+     </cac:SellersItemIdentification>
+     <cac:StandardItemIdentification>
+       <cac:ID identificationSchemeID="EAN/UCC-13">4032191018164</cac:ID>
+     </cac:StandardItemIdentification>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">5.5</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+     </cac:BasePrice>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">4.8</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+	<cbc:MinimumQuantity quantityUnitCode="PK">2</cbc:MinimumQuantity>
+     </cac:BasePrice>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">4.5</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+	<cbc:MinimumQuantity quantityUnitCode="PK">5</cbc:MinimumQuantity>
+     </cac:BasePrice>
+     <cac:RecommendedRetailPrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">0.99</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     </cac:RecommendedRetailPrice>
+  </cac:Item>
+  <cac:UnitPrice amountCurrencyID="EUR">4.80</cac:UnitPrice>
+  <Availability>
+      <Code>available</Code>
+  </Availability>
+</OrderResponseLine>
+<OrderResponseLine>
+  <cbc:Quantity quantityUnitCode="PK">4</cbc:Quantity>
+  <cac:Item>
+     <cbc:Description>Shimano Bremsaußenhülle M-System schwarz</cbc:Description>
+     <cbc:PackQuantity quantityUnitCode="MTR">30</cbc:PackQuantity>
+     <cac:BuyersItemIdentification>
+	<cac:ID>7295</cac:ID>
+     </cac:BuyersItemIdentification>
+     <cac:SellersItemIdentification>
+       <cac:ID>52090311100</cac:ID>
+     </cac:SellersItemIdentification>
+     <cac:StandardItemIdentification>
+       <cac:ID identificationSchemeID="EAN/UCC-13">4032191027388</cac:ID>
+     </cac:StandardItemIdentification>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">0.96</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="MTR">1</cbc:BaseQuantity>
+     </cac:BasePrice>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">0.87</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="MTR">1</cbc:BaseQuantity>
+	<cbc:MinimumQuantity quantityUnitCode="MTR">60</cbc:MinimumQuantity>
+     </cac:BasePrice>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">0.79</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="MTR">1</cbc:BaseQuantity>
+	<cbc:MinimumQuantity quantityUnitCode="MTR">90</cbc:MinimumQuantity>
+     </cac:BasePrice>
+     <cac:RecommendedRetailPrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">1.77</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="MTR">1</cbc:BaseQuantity>
+     </cac:RecommendedRetailPrice>
+  </cac:Item>
+  <cac:UnitPrice amountCurrencyID="EUR">23.70</cac:UnitPrice>
+  <Availability>
+      <Code>available</Code>
+  </Availability>
+</OrderResponseLine>
+</OrderResponse>

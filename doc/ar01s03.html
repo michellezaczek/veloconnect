@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3. Überblick</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s02.html" title="2. Abhängigkeit von anderen Spezifikationen" /><link rel="next" href="ar01s03s02.html" title="3.2. Transaktionen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3. Überblick</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s02.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s03s02.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="model"></a>3. Überblick</h2></div></div><div></div></div><p>
+      Die veloconnect-Spezifikation geht von folgender Modellsituation aus: Zwischen
+      einem <span class="emphasis"><em>Client</em></span> (typischerweise das
+      Warenwirtschaftsprogramm eines Einzelhändlers) und einem
+      <span class="emphasis"><em>Server</em></span> (typischerweise das Warenwirtschaftsprogramms
+      eines Großhändlers oder Herstellers) werden Daten ausgetauscht, um
+      bestimmte <span class="emphasis"><em>Geschäftsvorfälle</em></span>, wie z. B. das Bestellen
+      von Ware, auszulösen. Für die Zwecke dieser Geschäftsvorfälle vertritt
+      der Client den <span class="emphasis"><em>Käufer</em></span> und der Server den
+      <span class="emphasis"><em>Verkäufer</em></span>.
+    </p><p>Die Kommunikation zwischen Client und Server und die damit
+    ausgelösten "Seiteneffekte" können wir grob in drei Schichten unterteilen:
+      </p><div class="variablelist"><dl><dt><span class="term">Transport:</span></dt><dd>Übermittlung der Daten gemäß
+	    etablierter Standardprotokolle, wie z.B. http.</dd><dt><span class="term">Nachricht:</span></dt><dd>Syntax der übermittelten Daten; Regeln,
+	    in welcher Reihenfolge, welche Daten zu übermitteln sind</dd><dt><span class="term">Geschäftsvorfall:</span></dt><dd>Bedeutung der übermittelten Daten;
+	    welche Geschäftsvorfälle werden ausgelöst; welche Beziehung haben
+	    die übermittelten Daten zu bestehenden
+	    Warenwirtschaftssystememen.</dd></dl></div><p>
+    </p><p>Gegenstand dieser Spezifikation sind die Schichten Nachricht und
+      Geschäftsvorfall. Die Syntax der Daten wird mittels eines XML-Schemas
+      festgelegt (<a href="ar01s04.html" title="4. Veloconnect XML-Schema">Abschnitt 4, „Veloconnect XML-Schema“</a>). Die Abfolge der Nachrichten wird
+      im Überblick im folgenden behandelt und detailiert in <a href="ar01s06.html" title="6. Operationen">Abschnitt 6, „Operationen“</a>, <a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a> und <a href="ar01s08.html" title="8. Transaktion: OrderInOnlineShop">Abschnitt 8, „Transaktion: OrderInOnlineShop“</a>. Dort erfolgen auch die
+      Festlegungen zur Schicht Geschäftsvorfall, soweit sie in dieser
+      Spezifikation erforderlich sind. Gerade weil der Datenaustausch über eine
+      veloconnect-Schnittstelle den Zweck hat, Geschäftsvorfälle in der realen Welt
+      auszulösen, wie z.B. das Bestellen von Ware, ist es nötig
+      stillschweigende Voraussetzungen, die beim Übergang zwischen der Schicht
+      Nachricht und Geschäftsvorfall eine Rolle spielen, explizit zu machen.
+      Ferner wird der Käufer aufgrund der Informationen, die ihm übermittelt
+      werden, Entscheidungen treffen; er sollte also darauf vertrauen können,
+      dass die übermittelten Informationen von hinreichender Qualität und
+      unmißverständlich sind. (Eine beliebte Quelle von Mißverständnissen sind
+      hier Mengen- und Preisangaben.)
+    </p><p>
+      Der Nachrichtenaustausch zwischen Client und Server setzt sich aus
+      <span class="emphasis"><em>Operationen</em></span> zusammen. In einer
+      <span class="emphasis"><em>Operation</em></span> übermittelt der Client eine
+      <span class="emphasis"><em>Anfrage (Request)</em></span> an den Server und erhält von
+      diesem eine <span class="emphasis"><em>Antwort (Response)</em></span>.  Sowohl Anfrage als
+      auch Antwort werden als XML-Dokumente festgelegt. Genauer: zu jeder
+      Nachricht wird angegeben, welches Element aus dem in der Spezifikation
+      festgelegten XML-Schema (<a href="ar01s04.html" title="4. Veloconnect XML-Schema">Abschnitt 4, „Veloconnect XML-Schema“</a>) als Wurzelelement der
+      Nachricht verwendet wird. Komplexere Szenarien des Nachrichtenaustauschs
+      werden als <span class="emphasis"><em>Transaktionen</em></span> modelliert. Eine
+      Transaktion setzt sich aus mehreren Operationen zusammmen, die in genau
+      definierter Weise aufeinanderfolgen (<a href="ar01s03s02.html" title="3.2. Transaktionen">Abschnitt 3.2, „Transaktionen“</a>).
+    </p><p>
+      Die Art und Weise wie eine Nachricht übermittelt wird (Transportschicht),
+      wird durch die <span class="emphasis"><em>Bindung</em></span> festgelegt. Die Bindung legt
+      fest, welches Protokoll zur Übertragung verwendet wird und wie die
+      Nachricht zu <span class="emphasis"><em>serialisieren</em></span> ist.  
+    </p><p>
+      Bei jeder einzelnen Operation oder Transaktion wird angegeben, ob diese
+<span class="emphasis"><em>verbindlich</em></span>, oder ob diese <span class="emphasis"><em>optional</em></span>
+ist. Die Verbindlichkeit kann auch so formuliert sein, dass aus mehreren
+Operationen oder Transaktionen mindestens eine auszuwählen ist. Ein
+veloconnect-konformer Server muss eine verbindliche Operation in mindestens einer
+Bindung implementieren.
+    </p><p>
+      Zu den verbindlichen Operationen gehört die
+      <span class="emphasis"><em>GetProfile</em></span>-Operation (<a href="ar01s06s05.html" title="6.5. Operation: GetProfile">Abschnitt 6.5, „Operation: GetProfile“</a>). Mittels dieser Operation kann ein
+      Client ermitteln, welche Transaktionen und Operationen ein Server mit
+      welchen Bindungen unterstützt. 
+    </p><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="binding"></a>3.1. Bindungen</h3></div></div><div></div></div><p>
+      Die gegenwärtige Version von veloconnect kennt vier Bindungen:
+      </p><div class="itemizedlist"><ul type="disc" compact="compact"><li>URL</li><li>URL-S</li><li>XML-POST</li><li>XML-POST-S</li></ul></div><p><a id="rule-standardURL"></a><b>Regel: Standard-URL. </b>
+        Ein veloconnect-konformer Server ist unter einer festgelegten Standard-URL zu
+	erreichen. Diese wird dem Kunden (Käufer) zusammmen mit weiteren
+	Zugangsparametern wie z.B. Benutzername und Passwort mitgeteilt. 
+	Die GetProfile-Operation wird unter der
+	Standard-URL verarbeitet. Für alle anderen Operationen können
+	abweichende URLs festgelegt sein, die Antwort auf einen
+	GetProfile-Request enthält diese Informationen (<a href="ar01s06s05.html" title="6.5. Operation: GetProfile">Abschnitt 6.5, „Operation: GetProfile“</a>).
+      </p><p><a id="rule-HTTP-client"></a><b>Regel: HTTP-Protokoll (Client). </b>Der Client implementiert das HTTP/1.1 Protokoll [<a href="ar01s14.html#ref_http">8</a>] vollständig
+	(z.B. durch Benutzung einer Standardbibiothek). Die vom Server
+	gelieferte Nachricht wird nur dann gemäß dieser Spezifikation
+	behandelt, wenn die Übertragung gemäß des HTTP-Protokolls erfolgreich
+	abgeschlossen ist. Sofern der Server einen Redirect (HTTP-Status-Code
+	3xx) vorschlägt, ist diesem zu folgen. 
+	 </p><p><a id="rule-URL-binding"></a><b>Regel: URL-Bindung. </b>
+	  In der URL-Bindung wird die Anfrage als Folge von Parametern
+	  serialisiert, die gemäß des Medientyps <a href="http://www.w3.org/MarkUp/html-spec/html-spec_8.html" target="_top">application/x-www-form-urlencoded</a> 
+	  als Zeichenkette kodiert wird. Wie eine Anfrage als Folge von
+	  Parametern aufzufassen ist, wird jeweils bei den einzelnen
+	  Operationen angegeben. Zur Durchführung der Operation wird entweder
+	  vom Client mittels der GET-Methode die URL-Adresse angesteuert, die
+	  sich als Verkettung der zur Operation gehörigen URL, dem Zeichen "?"
+	  und den kodierten Parametern ergibt, oder der Client überträgt
+	  mittels der POST-Methode die kodierten Parameter an die zur Operation
+	  gehörige URL. Die Auswahl zwischen GET und POST bleibt dem Client
+	  überlassen; d.h. der Server muss beide Varianten implementieren, wenn
+	  er die URL-Bindung realisiert.  Die Antwort wird als XML-Datei
+	  serialisiert und als Inhaltstyp application/xml zurückgeliefert. Die
+	  URL-S-Bindung unterscheidet sich von der URL-Bindung nur darin, dass
+	  an Stelle von HTTP/1.1 [<a href="ar01s14.html#ref_http">8</a>]
+	  zur Übermittlung das Protokoll "HTTP over TLS" (https, rfc 2818)
+	[<a href="ar01s14.html#ref_https">9</a>]
+	  verwendet wird.
+	</p><p><a id="rule-XML-POST"></a><b>Regel: XML-POST-Bindung. </b>
+	Bei der XML-POST-Bindung werden sowohl Anfrage als auch Antwort als
+	  XML-Datei serialisiert und als Inhaltstyp application/xml übertragen.
+	  Die Anfrage verwendet die POST-Methode des HTTP/1.1-Protokolls. Die
+	  XML-POST-S-Bindung unterscheidet sich von der XML-POST-Bindung nur
+	  darin, dass an Stelle von http zur Übermittlung das Protokoll https
+	  verwendet wird.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s02.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s03s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">2. Abhängigkeit von anderen Spezifikationen </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 3.2. Transaktionen</td></tr></table></div></body></html>

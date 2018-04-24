@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>6.4. Operation: Rollback</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s06.html" title="6. Operationen" /><link rel="previous" href="ar01s06s03.html" title="6.3. Operation: GetStatus" /><link rel="next" href="ar01s06s05.html" title="6.5. Operation: GetProfile" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6.4. Operation: Rollback</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06s03.html">Zurück</a> </td><th width="60%" align="center">6. Operationen</th><td width="20%" align="right"> <a accesskey="n" href="ar01s06s05.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-Rollback"></a>6.4. Operation: Rollback</h3></div></div><div></div></div><p>Die Anfrage ist ein Element <a href="xsd/urn_veloconnect_transaction-1.0/element/RollbackRequest.html" target="_top">vct:RollbackRequest</a>, 
+	welches vom Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:TransactionRequestType</a> ist. Die
+	Antwort ist ein Element <a href="xsd/urn_veloconnect_transaction-1.0/element/RollbackResponse.html" target="_top">vct:RollbackResponse</a>, 
+	welches vom Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:TransactionResponseType</a> ist. 
+      </p><p><a id="rule-Rollback"></a><b>Regel: Rollback. </b>Ein veloconnect-konformer Server muss folgenden Bedingungen genügen:
+	</p><div class="orderedlist"><ol type="1"><li>Die Operation Rollback wird implementiert.
+	      </li><li>Falls die durch dieAnfrage spezifizierte
+		Transaktionsinstanz nicht existiert, wird der ResponseCode 420
+		zurückgeliefert.</li><li>Falls die Anfrage eine Transaktionsinstanz
+		identfiziert, die sich in einem der Zustände 50 bis 199
+		befindet, so ist der ResponseCode 430 zurückzuliefern.
+	      </li><li>Ansonsten ist der ResponseCode 200
+		zurückzuliefern und die Transaktionsinstanz ist zu
+		löschen.</li></ol></div><p>
+	</p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06s03.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s06.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s06s05.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">6.3. Operation: GetStatus </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 6.5. Operation: GetProfile</td></tr></table></div></body></html>

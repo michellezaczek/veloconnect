@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7.6. Operation: GetItemDetailsList
+      (neu in Version 1.1)</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s07.html" title="7. Transaktion: Order" /><link rel="previous" href="ar01s07s05.html" title="7.5. Operation: GetItemDetails" /><link rel="next" href="ar01s08.html" title="8. Transaktion: OrderInOnlineShop" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">7.6. Operation: GetItemDetailsList
+      (neu in Version 1.1)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s07s05.html">Zurück</a> </td><th width="60%" align="center">7. Transaktion: Order</th><td width="20%" align="right"> <a accesskey="n" href="ar01s08.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-GetItemDetailsList"></a>7.6. Operation: GetItemDetailsList
+      (neu in Version 1.1)</h3></div></div><div></div></div><p>Diese Operation bietet die Möglichkeit, mehrere
+    GetItemDetails-Anfragen innerhalb einer Operation durchzuführen.
+Die Anfrage ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsListRequest.html" target="_top">vco:GetItemDetailsListRequest</a>; 
+      dieses erweitert den Typ vct:RequestType um eine Folge von mindestens
+    einem Element <a href="xsd/urn_veloconnect_order-1.1/element/RequestEntry.html" target="_top">vco:RequestEntry</a>. Das Element vco:RequestEntry enthält als Kind-Elemente das Element cac:SellersItemIdentfication sowie optional das Element cbc:Quantity.
+       </p><p><a id="rule-serialize-vco-GetItemDetailsListRequest"></a><b>Regel: Serialisierung von GetItemDetailsListRequest. </b>Zusätzlich zu den Parametern von RequestType werden folgende
+	Parameter verwendet:
+	</p><div class="itemizedlist"><ul type="disc"><li>Für jedes vco:RequestEntry-Element, das kein Kindelement
+	  cbc:Quantity enthält: SellersItemIdentification</li><li>Für jedes vco:RequestEntry-Element, das ein
+	    Kindelement cbc:Quantity enthält ist die Regel zur <a href="ar01s07.html#serialize-vco-OrderRequestLine" title="Tabelle 11. URL-Parameter für&#10;&#9;  vco:OrderRequestLine">Serialisierung
+	    von vco:OrderRequestLines</a> sinngemäß anzuwenden,
+	    d.h. es werden Parameter Quantity.X und quantityUnitCode.X
+	    verwendet, wobei X die jeweilige Bestellnummer ist. 
+	  </li></ul></div><p>
+      Die URL oder URL-S-Bindung der GetItemDetailsList-Operation darf nur
+      unter den Voraussetzungen der Regel zur <a href="ar01s07.html#rule-serialize-vco-OrderRequestLine">Serialisierung</a> von
+      vco:OrderRequestLine implementiert werden.
+    </p><p>
+ Die
+      Antwort ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsListResponse.html" target="_top">vco:GetItemDetailsListResponse</a>, 
+      welches den Typ vct:ResponseType um eine Folge von mindestens
+    einem Element <a href="xsd/urn_veloconnect_order-1.1/element/ItemDetail.html" target="_top">vco:ItemDetail</a> erweitert.
+</p><p><a id="rule-GetItemDetailsList"></a><b>Regel:
+	GetItemDetailsList. </b> Ein veloconnect-konformer Server muss die
+	Operation GetItemDetailsList implementieren und reagiert auf eine Anfrage
+	vco:GetItemDetailsListRequest wie folgt: 
+Für jedes Element vco:RequestEntry wird Regel <a href="ar01s07s05.html#rule-GetItemDetails">Regel: GetItemDetails</a> auf den Inhalt dieses Elements
+	angewendet. Die dabei erzeugten Elemente cac:Item, vco:Availability
+	bzw. vco:RequestReplacement bzw. vco:ItemUnknown werden in ein Element
+	vco:ItemDetail verpackt und in derselben Reihenfolge an den Client ausgeliefert.</p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s07s05.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s07.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s08.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">7.5. Operation: GetItemDetails </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 8. Transaktion: OrderInOnlineShop</td></tr></table></div></body></html>

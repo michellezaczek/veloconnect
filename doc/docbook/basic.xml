@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+  <section id="basic"> 
+    <title>Basis-Komponenten</title>
+    
+    <section id="xsd-primitives">
+      <title>Primitive Datentypen</title>
+      <para>
+       Es werden folgende primitive Datentypen verwendet:
+	<variablelist>
+	  <varlistentry id="xsd-string">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#decimal">xsd:string</ulink></term>
+	    <listitem><simpara>Eine <ulink
+		  url="http://www.w3.org/TR/2000/WD-xml-2e-20000814#NT-content">beliebige</ulink> 
+		Folge von <ulink
+		  url="http://www.w3.org/TR/2000/WD-xml-2e-20000814#dt-character">Zeichen</ulink> 
+		entsprechend der XML-Spezifikation. Die Zeichen
+		<literal>&lt;</literal> und <literal>&amp;</literal> sind durch
+		die entsprechenden Entitäten <literal>&amp;lt;</literal> bzw.
+		<literal>&amp;amp;</literal> zu ersetzen oder es ist mit <ulink
+		  url="http://www.w3.org/TR/2000/WD-xml-2e-20000814#NT-CDSect">CDATA-Abschnitten</ulink> 
+		zu arbeiten.</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-normalizedString">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#normalizedString">xsd:normalizedString</ulink></term>
+	    <listitem><simpara>Wie xsd:string, allerdings dürfen die Zeichen
+		'carriage return'(#xD), 'linefeed'(#xA) und 'tabulator'(#x9) 
+		nicht vorkommen.</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-anyURI">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#anyURI">xsd:anyURI</ulink></term>
+	    <listitem><simpara>Zur Darstellung von URI's (Uniform Resource
+		Identifier).</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-decimal">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#decimal">xsd:decimal</ulink></term>
+	    <listitem><simpara>Darstellung rationaler Zahlen in Dezimalnotation, z.B. 123.45. Die Nachkommastellen werden durch einen Punkt abgetrennt!</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-integer">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#integer">xsd:integer</ulink></term>
+	    <listitem><simpara>Enschränkung von xsd:decimal auf ganze Zahlen,
+		also ohne Dezimalpunkt und Nachkommastellen</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-date">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#date">xsd:date</ulink></term>
+	    <listitem><simpara>Datum. Repräsentiert wird ein Datum in der Form
+		yyyy-mm-dd, also z.B. <literal>2005-05-30</literal> für den 30.
+		Mai 2005. Optional ist die Angabe einer
+		Zeitzone.</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-dateTime">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#dateTime">xsd:dateTime</ulink></term>
+	    <listitem><simpara>Zeitpunkt. Repräsentiert wird ein Zeitpunkt in der Form
+		yyyy-mm-ddThh:mm:ss, also z.B. <literal>2005-05-30T14:30:00</literal> für den 30. Mai
+		2005, 14.30 Uhr. Optional können Bruchteile von Sekunden und eine
+		Zeitzone angegeben werden.</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="xsd-boolean">
+	    <term><ulink
+		url="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#dateTime">xsd:boolean</ulink></term>
+	    <listitem><simpara>Indikator mit zwei möglichen Werten: <literal>true</literal> oder <literal>false</literal>.</simpara></listitem>
+	  </varlistentry>
+	</variablelist>
+      </para>
+      
+      <para>
+      Hiervon werden abgeleitet:
+	<variablelist>
+	  <varlistentry id="cbc-PriceAmountType">
+	    <term><ulink
+		url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/PriceAmountType.html">cbc:AmountType</ulink></term>
+	    <listitem><para>Zur Angabe von Geldbeträgen. Einfacher Inhalt
+		vom Typ <link linkend="xsd-decimal">xsd:decimal</link>. Das
+		Attribut amountCurrencyID ist erforderlich. Implementierungen
+		müssen die lokale Währung des Käufers oder des Verkäufers
+		verwenden. Beispiel:
+	      <programlisting><![CDATA[<UnitPrice
+		amountCurrencyID="EUR">12.45</UnitPrice>]]></programlisting>
+	(Die Angabe der Währung mag zwar äußerst redundant erscheinen, ist aber
+	eine Folge der Allgemeinheit von UBL.)</para></listitem>
+      </varlistentry>
+	  <varlistentry id="cbc-DateType">
+	  <term><ulink
+	      url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/DateType.html">cbc:DateType</ulink></term>
+	  <listitem><simpara>Zur Angabe eines Datums. Einfacher Inhalt vom Typ
+	      <link linkend="xsd-date">xsd:date</link>. Zeitzonen sind nicht zu
+	      verwenden.</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="cbc-DateTimeType">
+	  <term><ulink
+	      url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/DateTimeType.html">cbc:DateTimeType</ulink></term>
+	  <listitem><simpara>Zur Angabe eines Zeitpunkts. Einfacher Inhalt vom
+		Typ <link linkend="xsd-dateTime">xsd:dateTime</link>. Zeitzonen
+		und Burchteile von Sekunden sind nicht zu
+		verwenden.</simpara></listitem>
+	</varlistentry> <varlistentry id="udt-TextType"> <term><ulink
+	      url="xsd/urn_oasis_names_specification_ubl_schema_xsd_UnspecializedDatatypes-1.0/complexType/TextType.html">udt:TextType</ulink></term>
+	  <listitem><simpara>Zur Angabe beliebiger Texte. Einfacher Inhalt vom
+	      Typ <link linkend="xsd-string">xsd:string</link>, optionales
+	      Attribut languageID. Dieses Attribut wird nicht
+	      verwendet.</simpara></listitem> 
+	  </varlistentry>
+	  <varlistentry id="cbc-IndicatorType">
+	  <term><ulink
+	      url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/IndicatorType.html">cbc:IndicatorType</ulink></term>
+	  <listitem><simpara>Indikator zur Anzeige von zwei möglichen
+	      Zuständen. Einfacher Inhalt vom Typ <link
+		linkend="xsd-boolean">xsd:boolean</link>. Wenn ein Element von
+	      diesem Typ optional ist, so ist das Fehlen diese Elements in
+	      einer Dokumentinstanz äquivalent zum Vorkommen dieses Elements
+	      mit Inhalt <literal>false</literal>.</simpara></listitem>
+	  </varlistentry>
+	  <varlistentry id="udt-numericType">
+	  <term><ulink
+	      url="xsd/urn_oasis_names_specification_ubl_schema_xsd_UnspecializedDatatypes-1.0/simpleType/NumericType.html">udt:NumericType</ulink></term>
+	  <listitem><simpara>Zur Angabe von Zahlen. Inhalt vom Typ <link
+		linkend="xsd-decimal">xsd:decimal</link>.</simpara></listitem>
+	  </varlistentry> </variablelist>
+      </para>
+    </section>
+ 
+    <section>
+      <title>Basis-Typen</title>
+      <section>
+	<title>Kennzeichner</title>
+	<para>Der Typ <ulink
+	    url="xsd/urn_oasis_names_specification_ubl_schema_xsd_UnspecializedDatatypes-1.0/complexType/IdentifierType.html">udt:IdentifierType</ulink>
+	  wird verwendet, um in den Elementinstanzen etwas eindeutig zu
+	  kennzeichnen. Hierbei wird unterstellt, dass die Eindeutigkeit
+	  durch ein zugrunde liegendes Schema von Kennzeichnungen gewährleistet
+	  ist. 
+	</para>
+	<para>Ein Element von diesem Typ hat einfachen Inhalt vom Typ <link
+	    linkend="xsd-string">xsd:string</link> und zusätzliche optionale
+	  Attribute, um das Kennzeichnungsschema zu identifizieren. Zwei
+	  Elementinstanzen sind als gleich anzusehen, wenn sie hinsichtlich
+	  Elementname, Inhalt und dem Attribut
+	  <literal>identificationSchemeID</literal> übereinstimmen.
+	</para>
+	<formalpara id="rule-EAN">
+	  <title>Regel: EAN-Code</title>
+	  <para>&vc;-konforme Implementierungen müssen das Attribut
+	    <literal>identificationSchemeID</literal> auf den Wert
+	    <literal>EAN/UCC-13</literal> setzen, wenn es sich bei der
+	    Kennzeichnung um einen <ulink url="http://www.gs1-germany.de/internet/content/produkte/ean/content/produkte/ean/identsysteme/e241">EAN-Code</ulink> handelt. Falls UPC-A-Codes
+	    verwendet werden sind diese durch eine führende 0 in einen EAN-Code
+	    zu transformieren.
+	  </para>
+	</formalpara>
+	<formalpara id="rule-GLN">
+	  <title>Regel: ILN/GLN</title>
+	  <para>&vc;-konforme Implementierungen müssen das Attribut
+	    <literal>identificationSchemeID</literal> auf den Wert
+	    <literal>GLN</literal> setzen, wenn es sich bei der
+	    Kennzeichnung um eine <ulink url="http://www.gs1-germany.de/internet/content/produkte/ean/identsysteme/iln/index_ger.html">Internationale Lokationsnummer (ILN)</ulink>
+	  bzw. Global Location Number (GLN) handelt.
+	  </para>
+	</formalpara>
+      </section>
+      <section>
+	<title>Mengenangaben</title>
+	<formalpara id="cbc-QuantityType">
+	<title>cbc:QuantityType</title>
+	<para>
+	  Eine Mengenangabe besteht aus einem Wert (einer Zahl) und einer
+	  Einheit. Zur Darstellung von Mengenangaben wird der Basistyp <ulink
+	    url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/QuantityType.html"> 
+	    cbc:QuantityType</ulink> verwendet. Der Wert der Mengenangabe wird
+	  im Inhalt einer Elementinstanz als Zeichenkette vom Typ <link
+	    linkend="xsd-decimal">xsd:decimal</link> dargestellt, die Einheit
+	  durch das Attribut <emphasis>quantityUnitCode</emphasis>. Dieses
+	  Attribut muss stets angegeben werden. Eine Einheit wird dargestellt
+	  durch einen Code aus bis zu drei Buchstaben aus der Codeliste nach
+	  <ulink
+	    url="http://www.unece.org/cefact/recommendations/rec20en.htm">TRADE/CEFACT/2001/20 </ulink>. Diese Liste umfasst einige hundert
+	    Einheiten. Mit Rücksicht auf das Einsatzgebiet der
+	    &vc;-Spezifikation schränken wir diese Liste wie folgt ein:
+	</para>
+	</formalpara>
+	<formalpara id="rule-unit">
+	  <title>Regel: Einheiten</title>
+	  <para>
+	  Ein &vc;-konformer Client oder Server muss in der Lage sein, die
+	    folgenden Einheiten korrekt zu behandeln:
+	  <variablelist>
+	      <varlistentry>
+		<term>EA</term><listitem><simpara>Diskret: Stück, Gegenstand,
+		    der als Einheit anzusehen ist.</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>PR</term><listitem><simpara>Diskret: Paar, besteht aus
+		    zwei Stück, die gleich sind bis auf genau ein Merkmal, das
+		    nur zwei Werte annehmen kann. Zum Beispiel: ein Paar
+		    Schuhe, ein Paar Bremsbacken. </simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>PK</term><listitem><simpara>Diskret: Paket, besteht aus
+		    mehreren gleichen Teilen.</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>SET</term><listitem><simpara>Diskret: Set, besteht aus
+		    mehren Teilen, die aus funktionalen oder
+		    verkaufstechnischen Gründen zu einer Einheit
+		    zusammengefasst werden.</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>MTR</term><listitem>
+		  <simpara>Länge: Meter</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>CMT</term><listitem>
+		  <simpara>Länge: Zentimeter</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>MMT</term><listitem>
+		  <simpara>Länge: Millimeter</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>KGM</term><listitem>
+		  <simpara>Gewicht: Kilogramm</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>GRM</term><listitem>
+		  <simpara>Gewicht: Gramm</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>LTR</term><listitem>
+		  <simpara>Volumen: Liter</simpara></listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>MLT</term><listitem>
+		  <simpara>Volumen: Milliliter</simpara></listitem>
+	      </varlistentry>
+	  </variablelist> Korrekt behandeln heisst: Zwei Mengenangaben sind als
+	    gleich zu behandeln, wenn sie nach Definition der Einheiten gleich
+	    sind.
+	  </para>
+	</formalpara>
+	<para>Bei den physikalischen Maßeinheiten für Länge, Gewicht und Volumen
+	  ist offensichtlich, wie verschiedene Einheiten gleicher physikalischer
+	  Größen ineinander umzurechen sind. Zum
+	  Beispiel sind <literal><![CDATA[<cbc:Quantity
+	    quantityUnitCode="MTR">0.58</cbc:Quantity>]]></literal> und
+	  <literal><![CDATA[<cbc:Quantity
+	    quantityUnitCode="MMT">580</cbc:Quantity>]]></literal> 
+	  als gleich zu behandeln.
+	</para>
+	<formalpara id="rule-discrete-unit">
+	  <title>Regel: Diskrete Einheiten</title>
+	  <para>Bei den diskreten Einheiten ist das nicht offensichtlich. Wir
+	    setzen folgende Regeln für &vc;-konforme Implementierungen fest:
+	  <orderedlist>
+	      <listitem>
+		<simpara>Die Einheiten Stück, Paar und Set sind untereinander
+		  nicht zu vergleichen und sind auch nicht mit einer der
+		  physikalischen Größen zu vergleichen.</simpara>
+	      </listitem>
+	      <listitem>
+		<simpara>Eine Umrechnung einer Mengenangabe mit der Einheit
+		  Paket in eine andere Einheit Y, ist nur dann möglich, wenn Y
+		  eine von Paket verschiedene Einheit ist, und wenn explizit
+		  eine Zahl U angegeben wird, so dass 1 Paket einer Menge von U
+		  Y entspricht.
+		</simpara>
+	      </listitem>
+	  </orderedlist> Die Beschreibung von Gegenständen erfolgt mit dem
+	    Elementtyp <link linkend="cac-ItemType">cac:ItemType</link>. Dieser
+	    Elementtyp erlaubt die geforderte explizite Angabe zur Umrechung
+	    der Paket-Einheit in eine andere Einheit.
+	  </para>
+	</formalpara>
+	<formalpara id="rule-other-units">
+	  <title>Regel: Andere Einheiten nach TRADE/CEFACT/2001/20 [<xref linkend="ref_trade_cefact"/>]</title>
+	  <para>Es widerspricht nicht der &vc;-Spezifikation, andere als die
+	    oben genannten Einheiten aus der TRADE/CEFACT/2001/20-Liste zu verwenden.  Ein
+	    &vc;-konformer Server darf auf eine Nachricht mit einer
+	    Fehlermeldung antworten, wenn der Client eine andere als eine der
+	    oben explizit aufgeführten Einheiten verwendet. Ein &vc;-konformer
+	    Client muss eine solche Einheit verarbeiten, wenn sie vom Server
+	    geliefert wird. Dazu kann er diese Einheit entweder als Einheit
+	    betrachten, die mit keiner anderen vergleichbar ist, oder durch den
+	    Benutzer eine Umrechnung in eine bekannte Einheit festlegen lassen.
+	  </para>
+	</formalpara>
+      </section>
+    </section>
+    
+    <section>
+      <title>Grundlegende zusamengesetzte Typen</title>
+      <section id="cac-ItemIdentificationType">
+	<title>Kennzeichnung eines Gegenstands</title>
+	<para>Der Elementtyp <ulink
+	    url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/ItemIdentificationType.html">cac:ItemIdentificationType</ulink> wird verwendet, um Gegenstände zu identifizieren. Er besitzt die folgenden Elemente:
+	  <table>
+	    <title>cac:ItemIdenticationType - Elemente</title>
+	    <tgroup cols="3">
+	      <thead>
+		<row>
+		  <entry>Name</entry><entry>Typ/Vorkommen</entry><entry>Beschreibung</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>cac:ID</entry><entry>udt:IdentifierType</entry><entry>Kennzeichnung, wie z.B. Artikelnummer oder EAN-Code</entry>
+		</row>
+		<row>
+		  <entry>cac:PhysicalAttribute</entry><entry>cac:PhysicalAttributeType*</entry><entry>identifzierende Merkmale</entry>
+		</row>
+		<row>
+		  <entry>cac:MeasurementDimension</entry><entry>cac:DimensionType*</entry><entry>Maße zur Identifizierung eines Gegenstands</entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </table>
+	Das Vorkommen von Elementen wird in dieser Tabelle (und folgenden) 
+	auf diese Weise qualifiziert:
+		      <variablelist>
+			<varlistentry><term>Keine Angabe</term>
+			  <listitem><simpara>Element muss verwendet
+			      werden.</simpara>
+			  </listitem>
+			</varlistentry>
+			<varlistentry><term>*</term>
+			  <listitem><simpara>Element kann beliebig oft
+			      vorkommen.</simpara>
+			  </listitem>
+			</varlistentry>
+			<varlistentry><term>+</term>
+			  <listitem><simpara>Element muss mindestens einmal
+			      vorkommen.</simpara>
+			  </listitem>
+			</varlistentry>
+			<varlistentry><term>?</term>
+			  <listitem><simpara>Element kann höchstens einmal
+			      vorkommen.</simpara>
+			  </listitem>
+			</varlistentry>
+		      </variablelist>
+	  </para>
+	  <para>
+	  Zur Zeit gehen wir davon aus, dass ein Gegenstand beim Verkäufer
+	  durch eine kennzeichnende Zeichenkette eindeutig identifiziert wird,
+	  z.B. durch eine interne Artikelnummer oder durch einen EAN-Code.
+	</para>
+	<para>Es ist allerdings auch denkbar, dass zur Identifizierung eines
+	  Gegenstands zusätzlich zur Artikelnummer weitere Angaben wie
+	  z.B. Bekleidungsgröße oder Farbe erforderlich sind. Der Elementtyp
+	  ItemIdentificationType ist auch für diese Fälle geeignet. Wir werden
+	  allerdings erst genauere Regeln hierfür festlegen, wenn sich in der
+	  Praxis zeigt, dass dies benötigt wird.
+	</para>
+	<para>Bis auf weiteres gilt daher: &vc;-konforme Implementierungen
+	  verwenden ausser dem Element <literal>cac:ID</literal> kein anderes
+	  der Kindelemente von ItemIdentifcationType.
+	</para>
+      </section>
+      <section id="cac-BasePriceType">
+	<title>Basispreise</title>
+	<para>Der Elementtyp <ulink
+	    url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/BasePriceType.html">cac:BasePriceType</ulink> wird verwendet, um Preise mitzuteilen, die sich auf eine Menge beziehen:
+	  <table>
+	    <title>cac:BasePriceType - Elemente</title>
+	    <tgroup cols="3">
+	      <thead>
+		<row>
+		  <entry>Name</entry><entry>Typ/Vorkommen</entry><entry>Beschreibung</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>cbc:PriceAmount</entry><entry>cbc:PriceAmountType</entry><entry>Der Betrag des Preises.</entry>
+		</row>
+		<row>
+		  <entry>cbc:BaseQuantity</entry><entry>cbc:QuantityType?</entry><entry>Basismenge 
+		    für den Preis</entry>
+		</row>
+		<row>
+		  <entry>cbc:MaximumQuantity</entry><entry>cbc:QuantityType?</entry><entry>maximale Menge für Gültigkeit des Preises</entry>
+		</row>
+		<row>
+		  <entry>cbc:MinimumQuantity</entry><entry>cbc:QuantityType?</entry><entry>minimale Menge für Gültigkeit des Preises</entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </table>
+	</para>
+	<formalpara id="rule-BasePriceType">
+	  <title>Regel: BasePriceType</title>
+	  <para>Für &vc;-konforme Implementierungen gelten folgende Regeln:
+	  <orderedlist>
+	    <listitem><simpara>In einer Instanz vom Typ cac:BasePriceType muss
+		mindestens eines der Kind-Elemente vom Typ cbc:QuantityType
+		vorhanden sein.
+	      </simpara></listitem>
+	    <listitem><simpara>
+		In allen Kind-Elementen einer Elementinstanz e vom Typ
+		cbc:QuantityType darf nur ein und dieselbe Mengeneinheit
+		(quantityUnitCode) verwendet werden. Diese nennen wir die
+		Mengeneinheit von e. Ist eine Mengenangabe m gegeben, so nennen
+		wir e gültig für m, wenn die Mengeneinheit von e mit der
+		Mengeneinheit von m vergleichbar ist und m in dem Bereich
+		liegt, der durch cbc:MinimumQuantity und cbc:MaximumQuantity in
+		offensichtlicher Weise bestimmt ist. Insbesondere ist e nicht
+		gültig für m, wenn die Mengeneinheiten nicht vergleichbar sind,
+		und es ist gültig für m, wenn die Mengeneinheiten vergleichbar
+		sind und die Elemente cbc:MaximumQuantity und
+		cbc:MinimumQuantity nicht vorhanden sind.
+	      </simpara></listitem>
+	    <listitem><simpara>Werden in einem Instanzelement mehrere
+		gleichnamige Kind-Elemente von diesem Typ verwendet, so wird
+		damit eine Funktion mitgeteilt, die einer Mengenangabe einen
+		Preis zuordnet, und zwar wie folgt: Gegeben sei die
+		Mengenangabe m. Es werden unter den genannten Kind-Elementen
+		alle ermittelt, die für m gültig sind. Wenn es kein solches
+		Element gibt, dann ist die Funktion für dieses Argument m nicht
+		definiert. Ansonsten wird aus den für m gültigen Elementen der
+		kleinste Preisbetrag als Funktionswert festgesetzt.
+	      </simpara></listitem>
+	  </orderedlist>
+	 </para>
+	</formalpara>
+      </section>
+    </section>
+    <section id="cac-ItemType">
+      <title>Beschreibung von Gegenständen</title>
+      <para>Der Elementtyp <ulink
+	  url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/ItemType.html">cac:ItemType</ulink> wird verwendet um Gegenstände zu beschreiben. Dazu werden folgende Elemente verwendet:
+      </para>
+      <table>
+	<title>cac:ItemType - Elemente</title>
+	  <tgroup cols="3">
+	  <thead>
+	    <row>
+	      <entry>Name</entry><entry>Typ/Vorkommen</entry><entry>Beschreibung</entry>
+	      </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry>cbc:Description</entry><entry>cbc:TextType?</entry><entry>Text, der den Artikel beschreibt</entry>
+	    </row>
+	    <row>
+	      <entry>cbc:PackQuantity</entry><entry>cbc:QuantityType?</entry><entry>Verpackungseinheit</entry>
+	      </row>
+	    <row>
+	      <entry>cbc:PackSizeNumeric</entry><entry>udt:NumericType?</entry><entry>Anzahl in Verpackungseinheit</entry>
+	      </row>
+	    <row>
+	      <entry>cac:BuyersItemIdentification</entry><entry>cbc:IdentifierType?</entry><entry>Artikelkennzeichnung des Käufers</entry>
+	      </row>
+	    <row>
+	      <entry>cac:SellersItemIdentification</entry><entry>cbc:IdentifierType?</entry><entry>Artikelkennzeichnung des Verkäufers</entry>
+	      </row>
+	    <row>
+	      <entry>cac:StandardItemIdentification</entry><entry>cbc:IdentifierType?</entry><entry>Artikelkennzeichnung nach Standards, bevorzugt EAN.</entry>
+	      </row>
+	    <row>
+	      <entry>cac:ManufacturersItemIdentification</entry><entry>cbc:IdentifierType?</entry><entry>Artikelnummer des Herstellers.</entry>
+	      </row>
+	    <row>
+		<entry>cac:BasePrice</entry><entry>cac:BasePriceType*</entry><entry>Basispreis(netto), mehrere
+		Angaben möglich zur Darstellung von Staffelpreisen</entry>
+	    </row>
+	      <row>
+	      <entry>cac:RecommendedRetailPrice</entry><entry>cac:BasePriceType?</entry><entry>empfohlener Verkaufpreis(brutto)</entry>
+	    </row>
+	      <row>
+	      <entry>vcc:ItemInformation</entry><entry>?</entry><entry>Weitergehende Informationen zum Artikel, wie z.B. Bilder, Explosionszeichnungen, Warengruppen etc.</entry>
+	    </row>
+	    </tbody>
+	</tgroup>
+	</table>
+	<para>
+	Für &vc;-konforme Implementierungen gelten folgende Regeln:
+	<orderedlist>
+	  <listitem><simpara>Das Element cbc:Description ist mit einem Text zu
+	      füllen, der es einem sachkundigen Leser erlaubt, den Gegenstand
+	      zu erkennen, der beschrieben wird.</simpara></listitem>
+	  <listitem><simpara>Das Element cac:SellersItemIdentification enthält
+	      die Kennzeichnung des Gegenstands durch den Verkäufer und
+	      darf nicht leer sein.</simpara></listitem>
+	  <listitem><simpara>Das Element cac:BuyersItemIdentification kann die
+	      interne Kennzeichnung des Gegenstands durch den Verkäufer
+	      enthalten.</simpara></listitem>
+	  <listitem><simpara>Falls für den Gegenstand ein EAN-Code bekannt ist,
+	      ist dieser durch das Element cac:StandardItemIdentfication
+	      mitzuteilen. Das hat unabhängig davon zu geschehen, ob eine der
+	      beiden anderen Gegenstandskennzeichnungen schon ein EAN-Code ist.
+	    </simpara>
+	  </listitem>
+	  <listitem><simpara>Sollte kein EAN-Code bekannt sein, aber die
+	    Artikelnummer des Herstellers,
+	      ist diese durch das Element cac:ManufacturersItemIdentfication
+	      mitzuteilen. Der Hersteller ist über das Kind-Element
+	    <ulink
+	      url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/element/IssuerParty.html">cac:IssuerParty</ulink> dieses Elements anzugeben. Entweder über eine ID im Kind-Element PartyIdentification,
+	    bei der die Identifzierung des Herstellers über eine öffentliche
+	    Datenbank möglich ist (z.B. ILN/GLN), oder über den Namen im
+	    Kind-Element PartyName.
+	    </simpara>
+	  </listitem>
+	  <listitem><para>Falls Mengenangaben für den Gegenstand in der
+	      Einheit Paket verwendet werden, ist entweder im Element
+	      PackQuantity anzugeben, welche Menge einem Paket in einer anderen
+	      Einheit enspricht oder im Element PackSizeNumeric anzugeben aus
+	      wieviel Stück ein Paket besteht. Von diesen beiden Elementen darf
+	    höchstens eines verwendet werden. Insbesondere ist die Verwendung
+	      von <programlisting><![CDATA[<PackSizeNumeric>x</PackSizeNumeric>]]></programlisting> äquivalent zur Verwendung von
+	<programlisting><![CDATA[<PackQuantity quantityUnitCode="EA">x</PackQuantity>]]>.</programlisting>(Hierbei
+	steht x für eine beliebige Zahl).
+      </para></listitem>
+	<listitem><simpara>Es ist mindestens ein cac:BasePrice-Element vorhanden.</simpara></listitem>
+	<listitem><simpara>Die in den cac:BasePrice-Elementen angegebenen
+	      Preise sind immer Nettopreise und haben alle die gleiche
+	      Mengeneinheit.</simpara></listitem>
+	<listitem><simpara>Falls die Einheit der cac:BasePrice-Elemente die
+	      Einheit Paket ist, so muss die Umrechnung in eine andere diskrete
+	      Einheit oder in eine physikalische Einheit im Element
+	      cbc:PackQuantity oder cbc:PackSizeNumeric angegeben werden.
+	  </simpara></listitem>
+	<listitem><simpara>Die durch die cac:BasePrice-Elemente definierte
+	    Preisfunktion ist für alle Mengenangaben mit positiven Werten
+	    definiert, deren Einheit mit der Einheit der cac:BasePrice-Elemente
+	    vergleichbar ist.
+	  </simpara></listitem> 
+	<listitem><simpara>Der in RecommendedRetailPrice angegebene Preis ist
+	      ein Bruttopreis, es sei denn der Server teilt in seinem <link
+		linkend="vcp-VeloconnectProfile">Veloconnect-Profil</link>
+	      vermöge der Eigenschaft
+	      <literal>RecommendedRetailPrice.Netto</literal> mit, dass er
+	      hierfür Nettopreise verwendet. Ferner wird eine Mengeneinheit
+	      verwendet, die vergleichbar ist zur Einheit der
+	      BasePrice-Elemente.
+	  </simpara></listitem> 
+	<listitem><simpara>Das optionale Element ist gemäß <link
+	      linkend="rule-ItemInformation">Regel: ItemInformation</link> zu
+	    verwenden. 
+	  </simpara></listitem> 
+      </orderedlist>
+      </para>
+      <para>Aus den bisherigen Forderungen ergibt sich, dass für einen
+	Gegenstand stets mindestens eine Einheit explizit angegeben wird.  
+	Falls die Einheit Paket darunter ist, so ist auch die Umrechnung in
+	eine andere diskrete Einheit oder eine physikalische Maßeinheit
+	gegeben.
+      </para>
+      <para>Welche Einheiten ein Verkäufer für seine Artikel verwendet, ist
+	letztlich dessen Entscheidung und hängt auch davon ab, ob sein
+	Warenwirtschaftssystem in der Lage ist, mit Einheiten umzugehen. Es ist
+	also durchaus möglich, dass jeder Artikel als Stück betrachtet wird,
+	obwohl eine andere Einheit angemessener wäre. Warenwirtschaftssysteme
+	der Einzelhändler sind im allgemeinen in der Lage, mit dieser Situation
+	umzugehen: der Benutzer muss letztlich pro Artikel einen
+	Umrechnungsfaktor angeben, um die für den Verkauf verwendeten Einheiten
+	mit den Einheiten für die Bestellung zu harmonisieren. Das ist
+	natürlich eine Quelle von Fehlern und Mißverständnissen.
+      </para>
+      <para>Es ist davon auszugehen, dass für die beteiligten sachkundigen
+	Personen bei jedem Gegenstand klar ist, welches die korrekte Einheit
+	ist. Die Beschreibung von Gegenständen durch Elemente vom Typ
+	cac:ItemType ermöglicht es, diese Informationen explizit in einer
+	Weise mitzuteilen, dass die maschinelle Umrechung von Einheiten
+	ermöglicht wird. Dass diese Information nicht zur Verfügung gestellt
+	wird, kann letztlich nur daran liegen, dass diese Informationen im
+	Warenwirtschaftssystem nicht zur Verfügung stehen. 
+      </para>
+      <formalpara id="rule-use-unit">
+      <title>Regel: Benutzung von Einheiten</title>
+      <para>
+	<itemizedlist><listitem><simpara>
+	      Ein &vc; konformer Server muss genau eine der folgenden
+	Forderungen erfüllen:
+	<orderedlist>
+ 	  <listitem><simpara>Für alle Gegenstände werden die korrrekten
+		Einheiten benützt, wobei es erlaubt ist, auf die
+		Differenzierung in Stück, Paar und Set zu verzichten und als
+		diskrete Einheiten nur die Einheiten Stück und Paket zu
+		verwenden. Welche Einheit korrekt ist, ist nach den Katalogen
+		und Unterlagen zu entscheiden, die den Kunden üblicherweise zur
+		Verfügung stehen. 
+	      </simpara></listitem>
+ 	  <listitem><simpara>Es wird für alle Artikel die Einheit Stück
+	      verwendet, und der Server teilt diese Einschränkung in seinem 
+	      <link linkend="vcp-VeloconnectProfile">Veloconnect-Profil</link>
+	      über die Eigenschaft <literal>quantityUnitCode.EA</literal> mit.
+	    </simpara></listitem>
+	  </orderedlist>
+      </simpara></listitem>
+      <listitem>
+	  <simpara>Übermittelt der Client eine Mengenangabe für einen Gegenstand, die
+	eine Einheit verwendet, die nicht mit den in der Beschreibung des
+	Gegenstands verwendeten Einheiten vergleichbar ist, ersetzt der Server
+	diese Einheit wie folgt: Wird das Element PackQuantity verwendet, durch
+	die dort verwendete Einheit, ansonsten durch die in den
+	BasePrice-Elementen verwendetete Einheit. Der Client hat die Antwort
+	des Servers unter diesem Aspekt auszuwerten und gegebenenfalls den
+	Benutzer auf die Diskrepanz in den verwendeten Einheiten aufmerksam zu
+	machen. 
+      </simpara></listitem>
+      </itemizedlist> 
+     </para> 
+    </formalpara>
+      <informalexample>
+	<para>Hier noch zwei beliebte Beispiele aus der Fahrradbranche, um zu
+	  illustrieren, welchen Vorteil der korrekte Umgang mit Einheiten hat:
+	</para>
+	<para>Der Hersteller verpackt Speichen in Kartons zu je 72 Stück und
+	  verkauft diese in diesen Einheiten. Der Einzelhändler kauft Speichen
+	  in diesen Einheiten ein und verkauft sie stückweise an den
+	  Endkunden. Der Großhändler verwendet also die Einheit Paket zur
+	  Mengenangabe und gibt z.B. mittels
+	  <literal><![CDATA[<PacksizeNumeric>72</PacksizeNumeric>]]></literal>
+	  bekannt, dass ein Paket 72 Stück entspricht. Unter diesen
+	  Voraussetzungen kann der Kunde 1440 Stück Speichen bestellen und
+	  erhält eine Auftragsbestätigung über 20 Pakete Speichen, ohne dass
+	  für diese "Korrektur" ein Eingriff durch Menschen erforderlich
+	  wäre. Das geht natürlich nicht, wenn die Information über die
+	  Packungsgröße bloß in der Artikelbeschreibung steht, und der
+	  Großhändler ein Paket von 72 Speichen in seinem
+	  Warenwirtschaftssystem als ein Stück behandelt.
+	</para>
+	<para>Ein Großhändler verkauft Schaltseilzüge. Dieses Seil ist in
+	  Rollen zu je 30 Meter konfektioniert. Der Einzelhändler verarbeitet
+	  und verkauft das Seil nach Länge. Der Großhändler verwendet also für
+	  die Rolle Bremsseil die Einheit Paket und gibt mittels
+	  <programlisting><![CDATA[<PackageQuantity quantityUnitCode="MTR">30</PackageQuantity>]]></programlisting>
+	  bekannt, dass ein Paket einer Länge von 30 Metern entspricht. Unter
+	  diesen Voraussetzungen kann also der Einzelhändler 180 Meter
+	  Bremsseil bestellen und erhält eine Auftragsbestätigung über 6 Rollen
+	  Bremsseil, in der beispielsweise der Einkaufspreis als Preis pro
+	  Rolle und der empfohlene Verkaufspreis als Meterpreis angegeben ist.
+	</para>
+      </informalexample>
+      <informalexample>
+	<para>Um Mißverständnissen vorzubeugen, ein weiteres Beispiel: Ein
+	  Großhändler verkauft Bremszüge. Diese sind an einem Ende mit einem
+	  Nippel versehen und sind in Längen von 2 Metern und 4 Metern zu
+	  haben. Diese Bremszüge werden in Paketen zu je 50 Stück verkauft. Die
+	  Längenangabe von 2 bzw. 4 Metern sollte nicht zu dem Schluß
+	  verleiten, dass es sich bei dem Paket um eine Menge von 100 bzw. 200
+	  Metern handelt! Ein Paket sind und bleiben 50 Stück, die Länge ist
+	  ein Merkmal des Artikels und wird im allgemeinen dadurch erfasst,
+	  dass zur Unterscheidung verschiedene Artikelnummern verwendet werden.
+	</para>
+      </informalexample>
+      <informalexample>
+	<para>
+	  In der Praxis gibt es Online-Bestellschnittstellen, die folgendes
+	  fertigbringen: Eine Zeile einer Auftragsbestätigung enthält im
+	  wesentlichen die bestellte Anzahl (als Zahl), die Artikelnummer und
+	  einen Einzelpreis (auch nur als Zahl). Es kann vorkommen, dass der
+	  betreffende Artikel ein Paket aus 100 Stück ist, die Menge die Anzahl
+	  der Pakete angibt und der Einzelpreis tatsächlich der Preis eines
+	  Stücks und nicht der Preis eines Pakets ist. Für andere Paketartikel
+	  wiederum ist der Einzelpreis tatsächlich der Preis eines
+	  Pakets. Offensichtlich ist das unbrauchbar, es wird einfach zu wenig
+	  Information übertragen bzw. die Implementierung der Schnittstelle ist
+	  nicht in der Lage, die fehlenden Informationen dadurch zu ersetzen,
+	  dass sie eine allgemeine Regel einhält, wie z.B. dass der Einzelpreis
+	  sich immer auf die gleiche Menge bezieht wie die Anzahl.
+	</para>
+      </informalexample>
+    </section>
+  </section>
+  

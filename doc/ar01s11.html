@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>11. Zukünftige Versionen</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s10.html" title="10. Testbetrieb" /><link rel="next" href="ar01s12.html" title="12. Beispiele" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">11. Zukünftige Versionen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s10.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s12.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="version"></a>11. Zukünftige Versionen</h2></div></div><div></div></div><p>Es ist damit zu rechnen, dass diese Spezifikation weiterentwickelt
+      wird. In Planung ist die Übermittlung von Katalogdaten und - wenn hierfür
+      ein klarer Bedarf zu erkennen ist - für die Übermittlung von
+      Lieferscheinen und Rechnungen. Es ist also dafür Sorge zu tragen, dass
+      Server und Client, die unterschiedliche Versionen der veloconnect-Spezifikation
+      implementieren, reibungslos zusammenarbeiten können. Die
+      Weiterentwicklung der Spezifikation wird daher folgenden Regeln
+      unterworfen:
+    </p><p><a id="rule-version-policy"></a><b>Regel: Versions-Richtlinie. </b>
+       </p><div class="orderedlist"><ol type="1"><li>Jede veloconnect-Spezifikation wird nach dem Schema
+	      {version}.{revision} numeriert. Hierbei ist {version} die
+	      <span class="emphasis"><em>Versionsnummer</em></span> und {revision} die
+	      <span class="emphasis"><em>Revisionsnummer</em></span>. Die vorliegende
+	    Spezifikation hat also die Versionsnummer 1 und die Revisionsnummer
+	    0.
+	    Eine Spezifikation ist
+	      neuer als eine andere, wenn ihre Versionsnummer größer ist, oder
+	      wenn die Versionsnummern übereinstimmen und die Revisionsnummer
+	      größer ist.
+	    </li><li>Innerhalb eines Zeitraums von 12 Monaten findet
+	      höchstens ein Wechsel der Versionsnummer statt.</li><li>Die in der Spezifikation definierten Namensräume
+	      werden alle nach dem Muster
+	      urn:veloconnect:{name}-{version}.{revision} bezeichnet. Die
+	      Versionsnummer stimmt mit der Versionsnummer der Spezifikation
+	      überein. Eine Änderung der Revisionsnummer findet nur statt, wenn
+	      die Schemadefinitionen für diesen Namensraum geändert
+	      werden.</li><li>Zu jedem Namensraum, der in einer
+	      veloconnect-Spezifikation verwendet wird, gibt es in jeder neueren
+	      Spezifikation mit gleicher Versionsnummer genau einen Namensraum,
+	      dessen Bezeichnung bis auf die Revisionsnummer mit diesem
+	      übereinstimmt.</li><li>Die Modifikationen der Schemadefinitionen werden
+	      wie folgt sein. Sei D ein nach der Spezifikation u.v gültiges
+	      XML-Dokument und u.y eine neuere Spezifikation. Wir können D
+	      derart zu einem XML-Dokument E transformieren, dass wir die
+	      Bezeichner von Namensräumen durch ihre im vorherigen Abschnitt
+	      zugeordneten Bezeichner der neueren Spezifikation ersetzen. Das
+	      transformierte Dokument E wird dann auch wieder ein nach der
+	      Spezifikation u.y gültiges Dokument sein.</li><li>Sei D ein nach der Spezifikation u.v gültiges
+	      XML-Dokument und x.y eine neuere Spezifikation, wobei x und u
+	      verschieden sind. Falls eine zum vorherigen Fall analoge
+	      Transformation der Namensräume zum Dokument E möglich ist und das
+	      Wurzelelement von E im neueren Schema deklariert ist, dann ist
+	      das Dokument E auch wieder ein nach der Spezifikation x.y
+	      gültiges Dokument.</li></ol></div><p>
+      </p><p>Letzlich bedeutet diese Regel eine weitgehende Abwärtskompatibiltät.
+    Ebenso zeigt dies, dass Implementierungen Namensräume im wesentlichen als
+    Signal verwenden, um zu erkennen nach welchem Stand der Spezifikation die
+    beteiligten Parteien arbeiten, und die Verwendung der unqualifizierten
+    Namen zu keinen Missverständnissen führt. 
+    Für Client und Server hat es unterschiedliche
+    Konsequenzen, wenn sie mit einer Gegenseite kommunizieren, die einen
+    anderen Stand der Spezifikation implementiert. Für die Implementierung
+    von Clients werden einige Empfehlungen ausgesprochen, für Server einige
+    diesbezügliche Regeln formuliert.
+    </p><p><a id="version-client"></a><b>Empfehlung für Client-Implementierungen. </b>
+        </p><div class="itemizedlist"><ul type="disc"><li>Die Implementierung sollte keine Annahmen über
+	   das Nichtvorhandensein von Elementen oder Attributen machen. Es kann
+	   durchaus sein, dass eine neuere Spezifikation z.B. zwischen zwei
+	   Kindelementen ein weiteres optionales Element einfügt.</li><li>Ebenso kann es sein, dass für Typen, die als
+	      Aufzählung definiert sind, weitere Werte erlaubt werden. Die
+	      Implementierung sollte auf diesen Fall gefasst sein und
+	      gegebenenfalls einen Hinweis an den Benutzer generieren.</li><li>Da nicht davon auszugehen ist, dass die Server
+	      jeweils den neuesten Stand der Spezifikation implementieren,
+	      müssen gegebenenfalls auch veraltete Operationen, d.h.
+	      Operationen, die in der aktuellen Spezifikation nicht mehr
+	      vorgesehen sind, unterstützt werden. </li></ul></div><p>
+	</p><p><a id="rule-downwards-compatibility-server"></a><b>Regel: Abwärtskompatibilität (Server). </b>Im Umgang mit Clients, die einen älteren Stand der Spezifikation
+	implementieren, muss ein veloconnect-konformer Server folgende Regeln
+	beachten:
+	</p><div class="orderedlist"><ol type="1"><li>Sofern eine Anfrage des Client mit der oben
+	      beschriebenen Transformation der Namensräume in eine gültige
+	      Anfrage umgesetzt werden kann, ist diese transformierte Anfrage
+	      gemäß der Spezifikation zu beantworten</li><li>Andernfalls hat der Server die Wahl, ob die
+	      Anfrage gemäß einer früheren Sepzifikation beantwortet wird oder
+	      ob der Fehlercode 406 zurückgeliefert wird.</li></ol></div><p>
+       </p><p><a id="rule-upwards-compatibility-server"></a><b>Regel: Aufwärtskompatibilität (Server). </b>Im Umgang mit Clients, die einen neueren Stand der Spezifikation
+	implementieren, muss ein veloconnect-konformer Server folgende Regeln
+	beachten:
+	</p><div class="orderedlist"><ol type="1"><li>Sofern eine Anfrage des Client durch eine
+	      entsprechende Transformation der Namensräume in eine gültige
+	      Anfrage umgesetzt werden kann, ist diese transformierte Anfrage
+	      gemäß der Spezifikation zu beantworten</li><li>Andernfalls wird der Fehlercode 405
+	      zurückgeliefert.</li></ol></div><p>
+       </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s10.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s12.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">10. Testbetrieb </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 12. Beispiele</td></tr></table></div></body></html>

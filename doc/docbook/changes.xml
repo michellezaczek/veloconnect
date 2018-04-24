@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<section id="changes">
+<title>Änderungen/Neuerungen</title>
+<section>
+<title>Syntaktische Änderungen</title>
+<para>
+<itemizedlist>
+Die folgende Liste ist hinsichtlich der neuen Elemente nicht vollständig. Zu
+	jedem neuen Element gibt es aber mindestens ein Element in dieser List,
+	das dieses Element verwendet.
+  <listitem><simpara><ulink url="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/ItemType.html">cac:ItemType</ulink>: Neues
+	  Element vcc:ItemInformation</simpara></listitem>
+  <listitem><simpara><ulink url="xsd/urn_veloconnect_profile-1.1/element/VeloconnectProfile.html">vcp:VeloconnectProfile</ulink>: Neue
+	  Elemente vcp:SellersName, vcp:Message</simpara></listitem>
+  <listitem><simpara><ulink url="xsd/urn_veloconnect_profile-1.1/simpleType/OperationType.html">vcp:OperationType</ulink>: Neue
+	  Konstante GetItemDetailsList</simpara></listitem>
+  <listitem><simpara><ulink url="xsd/urn_veloconnect_profile-1.1/simpleType/OperationType.html">vcp:OperationType</ulink>: Neue
+	  Konstante GetClassificationScheme</simpara></listitem>
+  <listitem><simpara><ulink url="xsd/urn_veloconnect_profile-1.1/simpleType/TransactionType.html">vcp:TransactionType</ulink>: Neue
+	  Konstante TextSearch</simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_order-1.1/element/ItemUnknown.html">vco:ItemUnknown</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink
+	    url="xsd/urn_veloconnect_order-1.1/element/ItemDetail.html">vco:ItemDetail</ulink></simpara></listitem>
+  <listitem><simpara>Geändert: <ulink
+	    url="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsResponse.html">vco:GetItemDetailsResponse</ulink>: Kindelement vco:ItemUnknown hinzugefügt, inhaltliche Einschränkungen über choice-Konstrukt in Syntax übernommen.</simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_order-1.1/element/RequestEntry.html">vco:RequestEntry</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsListRequest.html">vco:GetItemDetailsListRequest</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink
+	    url="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsListResponse.html">vco:GetItemDetailsListResponse</ulink></simpara></listitem>
+<listitem><simpara>Neuer Namensraum <ulink url="xsd/urn_veloconnect_catalog-1.1/index.html">urn:veloconnect:catalog-1.1 (vcc)</ulink>.</simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/CreateTextSearchRequest.html">vcc:CreateTextSearchRequest</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/CreateTextSearchResponse.html">vcc:CreateTextSearchResponse</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/SearchResultRequest.html">vcc:SearchResultRequest</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/SearchResultResponse.html">vcc:SearchResultResponse</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/simpleType/ResultFormatType.html">vcc:ResultFormatType</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/GetClassificationSchemeRequest.html">vcc:GetClassificationSchemeRequest</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/GetClassificationSchemeResponse.html">vcc:GetClassificationSchemeResponse</ulink></simpara></listitem>
+  <listitem><simpara>Neu: <ulink url="xsd/urn_veloconnect_catalog-1.1/element/ItemInformation.html">vcc:ItemInformation</ulink></simpara></listitem>
+</itemizedlist>
+</para>
+</section>
+
+<section>
+<title>Änderungen an Operationen/Transaktionen</title>
+<para>
+<itemizedlist>
+<listitem><simpara><link
+	      linkend="operation-GetProfile">GetProfile</link>:
+Der Namen des Lieferanten (im Klartext) wird im Element vcp:SellersName
+	    mitgeteilt, vcp:Message kann zur Übermittlung einer Nachricht an
+	    den Nutzer des Client verwendet werden.
+</simpara></listitem>
+<listitem><simpara><link
+	      linkend="operation-GetItemDetails">GetItemDetails</link>:
+	    Wenn eine Bestellnummer unbekannt ist, wird dies explizit über ein
+	    vco:ItemUnknown-Element mitgeteilt und nicht wie in Version 1.0 durch
+	    das Fehlen eines Elements.
+</simpara></listitem>
+</itemizedlist>
+</para>
+</section>
+
+<section>
+<title>Neue Operationen/Transaktionen</title>
+<para>
+<itemizedlist>
+<listitem><simpara>Neue Operation <link
+	      linkend="operation-GetItemDetailsList">GetItemDetailsList</link>:
+	    zur Zusammenfassung mehrerer GetItemDetails-Abfragen in einer
+	    Operation</simpara></listitem>
+<listitem><simpara>Neue Operation <link
+	      linkend="operation-GetClassificationScheme">GetClassificationSchem</link>: zur Abfrage verwendeter Klassifikationsschemata (z.B. Warengruppen)</simpara></listitem>
+<listitem><simpara>Neue Transaktion <link
+	      linkend="transaction-TextSearch">TextSearch</link>:
+	    Volltextsuche in Artikelnummer und Artikelbezeichnung,
+	    Suchergebnisse können in Blöcken abgeholt werden, die Detailiertheit
+	    der Suchergebnisse kann gesteuert werden</simpara></listitem>
+</itemizedlist>
+</para>
+</section>
+
+</section>

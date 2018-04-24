@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="urn:veloconnect:profile-1.0"
+    xmlns:vct="urn:veloconnect:transaction-1.0"
+    xmlns:udt="urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0"
+    targetNamespace="urn:veloconnect:profile-1.0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+  <xsd:import namespace="urn:veloconnect:transaction-1.0"
+    schemaLocation="transaction-1.0.xsd" />
+
+  <xsd:element name="GetProfileRequest" type="vct:RequestType">
+    <xsd:annotation>
+      <xsd:documentation>Anfrage zur Ermittlung der Fähigkeiten des Servers.
+Jeder veloconnect-konforme Server muss diese Anfrage verarbeiten können.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="GetProfileResponse">
+    <xsd:annotation>
+      <xsd:documentation>Antwort auf GetProfileRequest.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+	<xsd:extension base="vct:ResponseType">
+	  <xsd:sequence>
+	    <xsd:element ref="VeloconnectProfile" />
+	  </xsd:sequence>
+	</xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="VeloconnectProfile">
+    <xsd:annotation>
+      <xsd:documentation>Information über die Fähigkeiten des Servers.
+Die implements-Elemente informieren über die unterstützten Transaktionen.
+Die property-Elemente enthalten einige für die Implementierung spezifischen
+Informationen als key/value-Paare.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+	<xsd:element name="Implements" type="ImplementsType"
+	  minOccurs="0" maxOccurs="unbounded"/>
+	<xsd:element name="Property" type="PropertyType"
+	  minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="ImplementsType">
+     <xsd:annotation>
+        <xsd:documentation>Information über implementierte Operationen und
+Transaktionen, sowie unterstützte Bindungen. Die Informationen über eine
+unterstützte Transaktion gelten für alle Operationen dieser Transaktion.
+Eine Angabe bei URI ist nur erforderlich, wenn diese Operation oder
+Transaktion unter einer anderen URL anzusprechen ist.</xsd:documentation>
+     </xsd:annotation>
+     <xsd:sequence>
+       <xsd:choice>
+	  <xsd:element name="Transaction" type="TransactionType"/>
+	  <xsd:element name="Operation" type="OperationType" />
+       </xsd:choice > 
+       <xsd:element name="Binding" type="BindingType"/>
+       <xsd:element name="URI" type="xsd:anyURI" 
+                    minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PropertyType">
+    <xsd:annotation>
+      <xsd:documentation>Eigenschaft der Serverimplementierung.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+        <xsd:element name="Key" type="PropertyKeyType"/>
+	<xsd:element name="Value" type="xsd:normalizedString"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="OperationType">
+    <xsd:annotation>
+      <xsd:documentation>Liste der Operationen.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="GetStatus">
+	<xsd:annotation>
+	  <xsd:documentation>GetStatus</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="Rollback">
+	<xsd:annotation>
+	  <xsd:documentation>Rollback</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="GetItemDetails">
+	<xsd:annotation>
+	  <xsd:documentation>GetItemDetails</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="TransactionType">
+    <xsd:annotation>
+      <xsd:documentation>Liste der Transaktionen.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="Order">
+	<xsd:annotation>
+	  <xsd:documentation>Order</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="OrderInOnlineShop">
+	<xsd:annotation>
+	  <xsd:documentation>OrderInOnlineShop</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="BindingType">
+    <xsd:annotation>
+      <xsd:documentation>Liste der Bindungen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="URL">
+	<xsd:annotation>
+	  <xsd:documentation>URL: Anfrage per http (GET oder POST), 
+Parameter als Querystring.</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="URL-S">
+	<xsd:annotation>
+	  <xsd:documentation>URL-S : Wie URL nur mit https.</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="XML-POST">
+	<xsd:annotation>
+	  <xsd:documentation>XML-POST: Request wird als XML-Dokument per http (POST) übertragen.</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="XML-POST-S">
+	<xsd:annotation>
+	  <xsd:documentation>XML-POST-S: Wie POST, nur mit https.</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="PropertyKeyType">
+    <xsd:annotation>
+      <xsd:documentation>Mögliche Eigenschaften der Serverimplemtierung.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="RecommendedRetailPrice.Netto">
+	<xsd:annotation>
+	  <xsd:documentation>RecommendedRetailPrice.Netto: Indikator ob die empfohlenen Verkaufspreise als Nettopreise angegeben werden. 
+Mögliche Werte: 
+false (empfohlener VK ist brutto), 
+true (empfohlener VK ist netto)</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="quantityUnitCode.EA">
+	<xsd:annotation>
+	  <xsd:documentation>quantityUnitCode.EA: Indikator ob grundsätzlich nur Stück als Einheit verwendet wird. 
+Mögliche Werte: false, true</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="OrderInOnlineShop.TransactionID">
+	<xsd:annotation>
+	  <xsd:documentation>OrderInOnlineShop.TransactionID: Feste TransactionID für die Benutzung der OrderInOnlineShop-Transaktion. 
+Muss angegeben werden, wenn diese Transaktion unterstützt wird.</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="Order.DeliveryDate">
+	<xsd:annotation>
+	  <xsd:documentation>Order.DeliveryDate: Indikator, ob terminierte Bestellungen möglich sind.
+Werte:
+false : nicht möglich
+order : nur ein Datum für die ganze Bestellung
+line  : Datum für jede Bestellzeile individuell einstellbar</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="Order.Availability">
+	<xsd:annotation>
+	  <xsd:documentation>Order.Availability: Indikator, ob Informationen zur
+Lieferbarkeit zur Vergügung gestellt werden.
+Werte:
+true : grundsätzlich Angaben zur Lieferbarkeit
+false : grundsätzlich keine Angaben zu Lieferbarkeit</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="Order.Backlog">
+	<xsd:annotation>
+	  <xsd:documentation>Order.Backlog: Indikator, wie die Nachlieferung 
+gesteuert werden kann. Mögliche Werte:
+false : nicht möglich
+order : Nachlieferungsverhalten nur für die Bestellung einstellbar
+line  : Nachlieferungsverhalten für jede Bestellzeile individuell einstellbar</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="Order.BacklogDefault">
+	<xsd:annotation>
+	  <xsd:documentation>Order.BacklogDefault: Grundsätzliches Verhalten bei nicht lieferbaren Artikeln.
+Werte:
+false : keine Nachlieferung
+true : Nachlieferung</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="Order.ExpectingDelivery">
+	<xsd:annotation>
+	  <xsd:documentation>Order.ExpectingDelivery: Zeitraum innerhalb dessen mit einer Lieferung zu rechnen ist; 
+Wert: Zahl (Anzahl von Tagen)</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2006)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen veloconnect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+veloconnect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur veloconnect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+<section id="catalog">
+<title>Katalogdaten (neu in Version 1.1)</title>
+<para>
+In diesem Abschnitt werden XML-Konstrukte und Operationen behandelt, bei denen
+    es im weitesten Sinne um das Thema "Katalogabgleich" geht. Es ist zu
+    erwarten, dass hier in zukünftigen Versionen noch Ergänzungen vorgenommen
+    werden. 
+</para>
+  <section id="transaction-TextSearch"> <title>Transaktion: TextSearch</title> <para>
+Zur Volltextsuche über  Artikelnummer und Artikelbezeichnung muss ein
+      &vc;-konformer Server die Transaktion TextSearch implementieren. Diese
+      Transaktion kennt folgende Zustände: 
+ <itemizedlist>
+      <listitem><simpara>Startzustand 1</simpara> </listitem>
+      <listitem><simpara>Abholen der Suchergebnisse  2</simpara> </listitem>
+      <listitem><simpara>Endzustand 100</simpara> </listitem>
+    </itemizedlist> und kennt zwei Operationen: <itemizedlist>
+      <listitem><simpara>CreateTextSearch</simpara> </listitem>
+      <listitem><simpara>SearchResult</simpara> </listitem>
+    </itemizedlist>
+    Die einzelnen Operationen sind wie folgt definiert:
+  </para>
+  <section id="operation-CreateTextSearch">
+     <title>Operation: CreateTextSearch</title>
+    <para>Die Anfrage ist ein Element vom Typ <ulink
+	  url="xsd/urn_veloconnect_catalog-1.1/element/CreateTextSearchRequest.html">vcc:CreateTextSearchRequest</ulink>, 
+das den Typ <link linkend="vct-RequestType">vct:RequestType</link> um das
+	Element vcc:SearchString vom Typ udt:TextType erweitert. Antwort ist ein Element vom Typ 
+<ulink url="xsd/urn_veloconnect_catalog-1.1/element/CreateTextSearchResponse.html">vcc:CreateTextSearchResponse</ulink>, 
+welches den Typ <link
+	  linkend="vct-ResponseType">vct:TransactionResponseType</link>, um das Element vcc:TotalCount vom Typ xsd:integer erweitert. 
+    </para>
+    <formalpara id="rule-CreateTextSearch"><title>Regel:
+	  CreateTextSearch</title>
+<para>Ein &vc;-konformer Server erzeugt für jede Anfrage CreateTextSearch einen
+	  eigenen Transaktionskontext. Der in vcc:SearchString übergebene
+	  Text wird in Teilworte (Trennzeichen ist das Leerzeichen) zerlegt. Es
+	  werden alle  Artikel ermittelt, bei denen jedes der Teilworte innerhalb von
+	  Artikelnummer oder Artikelbezeichnung vorkommt (als
+	  Teilzeichenkette). Insbesondere heisst dies, dass bei leerem
+	  SearchString alle Artikel ermittelt werden.
+	  Die Anzahl der gefundenen Artikel wird über das Element
+	  vcc:TotalCount mitgeteilt, die Liste der gefundenen Artikel im
+	  Transaktionskontext gespeichert. Falls diese Anzahl 0 ist, findet ein
+	  Übergang zum Endzustand 100 statt, ansonsten zum Zustand 2, und es
+	  wird jeweils die Antwort in vcc:CreateTextSearchResponse mit
+	  ResponseCode 200 zurückgeliefert.  
+</para>
+    </formalpara>
+ </section>
+  <section id="operation-SearchResult">
+     <title>Operation: SearchResult</title>
+    <para>Die Anfrage ist ein Element vom Typ <ulink
+	  url="xsd/urn_veloconnect_catalog-1.1/element/SearchResultRequest.html">vcc:SearchResultRequest</ulink>, 
+das den Typ <link linkend="vct-RequestType">vct:TransactionRequestType</link>
+	um die folgenden Elemente erweitert:
+<table> <title>vcc:SearchResultRequest - Elemente</title> <tgroup
+	  cols="3"> <thead> <row> <entry>Name</entry>
+	      <entry>Typ/Vorkommen</entry>
+	      <entry>Beschreibung</entry> </row> </thead> <tbody> 
+	      <row><entry>StartIndex</entry><entry>xsd:integer</entry><entry>Index des ersten Artikels, der übertragen werden soll (0-basiert)</entry></row>
+	      <row><entry>Count</entry><entry>xsd:integer</entry><entry>Anzahl der Artikel</entry> </row>
+	      <row><entry>ResultFormat</entry><entry>vcc:ResultFormatType</entry><entry>Format der Suchergebnisse</entry> </row>
+	      <row><entry>DoNotClose</entry><entry>xsd:boolean?</entry><entry>Flag, um
+		das automatische Beenden der Transaktion bei Rückgabe des
+		  letzten Artikels zu verhindern</entry> </row>
+            </tbody></tgroup>
+      </table>
+Die Antwort ist ein Element
+<ulink url="xsd/urn_veloconnect_catalog-1.1/element/SearchResultResponse.html">vcc:SearchResultResponse</ulink>, 
+welches den Typ <link
+	  linkend="vct-ResponseType">vct:TransactionResponseType</link>, wie
+	folgt erweitert:
+<table> <title>vcc:SearchResultResponse - Elemente</title> <tgroup
+	  cols="3"> <thead> <row> <entry>Name</entry>
+	      <entry>Typ/Vorkommen</entry>
+	      <entry>Beschreibung</entry> </row> </thead> <tbody> 
+	      <row><entry>StartIndex</entry><entry>xsd:integer</entry><entry>Index des ersten Artikels, der übermittelt wird (0-basiert)</entry></row>
+	      <row><entry>Count</entry><entry>xsd:integer</entry><entry>Anzahl der
+		  Artikel, die übermittelt werden</entry> </row>
+	      <row><entry>ResultFormat</entry><entry>vcc:ResultFormatType</entry><entry>Format der Suchergebnisse</entry> </row>
+	      <row><entry>cac:Item</entry><entry>*</entry><entry>Artikelstammdaten</entry> </row>
+	      <row><entry>vco:ItemDetail</entry><entry>*</entry><entry>Artikelstammdaten und Verfügbarkeit</entry> </row>
+	      <row><entry>cac:SellersItemIdentifcation</entry><entry>*</entry><entry>Artikelnummer</entry> </row>
+            </tbody></tgroup>
+      </table>
+
+    </para>
+    <formalpara id="rule-SearchResult"><title>Regel:
+	  SearchResult</title>
+<para><itemizedlist><listitem><simpara>
+Ein &vc;-konformer Server verarbeitet eine Anfrage SearchResult wie
+	  folgt: Über den Transaktionskontext ist die Gesamtzahl der Treffer
+	  sowie die Liste der gefundenen Artikel bekannt. Die vom Client
+	  übergebene Zahl StartIndex wird zunächst wie folgt modifiziert: Ist sie
+	  negativ wird sie durch 0 ersetzt, ist sie größer oder gleich
+	  TotalCount wird sie durch TotalCount - 1 ersetzt. Sodann wird
+	  gegebenenfalls die übergebene Zahl Count wie folgt modifiziert: Ist
+	  sie negativ, wird sie durch 0 ersetzt. Ist Startindex + Count &gt;
+	  TotalCount, wird Count durch TotalCount - Startindex
+	  ersetzt. Der Server kann eine obere Schranke für Count festlegen und 
+	  Count gegebenfalls durch diese obere Schranke ersetzen. Die obere
+	  Schranke darf weder kleiner als 50 noch kleiner als 2% von TotalCount
+	  sein. 
+	  Die aktuellen Werte für TotalCount, Startindex und Count werden im
+	  Element SearchResultResponse abgelegt. Ebenso wird der Inhalt von
+	  ResultFormat übernommen.
+</simpara></listitem>
+<listitem>
+<simpara>
+Falls ResultFormat nicht den Inhalt COUNT hat, wird nun für Count viele Artikel der Trefferliste beginnend mit dem Index Startindex
+	  (Index ist 0-basiert) wie folgt verfahren:
+<itemizedlist>
+<listitem><simpara>Ist ITEM_DETAIL Inhalt von ResultFormat, wird gemäss <link
+		  linkend="rule-GetItemDetailsList">Regel:
+		  GetItemDetailsList</link> ein Element ItemDetail erzeugt.
+</simpara></listitem>
+<listitem><simpara>Ist ITEM_TYPE Inhalt von ResultFormat, wird aus den Stammdaten
+		des Artikels ein Element Item erzeugt.
+</simpara></listitem>
+<listitem><simpara>Ist ID_ONLY Inhalt von ResultFormat, wird aus der
+Artikelnummer des Artikels ein Element SellersItemIdentification erzeugt.
+</simpara></listitem>
+</itemizedlist>
+</simpara></listitem>
+<listitem>
+<simpara>Das vollständig ausgefüllte Element vcc:SearchResultResponse wird mit
+	  ResponseCode 200 an den Client übermittelt.
+</simpara></listitem>
+<listitem>
+<simpara>
+Die Transaktion verbleibt im Zustand 2, es sei denn, es gilt StartIndex + Count
+	  &gt;= TotalCount und in vcc:SearchResultRequest hat das Element
+	  DoNotClose nicht den Wert true.
+</simpara></listitem></itemizedlist>
+</para>
+</formalpara>
+ </section>
+ </section>
+  <section id="operation-GetClassificationScheme">
+   <title>Operation: GetClassificationScheme</title>
+   <para>
+    Es ist gängige Praxis, zur Strukturierung des Sortiments Artikel in
+    Warengruppen zusammenzufassen. Manche Lieferanten gewähren Mengenrabatte in
+    der Form, dass zur Ermittlung des Rabatts Artikel zu Gruppen
+    zusammengefasst werden. Die Zusammenfassung in Gruppen kann generisch als
+    Klassifikation der Artikel nach einem Klassifikationsschema aufgefasst
+    werden. Zur Mitteilung verwendeter Klassifikationsschemata kann die
+    Operation GetClassificationScheme verwendet werden.
+   </para>
+   <para>
+    Die Operation GetClassificationScheme besteht aus der Anfrage <ulink
+	url="xsd/urn_veloconnect_catalog-1.1/element/GetClassificationSchemeRequest.html">vcc:GetClassificationSchemeRequest</ulink> vom Typ vct:RequestType. Der Server antwortet hierauf mit <ulink url="xsd/urn_veloconnect_catalog-1.1/element/GetClassificationSchemeResponse.html">vcc:GetClassificationSchemeResponse</ulink>, welches den Typ vct:ResponseType um eine nicht leere Folge von Elementen <ulink url="xsd/urn_veloconnect_catalog-1.1/element/ClassificationScheme.html">vcc:ClassificationScheme</ulink> erweitert.
+   </para>
+   <para>
+     Das Element vcc:ClassificationScheme hat das Attribut singleMapping,
+      welches per default auf true gesetzt ist, und besteht aus dem Element
+      vcc:ClassificationSchemeID vom Typ udt:IdentifierType, gefolgt von
+      wahlweise vcc:ClassificationSchemeURI vom Typ xsd:anyURI oder einer
+      nicht leeren Liste von Elementen <ulink
+	url="xsd/urn_veloconnect_catalog-1.1/element/ClassificationSchemeGroup.html">vcc:ClassificationSchemeGroup</ulink>.
+   </para>
+   <para>
+     Das Element vcc:ClassificationSchemeGroup besteht aus folgenden Elementen:
+      <table>
+	<title>vcc:ClassificationSchemeGroup - Elemente</title>
+	  <tgroup cols="3">
+	  <thead>
+	    <row>
+	      <entry>Name</entry><entry>Typ/Vorkommen</entry><entry>Beschreibung</entry>
+	      </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry>vcc:ID</entry><entry>udt:IdentifierType</entry><entry>Eindeutige Kennzeichnung der Gruppe innerhalb eines Schemas</entry>
+	    </row>
+	    <row>
+	      <entry>vcc:ParentID</entry><entry>udt:IdentifierType?</entry><entry>Verweis auf übergeordnete Gruppe bei hierarchischer Gruppenstruktur</entry>
+	    </row>
+	    <row>
+	      <entry>vcc:Description</entry><entry>cct:TextType</entry><entry>Bezeichnung der Gruppe</entry>
+	    </row>
+          </tbody>
+	</tgroup>
+      </table>
+   </para>
+   <formalpara id="rule-GetClassificationScheme">
+      <title>Regel: ClassificationScheme</title>
+     <para><itemizedlist><listitem> 
+     <simpara>
+         Ein &vc;-konformer Server muss alle verwendeten
+	Klassifikationsschemata mit Hilfe der Operation GetClassificationScheme
+	mitteilen. Referenzen auf eine bestimmte Gruppe eines
+	Klassifikationsschemas bestehen aus der ID des Schemas und der ID der
+	Gruppe. 
+      </simpara></listitem>
+      <listitem>
+      <simpara>Falls bei einem Klassifikationsschema das Attribut singleMapping
+den Wert true hat, muss gewährleistet sein, dass es zu jedem Artikel höchstens
+eine Gruppe dieses Schemas gibt, der dieser Artikel zugeordnet wird.
+      </simpara></listitem>
+      <listitem>
+      <simpara>Bei einem Klassifikationsschema ist zu unterscheiden zwischen
+	einem proprietären, nur für den jeweiligen Lieferanten gültigen Schema
+	und einem standardisierten, d.h. öffentlich und lieferantenunabhängig
+	festgelegten Schema. Bei einem proprietären Schema teilt der Server
+	alle Gruppen dieses Schemas über Elemente vcc:ClassificationSchemeGroup
+	mit. Bei einem standardisierten Schema wird die Gruppenstruktur über
+	eine URL mitgeteilt, die es erlaubt, die erforderlichen Informationen
+	über die Gruppen dieses Schemas zu ermitteln.
+      </simpara></listitem>
+     </itemizedlist>
+    </para>
+   </formalpara>
+      <para>Da es zur Zeit in der Fahrradbranche keine standardisierten Klassifikationsschemata zu
+	geben scheint, die brauchbar sind und auch üblicherweise angewendet
+	werden, ist die Benutzung eines standardisierten Schemas zunächst nur
+	eine hypothetische Möglichkeit für den zukünfigen Einsatz 
+        von veloconnect.
+      </para>
+  </section>
+  <section id="ItemInformation">
+    <title>vcc:ItemInformation</title>
+    <para>
+    Der Typ cac:ItemType besitzt als Kind-Element das Element
+    <ulink
+      url="xsd/urn_veloconnect_catalog-1.1/element/ItemInformation.html">vcc:ItemInformation</ulink>, um weitergehende Informationen zu einem Artikel zu übermitteln. Dieses Element ist wie folgt aufgebaut:
+      <table>
+	<title>vcc:ItemInformation - Elemente</title>
+	  <tgroup cols="3">
+	  <thead>
+	    <row>
+	      <entry>Name</entry><entry>Typ/Vorkommen</entry><entry>Beschreibung</entry>
+	      </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry>vcc:InformationURL</entry><entry><ulink url="xsd/urn_veloconnect_catalog-1.1/complexType/InformationURLType.html">vcc:InformationURLType</ulink>*</entry><entry>Links auf weiterführende Informationen</entry>
+	    </row>
+	    <row>
+	      <entry>vcc:ClassificationGroupMember</entry><entry><ulink
+		url="xsd/urn_veloconnect_catalog-1.1/complexType/ClassificationGroupMemberType.html">vcc:ClassificationGroupMemberType</ulink>*</entry><entry>Klassifikation nach Klassifikationsschemata, z.B. Warengruppen</entry>
+	    </row>
+	    <row>
+	      <entry>vcc:ScalePriceGroup</entry><entry><ulink
+		url="xsd/urn_veloconnect_catalog-1.1/complexType/ClassificationGroupMemberType.html">vcc:ClassificationGroupMemberType</ulink>?</entry><entry>sofern sich Mengenrabatte auf Artikel einer bestimmten Gruppe und nicht nur auf den einzelnen Artikel beziehen, wird hier diese Gruppe mitgeteilt.</entry>
+	    </row>
+          </tbody>
+	</tgroup>
+      </table>
+    </para>
+    <formalpara id="rule-ItemInformation">
+      <title>Regel: ItemInformation</title>
+      <para>
+       <itemizedlist><listitem><simpara>
+         Bei Verwendung der Elemente vcc:InformationURL ist die Art der
+	angegebenen Links durch Verwendung des Elements vcc:Disposition vom Typ
+	<ulink
+	  url="xsd/urn_veloconnect_catalog-1.1/simpleType/InformationDispositionType.html">vcc:InformationDispositionType</ulink> anzugeben.
+	Eine Tabelle der hierfür zulässigen Werte findet sich im Anschluss.
+	Mehrfachnennungen sind möglich, sofern das verlinkte Dokument verschiedene Arten von Informationen enthält. Bei Verwendung der Art "general" sollte im Element vcc:Description eine prägnante Beschreibung mitteilen, welche Art von Information über den Link erhalten werden kann. 
+      </simpara></listitem><listitem>
+      <simpara>Falls Elemente vcc:ClassificationGroupMember oder
+	vcc:ScalePriceGroup verwendet werden, muss die Operation
+	GetClassificationScheme implementiert werden.
+      </simpara></listitem><listitem>
+      <simpara>Die Zugehörigkeit zu einer Gruppe eines Klassifikationsschemas wird
+	im Element vcc:ClassificationGroupMember durch die ID des zugehörigen
+	Schemas und die ID der Gruppe mitgeteilt. Sofern Mitgliedschaft in
+	mehreren Gruppen eines Schemas besteht, darf höchstens für eine Gruppe
+	das Attribut primaryGroup den Wert true haben. Bei einer hierarchischen
+	Gruppenstruktur ist jeweils nur die Zugehörigkeit zur jeweils untersten
+	Gruppe in dieser Hierarchie mitzuteilen.
+      </simpara></listitem><listitem>
+      <simpara>Wird das Element vcc:ScalePriceGroup verwendet, wird zur Ermittlung
+	des Einzelpreises in einer Bestellung die für diesen Artikel definierte
+	Preisfunktion (vgl. <xref linkend="rule-BasePriceType"/>) nicht auf die
+	Bestellmenge dieses Artikels angewendet, sondern auf die Summe der
+	Bestellmengen aller Artikel, deren Element vcc:ScalePriceGroup den
+	gleichen Inhalt hat.
+      </simpara></listitem>
+     </itemizedlist>
+     </para>
+    </formalpara>
+    <para><table
+		id="vcc-InformationDispositionType"> 
+	<title>vcc:InformationDispositionType</title> 
+	<tgroup cols="2"> <thead>
+		    <row><entry>Inhalt</entry><entry>Bedeutung</entry> </row>
+		  </thead> <tbody> 
+	           <row>
+                     <entry>picture</entry>
+                     <entry>Foto, Bild</entry>
+		   </row>
+	           <row>
+                     <entry>detail_picture</entry>
+                     <entry>Detailaufnahme</entry>
+		   </row>
+	           <row>
+                     <entry>exploded_drawing</entry>
+                     <entry>Explosionzeichnung</entry>
+		   </row>
+	           <row>
+                     <entry>technical_drawing</entry>
+                     <entry>technische Zeichnung</entry>
+		   </row>
+	           <row>
+                     <entry>manual</entry>
+                     <entry>Einbau-, Betriebs-, Wartungs-, Pflegeanleitung</entry>
+		   </row>
+	           <row>
+                     <entry>manual_professional</entry>
+                     <entry>Einbau-, Betriebs-, Wartungs-, Pflegeanleitung für
+		fackundige Leser</entry>
+		   </row>
+	           <row>
+                     <entry>manual_customer</entry>
+                     <entry>Einbau-, Betriebs-, Wartungs-, Pflegeanleitung für Endkunden</entry>
+		   </row>
+	           <row>
+                     <entry>tech_spec</entry>
+                     <entry>Technische Spezifikation</entry>
+		   </row>
+	           <row>
+                     <entry>general</entry>
+                     <entry>allgemeine Informationen</entry>
+		   </row>
+
+        </tbody> </tgroup> </table>
+    </para>
+</section>
+</section>

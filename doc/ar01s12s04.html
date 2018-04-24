@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12.4. Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)
+    </title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s12.html" title="12. Beispiele" /><link rel="previous" href="ar01s12s03.html" title="12.3. Abfrage von Artikeldetails (Operation: GetItemDetailsList)" /><link rel="next" href="ar01s12s05.html" title="12.5. Bestellung ändern (Transaktion: Order, Operation: UpdateOrder)&#10;    " /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">12.4. Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)
+    </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s12s03.html">Zurück</a> </td><th width="60%" align="center">12. Beispiele</th><td width="20%" align="right"> <a accesskey="n" href="ar01s12s05.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2525426"></a>12.4. Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)
+    </h3></div></div><div></div></div><p>Der Käufer erzeugt eine neue Bestellung. Hierzu werden an die URL
+      <tt class="literal">http://b2b.beispielserver.com/</tt> mittels der
+      POST-Methode des HTTP-Protokolls folgende <a href="examples/order1.xml" target="_top">Daten</a> vom Medientyp
+      <tt class="literal">application/xml</tt> übertragen.
+      Alternativ dazu könnte auch folgende URL abgerufen werden
+      </p><pre class="programlisting">
+http://b2b.beispielserver.com/?BuyersID=127654&amp;Password=secret
+&amp;RequestName=CreateOrderRequest
+&amp;Quantity.42213526300=500&amp;quantityUnitCode.42213526300=EA
+&amp;BuyersItemIdentification.42213526300=7285
+&amp;Quantity.42038057500=20&amp;quantityUnitCode.42038057500=EA
+&amp;BuyersItemIdentification.42038057500=7290
+&amp;Quantity.52090311600=100&amp;quantityUnitCode.52090311600=MTR
+&amp;BuyersItemIdentification.52090311600=7295
+</pre><p>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      bzw. an die URL <tt class="literal">http://b2b.beispielserver.com/</tt> mittels
+      der POST-Methode des HTTP-Protokolls folgende Daten vom Medientyp
+      <tt class="literal">application/x-www-form-urlencoded</tt> übermittelt werden:
+      </p><pre class="programlisting">
+BuyersID=127654&amp;Password=secret&amp;RequestName=CreateOrderRequest
+&amp;Quantity.42213526300=500&amp;quantityUnitCode.42213526300=EA
+&amp;BuyersItemIdentification.42213526300=7285
+&amp;Quantity.42038057500=20&amp;quantityUnitCode.42038057500=EA
+&amp;BuyersItemIdentification.42038057500=7290
+&amp;Quantity.52090311600=100&amp;quantityUnitCode.52090311600=MTR
+&amp;BuyersItemIdentification.52090311600=7295
+</pre><p>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!).
+    </p><p>Die Antwort des Servers sieht beispielsweise <a href="examples/order2.xml" target="_top">so</a> aus.
+      Hieran ist folgendes zu erkennen:
+      </p><div class="itemizedlist"><ul type="disc"><li>Die erzeugte Transaktionsinstanz hat die
+	    TransactionID <tt class="literal">order-1</tt>. 
+	  </li><li>Die Transaktion befindet sich im Zustand 2,
+	d.h. im Updatezustand.
+	  </li><li>Jeder Artikel wird in einer bestimmten Packungsgröße
+	    verkauft; die Speichen zu je 100 Stück, die Bremsinnenzüge zu je 10
+	    Stück und die Bremsaußenhülle zu
+	    Rollen je 30 Meter. 
+	  </li><li>Bei der Bremsaußenhülle wurde die Bestellmenge
+	von 100 Meter auf 4 Rollen, d.h. 120 Meter, aufgerundet. Bei den
+	anderen beiden Artikeln wurden die Bestellmengen ohne Änderung in die
+	entsprechende Anzahl von Packungen umgerechnet.
+	  </li><li>Von der Bremsaußenhülle sind nur zwei Rollen
+	    lieferbar, es wird empfohlen, an Stelle der grauen die schwarze
+	    Bremsaußenhülle zu bestellen.
+	  </li><li>Die Staffelpreise und die empfohlenen
+	Verkaufspreise beziehen sich teilweise nicht auf die Einheit, in der
+	    die Bestellmenge angegeben ist.
+	  </li><li>Das System des Verkäufers liefert die übertragenen
+	    internen Artikelnummern des Käufers zurück.
+	  </li></ul></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s12s03.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s12.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s12s05.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">12.3. Abfrage von Artikeldetails (Operation: GetItemDetailsList) </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 12.5. Bestellung ändern (Transaktion: Order, Operation: UpdateOrder)
+    </td></tr></table></div></body></html>

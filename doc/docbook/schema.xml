@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+  <section id="schema"> <title>Veloconnect XML-Schema</title> <para> Die
+      XML-Syntax der Nachrichten wird in einem <ulink
+	url="http://www.w3.org/TR/xmlschema-1/">XML-Schema</ulink> festgelegt.
+      Die normative Beschreibung dieses Schemas ist den Dateien mit Endung
+      <literal>xsd</literal> zu entnehmen, die im Verzeichnis <ulink
+	url="../xsd">xsd</ulink> zu finden sind. Diese Dateien sind normativ
+      für die syntaktische Korrektheit und können von geeigneten Parsern zur
+      automatischen Validierung verwendet werden. Sofern in dieser
+      Spezifikation Angaben zur Syntax von XML-Elementen gemacht werden,
+      handelt es sich nur um Umschreibungen des in den xsd-Dateien
+      niedergelegten XML-Schemas.
+    </para>
+    <para>
+      Zur Beschreibung von geschäftsbezogenen Entitäten wie Preis, Menge,
+      Artikel wird auf das Vokabular zurückgegriffen, das durch die <ulink
+	url="http://docs.oasis-open.org/ubl/cd-UBL-1.0/">Universal Business
+	Language 1.0 (UBL)</ulink>, zur Verfügung gestellt wird. Das UBL-Schema
+      ist in mehrere <ulink
+	url="http://www.w3.org/TR/1999/REC-xml-names-19990114/">Namensräume</ulink> 
+      zerlegt, wir verwenden davon explizit folgende: <itemizedlist>
+	<listitem><simpara>urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0</simpara>
+        </listitem> 
+	<listitem><simpara>urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0</simpara>
+        </listitem> 
+	<listitem><simpara>urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0</simpara>
+        </listitem> 
+    </itemizedlist> Dabei nehmen wir einige Änderungen und Ergänzungen in den
+      beiden letzten Namensräumen vor. Diese sind in den Dateien <ulink
+	url="../xsd/basic-components-1.0.xsd">basic-components-1.0.xsd</ulink>
+      bzw. <ulink
+	url="../xsd/aggregate-components-1.0.xsd">aggregate-components-1.0.xsd</ulink> 
+      festgehalten. Grundsätzlich sind diese Änderungen jedoch dergestalt, dass
+      Dokumentinstanzen nach dem originalen UBL-Schema auch gültige Dokumente
+      nach dem geänderten Schema sind, damit bei der Implementierung von
+      &vc;-Schnittstellen auf eventuell vorhandene Softwarekomponenten
+      zurückgegriffen werden kann, die das UBL-Schema verwenden.
+    </para> 
+    <para> Ferner verwenden wir die eigenen Namensräume <itemizedlist>
+	<listitem><simpara>urn:veloconnect:profile-1.1 (<ulink
+	      url="../xsd/profile-1.1.xsd">profile-1.1.xsd</ulink>)</simpara></listitem>
+	<listitem><simpara>urn:veloconnect:transaction-1.0 (<ulink
+	      url="../xsd/transaction-1.0.xsd">transaction-1.0.xsd</ulink>)</simpara></listitem>
+	<listitem><simpara>urn:veloconnect:order-1.1 (<ulink
+	      url="../xsd/order-1.1.xsd">order-1.1.xsd</ulink>)</simpara></listitem> 
+	<listitem><simpara>urn:veloconnect:catalog-1.1 (<ulink
+	      url="../xsd/catalog-1.1.xsd">catalog-1.1.xsd</ulink>)</simpara></listitem> 
+      </itemizedlist> 
+      </para> 
+      <para>
+    In den Schemadateien und in  dieser Spezifikation werden für Namensräume
+      folgende Präfixe verwendet: 
+    <itemizedlist>
+	<listitem><simpara>udt für
+	    urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0</simpara></listitem> 
+	
+	
+	<listitem><simpara>cbc für
+	    urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0</simpara></listitem> 
+	
+	
+	<listitem><simpara>cac für
+	    urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0</simpara></listitem> 
+	
+	
+	<listitem><simpara>vcc für
+	    urn:veloconnect:catalog-1.1</simpara></listitem>
+	<listitem><simpara>vcp für
+	    urn:veloconnect:profile-1.1</simpara></listitem>
+	<listitem><simpara>vct für
+	    urn:veloconnect:transaction-1.0</simpara></listitem>
+	<listitem><simpara>vco für
+	    urn:veloconnect:order-1.1</simpara></listitem>
+	<listitem><simpara>xsd für
+	    http://www.w3.org/2001/XMLSchema</simpara></listitem>
+    </itemizedlist> Innerhalb jeder xsd-Datei wird für den aktuellen Namensraum
+      kein Präfix verwendet. Eine nach diesem XML-Schema gültige
+      XML-Dokumentinstanz muss qualifizierte Namen, d.h. mit Namensraumangaben,
+      verwenden. Dies ermöglicht dann insbesondere die Unterscheidung
+      unterschiedlicher Versionen dieser Spezifikation. In <xref
+      linkend="version"/> wird näher erläutert, wie sich zukünftige Versionen
+      der &vc;-Spezifikation von dieser unterscheiden können und was bei
+      Implementierungen zu beachten ist, um dem Rechnung zu tragen.
+    </para> 
+</section>

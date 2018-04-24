@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>5. Basis-Komponenten</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s04.html" title="4. Veloconnect XML-Schema" /><link rel="next" href="ar01s05s02.html" title="5.2. Basis-Typen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5. Basis-Komponenten</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s04.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s05s02.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="basic"></a>5. Basis-Komponenten</h2></div></div><div></div></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="xsd-primitives"></a>5.1. Primitive Datentypen</h3></div></div><div></div></div><p>
+       Es werden folgende primitive Datentypen verwendet:
+	</p><div class="variablelist"><dl><dt><a id="xsd-string"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#decimal" target="_top">xsd:string</a></span></dt><dd>Eine <a href="http://www.w3.org/TR/2000/WD-xml-2e-20000814#NT-content" target="_top">beliebige</a> 
+		Folge von <a href="http://www.w3.org/TR/2000/WD-xml-2e-20000814#dt-character" target="_top">Zeichen</a> 
+		entsprechend der XML-Spezifikation. Die Zeichen
+		<tt class="literal">&lt;</tt> und <tt class="literal">&amp;</tt> sind durch
+		die entsprechenden Entitäten <tt class="literal">&amp;lt;</tt> bzw.
+		<tt class="literal">&amp;amp;</tt> zu ersetzen oder es ist mit <a href="http://www.w3.org/TR/2000/WD-xml-2e-20000814#NT-CDSect" target="_top">CDATA-Abschnitten</a> 
+		zu arbeiten.</dd><dt><a id="xsd-normalizedString"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#normalizedString" target="_top">xsd:normalizedString</a></span></dt><dd>Wie xsd:string, allerdings dürfen die Zeichen
+		'carriage return'(#xD), 'linefeed'(#xA) und 'tabulator'(#x9) 
+		nicht vorkommen.</dd><dt><a id="xsd-anyURI"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#anyURI" target="_top">xsd:anyURI</a></span></dt><dd>Zur Darstellung von URI's (Uniform Resource
+		Identifier).</dd><dt><a id="xsd-decimal"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#decimal" target="_top">xsd:decimal</a></span></dt><dd>Darstellung rationaler Zahlen in Dezimalnotation, z.B. 123.45. Die Nachkommastellen werden durch einen Punkt abgetrennt!</dd><dt><a id="xsd-integer"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#integer" target="_top">xsd:integer</a></span></dt><dd>Enschränkung von xsd:decimal auf ganze Zahlen,
+		also ohne Dezimalpunkt und Nachkommastellen</dd><dt><a id="xsd-date"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#date" target="_top">xsd:date</a></span></dt><dd>Datum. Repräsentiert wird ein Datum in der Form
+		yyyy-mm-dd, also z.B. <tt class="literal">2005-05-30</tt> für den 30.
+		Mai 2005. Optional ist die Angabe einer
+		Zeitzone.</dd><dt><a id="xsd-dateTime"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#dateTime" target="_top">xsd:dateTime</a></span></dt><dd>Zeitpunkt. Repräsentiert wird ein Zeitpunkt in der Form
+		yyyy-mm-ddThh:mm:ss, also z.B. <tt class="literal">2005-05-30T14:30:00</tt> für den 30. Mai
+		2005, 14.30 Uhr. Optional können Bruchteile von Sekunden und eine
+		Zeitzone angegeben werden.</dd><dt><a id="xsd-boolean"></a><span class="term"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#dateTime" target="_top">xsd:boolean</a></span></dt><dd>Indikator mit zwei möglichen Werten: <tt class="literal">true</tt> oder <tt class="literal">false</tt>.</dd></dl></div><p>
+      </p><p>
+      Hiervon werden abgeleitet:
+	</p><div class="variablelist"><dl><dt><a id="cbc-PriceAmountType"></a><span class="term"><a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/PriceAmountType.html" target="_top">cbc:AmountType</a></span></dt><dd><p>Zur Angabe von Geldbeträgen. Einfacher Inhalt
+		vom Typ <a href="ar01s05.html#xsd-decimal">xsd:decimal</a>. Das
+		Attribut amountCurrencyID ist erforderlich. Implementierungen
+		müssen die lokale Währung des Käufers oder des Verkäufers
+		verwenden. Beispiel:
+	      </p><pre class="programlisting">&lt;UnitPrice
+		amountCurrencyID="EUR"&gt;12.45&lt;/UnitPrice&gt;</pre><p>
+	(Die Angabe der Währung mag zwar äußerst redundant erscheinen, ist aber
+	eine Folge der Allgemeinheit von UBL.)</p></dd><dt><a id="cbc-DateType"></a><span class="term"><a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/DateType.html" target="_top">cbc:DateType</a></span></dt><dd>Zur Angabe eines Datums. Einfacher Inhalt vom Typ
+	      <a href="ar01s05.html#xsd-date">xsd:date</a>. Zeitzonen sind nicht zu
+	      verwenden.</dd><dt><a id="cbc-DateTimeType"></a><span class="term"><a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/DateTimeType.html" target="_top">cbc:DateTimeType</a></span></dt><dd>Zur Angabe eines Zeitpunkts. Einfacher Inhalt vom
+		Typ <a href="ar01s05.html#xsd-dateTime">xsd:dateTime</a>. Zeitzonen
+		und Burchteile von Sekunden sind nicht zu
+		verwenden.</dd><dt><a id="udt-TextType"></a><span class="term"><a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_UnspecializedDatatypes-1.0/complexType/TextType.html" target="_top">udt:TextType</a></span></dt><dd>Zur Angabe beliebiger Texte. Einfacher Inhalt vom
+	      Typ <a href="ar01s05.html#xsd-string">xsd:string</a>, optionales
+	      Attribut languageID. Dieses Attribut wird nicht
+	      verwendet.</dd><dt><a id="cbc-IndicatorType"></a><span class="term"><a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/IndicatorType.html" target="_top">cbc:IndicatorType</a></span></dt><dd>Indikator zur Anzeige von zwei möglichen
+	      Zuständen. Einfacher Inhalt vom Typ <a href="ar01s05.html#xsd-boolean">xsd:boolean</a>. Wenn ein Element von
+	      diesem Typ optional ist, so ist das Fehlen diese Elements in
+	      einer Dokumentinstanz äquivalent zum Vorkommen dieses Elements
+	      mit Inhalt <tt class="literal">false</tt>.</dd><dt><a id="udt-numericType"></a><span class="term"><a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_UnspecializedDatatypes-1.0/simpleType/NumericType.html" target="_top">udt:NumericType</a></span></dt><dd>Zur Angabe von Zahlen. Inhalt vom Typ <a href="ar01s05.html#xsd-decimal">xsd:decimal</a>.</dd></dl></div><p>
+      </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s04.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s05s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">4. Veloconnect XML-Schema </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 5.2. Basis-Typen</td></tr></table></div></body></html>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>9. Katalogdaten (neu in Version 1.1)</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s08.html" title="8. Transaktion: OrderInOnlineShop" /><link rel="next" href="ar01s09s02.html" title="9.2. Operation: GetClassificationScheme" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">9. Katalogdaten (neu in Version 1.1)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s08.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s09s02.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="catalog"></a>9. Katalogdaten (neu in Version 1.1)</h2></div></div><div></div></div><p>
+In diesem Abschnitt werden XML-Konstrukte und Operationen behandelt, bei denen
+    es im weitesten Sinne um das Thema "Katalogabgleich" geht. Es ist zu
+    erwarten, dass hier in zukünftigen Versionen noch Ergänzungen vorgenommen
+    werden. 
+</p><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="transaction-TextSearch"></a>9.1. Transaktion: TextSearch</h3></div></div><div></div></div><p>
+Zur Volltextsuche über  Artikelnummer und Artikelbezeichnung muss ein
+      veloconnect-konformer Server die Transaktion TextSearch implementieren. Diese
+      Transaktion kennt folgende Zustände: 
+ </p><div class="itemizedlist"><ul type="disc"><li>Startzustand 1</li><li>Abholen der Suchergebnisse  2</li><li>Endzustand 100</li></ul></div><p> und kennt zwei Operationen: </p><div class="itemizedlist"><ul type="disc"><li>CreateTextSearch</li><li>SearchResult</li></ul></div><p>
+    Die einzelnen Operationen sind wie folgt definiert:
+  </p><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h4 class="title"><a id="operation-CreateTextSearch"></a>9.1.1. Operation: CreateTextSearch</h4></div></div><div></div></div><p>Die Anfrage ist ein Element vom Typ <a href="xsd/urn_veloconnect_catalog-1.1/element/CreateTextSearchRequest.html" target="_top">vcc:CreateTextSearchRequest</a>, 
+das den Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:RequestType</a> um das
+	Element vcc:SearchString vom Typ udt:TextType erweitert. Antwort ist ein Element vom Typ 
+<a href="xsd/urn_veloconnect_catalog-1.1/element/CreateTextSearchResponse.html" target="_top">vcc:CreateTextSearchResponse</a>, 
+welches den Typ <a href="ar01s06s02.html" title="6.2. ResponseType">vct:TransactionResponseType</a>, um das Element vcc:TotalCount vom Typ xsd:integer erweitert. 
+    </p><p><a id="rule-CreateTextSearch"></a><b>Regel:
+	  CreateTextSearch. </b>Ein veloconnect-konformer Server erzeugt für jede Anfrage CreateTextSearch einen
+	  eigenen Transaktionskontext. Der in vcc:SearchString übergebene
+	  Text wird in Teilworte (Trennzeichen ist das Leerzeichen) zerlegt. Es
+	  werden alle  Artikel ermittelt, bei denen jedes der Teilworte innerhalb von
+	  Artikelnummer oder Artikelbezeichnung vorkommt (als
+	  Teilzeichenkette). Insbesondere heisst dies, dass bei leerem
+	  SearchString alle Artikel ermittelt werden.
+	  Die Anzahl der gefundenen Artikel wird über das Element
+	  vcc:TotalCount mitgeteilt, die Liste der gefundenen Artikel im
+	  Transaktionskontext gespeichert. Falls diese Anzahl 0 ist, findet ein
+	  Übergang zum Endzustand 100 statt, ansonsten zum Zustand 2, und es
+	  wird jeweils die Antwort in vcc:CreateTextSearchResponse mit
+	  ResponseCode 200 zurückgeliefert.  
+</p></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h4 class="title"><a id="operation-SearchResult"></a>9.1.2. Operation: SearchResult</h4></div></div><div></div></div><p>Die Anfrage ist ein Element vom Typ <a href="xsd/urn_veloconnect_catalog-1.1/element/SearchResultRequest.html" target="_top">vcc:SearchResultRequest</a>, 
+das den Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:TransactionRequestType</a>
+	um die folgenden Elemente erweitert:
+</p><div class="table"><a id="id2521964"></a><p class="title"><b>Tabelle 17. vcc:SearchResultRequest - Elemente</b></p><table summary="vcc:SearchResultRequest - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>StartIndex</td><td>xsd:integer</td><td>Index des ersten Artikels, der übertragen werden soll (0-basiert)</td></tr><tr><td>Count</td><td>xsd:integer</td><td>Anzahl der Artikel</td></tr><tr><td>ResultFormat</td><td>vcc:ResultFormatType</td><td>Format der Suchergebnisse</td></tr><tr><td>DoNotClose</td><td>xsd:boolean?</td><td>Flag, um
+		das automatische Beenden der Transaktion bei Rückgabe des
+		  letzten Artikels zu verhindern</td></tr></tbody></table></div><p>
+Die Antwort ist ein Element
+<a href="xsd/urn_veloconnect_catalog-1.1/element/SearchResultResponse.html" target="_top">vcc:SearchResultResponse</a>, 
+welches den Typ <a href="ar01s06s02.html" title="6.2. ResponseType">vct:TransactionResponseType</a>, wie
+	folgt erweitert:
+</p><div class="table"><a id="id2522058"></a><p class="title"><b>Tabelle 18. vcc:SearchResultResponse - Elemente</b></p><table summary="vcc:SearchResultResponse - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>StartIndex</td><td>xsd:integer</td><td>Index des ersten Artikels, der übermittelt wird (0-basiert)</td></tr><tr><td>Count</td><td>xsd:integer</td><td>Anzahl der
+		  Artikel, die übermittelt werden</td></tr><tr><td>ResultFormat</td><td>vcc:ResultFormatType</td><td>Format der Suchergebnisse</td></tr><tr><td>cac:Item</td><td>*</td><td>Artikelstammdaten</td></tr><tr><td>vco:ItemDetail</td><td>*</td><td>Artikelstammdaten und Verfügbarkeit</td></tr><tr><td>cac:SellersItemIdentifcation</td><td>*</td><td>Artikelnummer</td></tr></tbody></table></div><p>
+
+    </p><p><a id="rule-SearchResult"></a><b>Regel:
+	  SearchResult. </b></p><div class="itemizedlist"><ul type="disc"><li>
+Ein veloconnect-konformer Server verarbeitet eine Anfrage SearchResult wie
+	  folgt: Über den Transaktionskontext ist die Gesamtzahl der Treffer
+	  sowie die Liste der gefundenen Artikel bekannt. Die vom Client
+	  übergebene Zahl StartIndex wird zunächst wie folgt modifiziert: Ist sie
+	  negativ wird sie durch 0 ersetzt, ist sie größer oder gleich
+	  TotalCount wird sie durch TotalCount - 1 ersetzt. Sodann wird
+	  gegebenenfalls die übergebene Zahl Count wie folgt modifiziert: Ist
+	  sie negativ, wird sie durch 0 ersetzt. Ist Startindex + Count &gt;
+	  TotalCount, wird Count durch TotalCount - Startindex
+	  ersetzt. Der Server kann eine obere Schranke für Count festlegen und 
+	  Count gegebenfalls durch diese obere Schranke ersetzen. Die obere
+	  Schranke darf weder kleiner als 50 noch kleiner als 2% von TotalCount
+	  sein. 
+	  Die aktuellen Werte für TotalCount, Startindex und Count werden im
+	  Element SearchResultResponse abgelegt. Ebenso wird der Inhalt von
+	  ResultFormat übernommen.
+</li><li>
+Falls ResultFormat nicht den Inhalt COUNT hat, wird nun für Count viele Artikel der Trefferliste beginnend mit dem Index Startindex
+	  (Index ist 0-basiert) wie folgt verfahren:
+<div class="itemizedlist"><ul type="circle"><li>Ist ITEM_DETAIL Inhalt von ResultFormat, wird gemäss <a href="ar01s07s06.html#rule-GetItemDetailsList">Regel:
+		  GetItemDetailsList</a> ein Element ItemDetail erzeugt.
+</li><li>Ist ITEM_TYPE Inhalt von ResultFormat, wird aus den Stammdaten
+		des Artikels ein Element Item erzeugt.
+</li><li>Ist ID_ONLY Inhalt von ResultFormat, wird aus der
+Artikelnummer des Artikels ein Element SellersItemIdentification erzeugt.
+</li></ul></div>
+</li><li>Das vollständig ausgefüllte Element vcc:SearchResultResponse wird mit
+	  ResponseCode 200 an den Client übermittelt.
+</li><li>
+Die Transaktion verbleibt im Zustand 2, es sei denn, es gilt StartIndex + Count
+	  &gt;= TotalCount und in vcc:SearchResultRequest hat das Element
+	  DoNotClose nicht den Wert true.
+</li></ul></div><p>
+</p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s08.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s09s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">8. Transaktion: OrderInOnlineShop </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 9.2. Operation: GetClassificationScheme</td></tr></table></div></body></html>

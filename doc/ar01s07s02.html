@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7.2. Operation: UpdateOrder</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s07.html" title="7. Transaktion: Order" /><link rel="previous" href="ar01s07.html" title="7. Transaktion: Order" /><link rel="next" href="ar01s07s03.html" title="7.3. Operation: FinishOrder" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">7.2. Operation: UpdateOrder</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s07.html">Zurück</a> </td><th width="60%" align="center">7. Transaktion: Order</th><td width="20%" align="right"> <a accesskey="n" href="ar01s07s03.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-UpdateOrder"></a>7.2. Operation: UpdateOrder</h3></div></div><div></div></div><p>Die Anfrage ist ein Element
+      <a href="xsd/urn_veloconnect_order-1.1/element/UpdateOrderRequest.html" target="_top">vco:UpdateOrderRequest</a>, 
+      die Antwort ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/OrderResponse.html" target="_top">vco:OrderResponse</a>. 
+      Das Element vco:UpdateOrderRequest unterscheidet sich vom Element
+      vco:CreateOrderRequest nur durch den Namen. </p><p><a id="rule-UpdateOrderRequest"></a><b>Regel: UpdateOrderRequest. </b>Ein veloconnect-konformer Client vehält sich wie folgt: Zu jeder Zeile der
+	normalisierten Bestellung, die geändert werden soll, wird ein Element
+	OrderRequestLine gemäß <a href="ar01s07.html#rule-OrderRequestLine-Client">Regel:
+	  OrderRequestLine(Client)</a> erzeugt. </p><p><a id="rule-UpdateOrder"></a><b>Regel: UpdateOrder. </b>
+	Ein veloconnect-konformer Server reagiert auf ein Anfrage UpdateOrderRequest
+	wie folgt: </p><div class="orderedlist"><ol type="1"><li>Zur Anfrage wird ermittelt,
+	      ob hierzu eine Transaktionsinstanz existiert. Falls keine
+	      existiert wird der ResponseCode 420 zurückgeliefert. Falls eine
+	      solche existiert und sich diese nicht im Zustand 2 befindet, wird
+	      die Bearbeitung der Anfrage abgebrochen und der ResponseCode 430
+	      zurückgeliefert.</li><li>Mit
+	      jedem Element OrderRequestLine wird gemäß der Regel <a href="ar01s07.html#rule-OrderRequestLine-Server">OrderRequestLine</a>
+	      verfahren. Hierbei werden im Transaktionskontext Elemente
+	      OrderResponseLine angelegt bzw. geändert, sowie eventuell 
+	      Elemente RequestReplacement erzeugt.</li><li>Aus dem Transaktionskontext werden die Elemente
+	      OrderResponseLine in die Antwort eingefügt, sowie die im
+	      vorherigen Schritt erzeugten Elemente ReqestReplacement. Die
+	      Antwort wird mit ResponseCode 200 an den Client ausgeliefert.
+	      Die Transaktionsinstanz bleibt im Zustand 2.
+	    </li></ol></div><p> </p><p>Zur Verdeutlichung: Der Client übermittelt nur die Bestellzeilen, die
+      geändert werden sollen, der Server liefert alle Zeilen der Bestellung
+      zurück, die im Transaktionskontext gespeichert sind. </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s07.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s07.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s07s03.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">7. Transaktion: Order </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 7.3. Operation: FinishOrder</td></tr></table></div></body></html>

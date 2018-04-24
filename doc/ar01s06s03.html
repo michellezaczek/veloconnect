@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>6.3. Operation: GetStatus</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s06.html" title="6. Operationen" /><link rel="previous" href="ar01s06s02.html" title="6.2. ResponseType" /><link rel="next" href="ar01s06s04.html" title="6.4. Operation: Rollback" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6.3. Operation: GetStatus</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06s02.html">Zurück</a> </td><th width="60%" align="center">6. Operationen</th><td width="20%" align="right"> <a accesskey="n" href="ar01s06s04.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-GetStatus"></a>6.3. Operation: GetStatus</h3></div></div><div></div></div><p>Die Operation GetStatus kann innerhalb jeder beliebigen Transaktion
+	angewendet werden, um den Status der Transaktion zu ermitteln. Zur
+	Erinnerung: Eine Transaktion wird als endlicher Automat modelliert, die
+	jeweiligen Zustände dieses Automaten sind mit den Zahlen 1 bis 199
+	bezeichnet, wobei 1 der Startzustand ist.
+      </p><p>Die Anfrage in der GetStatus-Operation ist das Element <a href="xsd/urn_veloconnect_transaction-1.0/element/GetStatusRequest.html" target="_top">vct:GetStatusRequest</a>. 
+	Dieses ist vom Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:RequestType</a>. Die Antwort ist das
+	Element <a href="xsd/urn_veloconnect_transaction-1.0/element/GetStatusResponse.html" target="_top">vct:GetStatusResponse</a>. 
+	Dieses erweitert den Typ <a href="ar01s06s02.html" title="6.2. ResponseType">vct:ResponseType</a> um das Element
+      vct:TransactionStatus vom Typ
+	<a href="xsd/urn_veloconnect_transaction-1.0/complexType/TransactionStatusType.html" target="_top">vct:TransactionStatusType</a>, 
+	welches beliebig oft wiederholt werden kann. Dieses Element ist eine
+	Folge bestehend aus den Elementen vct:TransactionId (Typ:
+	xsd:normalizedString) und dem Element vct:StatusCode vom Typ
+	<a href="xsd/urn_veloconnect_transaction-1.0/simpleType/StatusCodeType.html" target="_top">vct:StatusCodeType</a>. Dieser Typ ist eine Einschränkung 
+      von xsd:integer auf die Zahlen 1 bis 199.
+      </p><p><a id="rule-GetStatus"></a><b>Regel: GetStatus. </b>
+	  </p><div class="orderedlist"><ol type="1"><li>Jeder veloconnect-konforme Server muss die Operation
+		GetStatus implementieren.
+	      </li><li>Wird in der Anfrage eine TransactionId
+		übermittelt und gibt es hierzu eine Transaktionsinstanz, so
+		enthält die Antwort den ResponseCode 200 und ein Element
+		TransactionStatus mit dieser TransactionID und dem aktuellen
+		Status der Transaktionsinstanz. Falls es keine
+		Transaktionsinstanz gibt, wo wird der ResponseCode 420
+		zurückgeliefert.</li><li>Wird in der Anfrage keine TransactionID
+		übermittelt, so ermittelt der Server alle
+		Transaktionsinstanzen, deren Transaktionskontext hinsichtlich
+		BuyersID und eventuell SellersID mit der Anfrage übereinstimmen. Für jede
+		dieser Transaktionsinstanzen wird ein Element TransactionStatus
+		in die Antwort eingefügt, das die TransactionID und den Status
+		dieser Transaktionsinstanz enthält. Der ResponseCode ist 200.
+	      </li><li>Sofern die Anfrage des Client nicht geeignet
+	      ist, um festzulegen, welche Operation ausgeführt werden soll,
+	      kann der Server den ResponseCode 400 bzw. 405 mit einem
+	      GetStatusResponse-Element zurückzugeben. Alternativ ist die
+	      Rückgabe des http-Fehlercodes 404 möglich.</li></ol></div><p>
+       </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06s02.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s06.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s06s04.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">6.2. ResponseType </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 6.4. Operation: Rollback</td></tr></table></div></body></html>

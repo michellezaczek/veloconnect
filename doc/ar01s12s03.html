@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12.3. Abfrage von Artikeldetails (Operation: GetItemDetailsList)</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s12.html" title="12. Beispiele" /><link rel="previous" href="ar01s12s02.html" title="12.2. Abfrage von Artikeldetails (Operation: GetItemDetails)" /><link rel="next" href="ar01s12s04.html" title="12.4. Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)&#10;    " /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">12.3. Abfrage von Artikeldetails (Operation: GetItemDetailsList)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s12s02.html">Zurück</a> </td><th width="60%" align="center">12. Beispiele</th><td width="20%" align="right"> <a accesskey="n" href="ar01s12s04.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2525365"></a>12.3. Abfrage von Artikeldetails (Operation: GetItemDetailsList)</h3></div></div><div></div></div><p>Der Client fragt nun in einer Anfrage die Details zu
+      den Artikeln mit den Bestellnummern 42213526300, 42038057510, 42213526301
+      in der URL-Bindung wie folgt ab:
+      </p><pre class="programlisting">http://b2b.beispielserver.com/?BuyersID=B127645&amp;Password=secret
+&amp;RequestName=GetItemDetailsListRequest&amp;Quantity.42213526300=500&amp;quantityUnitCode.42213526300=EA
+&amp;SellersItemIdentification=42038057510
+&amp;SellersItemIdentification=42213526301
+</pre><p> 
+(Zeilenumbrüche nur zur besseren Lesbarkeit!) Äquivalent ist die Übermittlung
+      folgender <a href="examples/details_list.xml" target="_top">XML-Nachricht</a>.
+</p><p>
+      Es wird folgende <a href="examples/details_list_a.xml" target="_top">Antwort</a> zurückgeliefert.
+Die Antwort zur zweiten und dritten Bestellnummer enthält folgende Informationen: 
+      </p><div class="itemizedlist"><ul type="disc"><li>Bestellnummer 42038057510 ist veraltet und durch
+	    42038057500 zu ersetzen.
+	  </li><li>Bestellnummer 42213526301 ist unbekannt.</li></ul></div><p> 
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s12s02.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s12.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s12s04.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">12.2. Abfrage von Artikeldetails (Operation: GetItemDetails) </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 12.4. Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)
+    </td></tr></table></div></body></html>

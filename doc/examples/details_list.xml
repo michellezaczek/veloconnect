@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<GetItemDetailsListRequest  xmlns="urn:veloconnect:order-1.1"
+xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+xmlns:vct="urn:veloconnect:transaction-1.0">
+  <vct:BuyersID>B127645</vct:BuyersID>
+  <vct:Credential>
+    <vct:Password>secret</vct:Password>
+  </vct:Credential>
+  <RequestEntry>
+     <cac:SellersItemIdentification>
+       <cac:ID>42213526300</cac:ID>
+     </cac:SellersItemIdentification>
+  </RequestEntry>
+  <RequestEntry>
+     <cac:SellersItemIdentification>
+       <cac:ID>42038057510</cac:ID>
+     </cac:SellersItemIdentification>
+  </RequestEntry>
+  <RequestEntry>
+     <cac:SellersItemIdentification>
+       <cac:ID>42213526301</cac:ID>
+     </cac:SellersItemIdentification>
+  </RequestEntry>
+</GetItemDetailsListRequest>

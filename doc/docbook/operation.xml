@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<section id="operation">
+    <title>Operationen</title>
+    <para>Jede Operation besteht aus einer Anfrage des Client an den Server und
+      einer entsprechenden Antwort des Servers an den Client. Die XML-Elemente
+      welche hierbei verwendet werden, werden von den beiden generischen Typen
+      vct:RequestType und vct:ResponseType abgeleitet.
+  </para>
+    <section id="vct-RequestType">
+      <title>RequestType</title>
+      <para>Ein Element vom Typ <ulink url="xsd/urn_veloconnect_transaction-1.0/complexType/RequestType.html">vct:RequestType</ulink> besteht aus folgenden Elementen
+        <table> <title>vct:RequestType - Elemente</title> <tgroup
+							    cols="3"> <thead> <row>
+		<entry>Name</entry><entry>Typ/Vorkommen
+		</entry>
+		<entry>Beschreibung</entry> 
+	      </row> 
+	    </thead> 
+	    <tbody> 
+	      <row>
+		<entry>vct:BuyersID</entry>
+		<entry>udt:IdentifierType</entry>
+		<entry>Kennzeichnung des Käufers, wie z.B. Kundennummer
+		</entry> 
+	      </row>
+	      <row>
+		<entry>vct:Credential</entry>
+		<entry><ulink url="xsd/urn_veloconnect_transaction-1.0/complexType/CredentialType.html">vct:CredentialType</ulink></entry>
+		<entry>Zur Autorisierung des Client, siehe unten</entry> 
+	      </row>
+	      <row>
+		<entry>vct:SellersID</entry>
+		<entry>udt:IdentifierType?</entry>
+		<entry>Kennzeichnung des Verkäufers, nur erforderlich, falls
+		  der Server für mehrere Verkäufer betrieben wird.
+		</entry> 
+	      </row>
+	      <row>
+		<entry>vct:TransactionID</entry>
+		<entry>xsd:normalizedString?</entry>
+		<entry>Zur Identifikation der Transaktionsinstanz</entry> 
+	      </row>
+	      <row>
+		<entry>vct:IsTest</entry>
+		<entry>xsd:boolean?</entry>
+		<entry>Indikator, ob die Operation nur testweise ausgeführt
+		  werden soll (vgl. <xref linkend="test"/>)</entry> 
+	      </row>
+	    </tbody>
+	  </tgroup>
+        </table> Die Definition des Typs vct:CredentialType erscheint
+	redundant, ist jedoch so gewählt, um später durch Erweiterung mögliche andere
+	Authentifizierungsmechanismen (wie z.B. Zertifikate) zu unterstützen.
+        <table id="vct-CredentialType"> 
+	  <title>vct:CredentialType - Elemente</title> 
+	  <tgroup cols="3"> 
+	    <thead> <row>
+		<entry>Name</entry><entry>Typ/Vorkommen</entry>
+		<entry>Beschreibung</entry> 
+	      </row> 
+	    </thead> 
+	    <tbody> 
+	      <row>
+		<entry>vct:Password</entry>
+		<entry>xsd:string</entry>
+		<entry>Passwort.
+		</entry> 
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</table> Als Einschränkung des Typs vct:RequestType ist der Typ
+	<ulink url="xsd/urn_veloconnect_transaction-1.0/complexType/TransactionRequestType.html">vct:TransactionRequestType</ulink> definiert; die
+	Einschränkung besteht darin, dass das Element vct:TransactionID
+	verwendet werden muss.
+      </para> 
+      <formalpara id="serialize-vct-RequestType">
+         <title>Serialisierung von Elementen vom Typ RequestType</title>
+	 <para>Zur Serialisierung der URL-Bindung ist eine Anfrage zunächst als
+	  Folge von Parametern darzustellen. Die Namen der Parameter sind wie
+	  folgt: 
+	<itemizedlist>
+	    <listitem><simpara>RequestName</simpara></listitem>
+	    <listitem><simpara>BuyersID</simpara></listitem>
+	    <listitem><simpara>Password</simpara></listitem>
+	    <listitem><simpara>SellersID</simpara></listitem>
+	    <listitem><simpara>TransactionID</simpara></listitem>
+	    <listitem><simpara>IsTest</simpara></listitem>
+	</itemizedlist> Hinzu kommen eventuell noch weitere Parameter, die
+	  jeweils bei der Definition der einzelnen Operationen angegeben
+	  werden. Als Wert der genannten Parameter ist der Inhalt der
+	  gleichnamigen Unterlemente des jeweiligen Request-Elements zu
+	  verwenden, bzw. beim Parameter "RequestName" der Name dieses Elements
+	  selbst. 
+	</para>
+      </formalpara>
+    </section>
+    <section id="vct-ResponseType">
+      <title>ResponseType</title>
+      <para>Ein Element vom Typ <ulink url="xsd/urn_veloconnect_transaction-1.0/complexType/ResponseType.html">vct:ResponseType</ulink> besteht aus folgenden
+	Elementen
+        <table> <title>vct:ResponseType - Elemente</title> <tgroup
+							     cols="3"> <thead> <row>
+		<entry>Name</entry>
+		<entry>Typ/Vorkommen</entry>
+		<entry>Beschreibung</entry> 
+	      </row> 
+	    </thead> 
+	    <tbody> 
+	      <row>
+		<entry>vct:BuyersID</entry>
+		<entry>udt:IdentifierType</entry>
+		<entry>Kennzeichnung des Käufers, wie z.B. Kundennummer
+		</entry> 
+	      </row>
+	      <row>
+		<entry>vct:ResponseCode</entry>
+		<entry><ulink url="xsd/urn_veloconnect_transaction-1.0/simpleType/ResponseCodeType.html">vct:ResponseCodeType</ulink></entry>
+		<entry>Informiert über Erfolg oder Mißerfolg der Operation,
+		  sowie über mögliche Fehlergründe</entry> 
+	      </row>
+	      <row>
+		<entry>vct:ResponseMessage</entry>
+		<entry>xsd:string?</entry>
+		<entry>Optionale Erfolgs- oder Fehlermeldung im
+		  Klartext.</entry> 
+	      </row>
+	      <row>
+		<entry>vct:SellersID</entry>
+		<entry>udt:IdentifierType?</entry>
+		<entry>Kennzeichnung des Verkäufers, nur erforderlich, falls
+		  der Server für mehrere Verkäufer betrieben wird.
+		</entry> 
+	      </row>
+	      <row>
+		<entry>vct:TransactionID</entry>
+		<entry>xsd:normalizedString?</entry>
+		<entry>Zur Identifikation der Transaktionsinstanz</entry> 
+	      </row>
+	      <row>
+		<entry>vct:StatusCode</entry>
+		<entry><ulink url="xsd/urn_veloconnect_transaction-1.0/simpleType/StatusCodeType.html">vct:StatusCodeType</ulink>?</entry>
+		<entry>Sofern die Operation innerhalb einer Transaktion
+		  durchgeführt wird: Zustand der Transaktion nach dieser
+		  Operation.</entry> 
+	      </row>
+	      <row>
+		<entry>vct:IsTest</entry>
+		<entry>xsd:boolean?</entry>
+		<entry>Indikator, ob die Operation nur testweise ausgeführt
+		  wurde. (vgl. <xref linkend="test"/>)</entry> 
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</table> Als Einschränkung des Typs vct:ResponseType ist der Typ
+	<ulink url="xsd/urn_veloconnect_transaction-1.0/complexType/TransactionResponseType.html">vct:TransactionResponseType</ulink> definiert; die
+	Einschränkung besteht darin, dass die Elemente vct:TransactionID und
+	vct:StatusCode verwendet werden müssen. Der Typ <ulink url="xsd/urn_veloconnect_transaction-1.0/simpleType/StatusCodeType.html">vct:StatusCodeType</ulink> ist
+	eine Einschränkung des Typs xsd:integer auf die Zahlen 1 bis 199. Der
+	Typ <ulink url="xsd/urn_veloconnect_transaction-1.0/simpleType/ResponseCodeType.html">vct:ResponseCodeType</ulink> ist eine Einschränkung des Typs
+	xsd:positiveInteger auf die folgende Liste von Zahlen:
+	<variablelist>
+	  <varlistentry><term>200</term>
+	    <listitem><simpara>Operation wurde erfolgreich
+		durchgeführt.</simpara></listitem> 
+	  </varlistentry>
+	  <varlistentry><term>400</term> 
+	    <listitem><simpara>Allgemeiner Fehler in der Anfrage. Zu verwenden,
+		wenn aufgrund der Anfrage keine Operation duchgeführt werden
+		kann und der Fehler nicht unter einen der folgenden Fälle zu
+		subsumieren ist.</simpara></listitem>
+	  </varlistentry> 
+	  <varlistentry><term>404</term>
+	    <listitem><simpara>Anfrage wird nicht unterstützt, d.h. die Anfrage
+		entspricht zwar der Spezifikation, es handelt sich aber um eine
+		optionale Operation, die dieser Server nicht
+		implementiert.</simpara></listitem>
+	  </varlistentry> 
+	  <varlistentry><term>405</term>
+	    <listitem><simpara>Fehlerhafte Anfrage: Anfrage ist nicht die
+		Serialisierung eines XML-Dokuments, das dem &vc;-XML-Schema
+		entspricht.</simpara></listitem> </varlistentry>
+	  <varlistentry><term>406</term>
+	    <listitem><simpara>Fehlerhafte Anfrage: Anfrage ist die
+		Serialisierung eines XML-Dokuments, das einem veralteten Stand
+		der &vc;-Spezifikation entspricht (vgl. <xref
+		  linkend="version"/>).
+	      </simpara></listitem> </varlistentry>
+	  <varlistentry><term>410</term> <listitem><simpara>Die angegebene
+		BuyersID ist unbekannt.</simpara></listitem> </varlistentry>
+	  <varlistentry><term>411</term> <listitem><simpara>Authentifzierung
+		ist fehlgeschlagen (Passwort falsch)</simpara></listitem>
+	  </varlistentry> 
+	  <varlistentry><term>415</term> <listitem><simpara>Die angegebene
+		SellersID ist unbekannt.</simpara></listitem>
+	  </varlistentry> 
+	  <varlistentry><term>420</term> <listitem><simpara>Die angebene
+		TransactionID ist unbekannt, d.h. die in der Anfrage
+		spezifizierte Transaktionsinstanz existiert nicht auf dem
+		Server.</simpara></listitem> </varlistentry>
+	  <varlistentry><term>421</term> <listitem><simpara>Der Server kann
+		keine weiteren Transaktionsinstanzen zu dieser Anfrage
+		erzeugen.</simpara></listitem> </varlistentry>
+	  <varlistentry><term>430</term> <listitem><simpara>Die angeforderte
+		Operation ist im momentanen Zustand der Transaktioninstanz
+		nicht anwendbar.</simpara></listitem> </varlistentry>
+	  <varlistentry><term>435</term> <listitem><simpara>Der Wert des
+		IsTest-Elements ist im gegenwärtigen Zustand der Transaktion
+		nicht erlaubt. (vgl. <xref
+		  linkend="test"/>)</simpara></listitem>
+	  </varlistentry> 
+	  <varlistentry><term>500</term> <listitem><simpara>Ein interner Fehler
+		ist aufgetreten, der den Server an der Durchführung der
+		Operation hindert.</simpara></listitem>
+	  </varlistentry>
+      </variablelist> 
+      </para>
+      <para>
+	Die folgenden Abschnitte behandeln Operationen, die entweder außerhalb
+	von Transaktionen ausgeführt werden oder aber innerhalb jeder
+	Transaktion erlaubt sind. Jede dieser Operationen ist verbindlich.
+      </para>
+    </section>
+
+    <section id="operation-GetStatus">
+      <title>Operation: GetStatus</title>
+      <para>Die Operation GetStatus kann innerhalb jeder beliebigen Transaktion
+	angewendet werden, um den Status der Transaktion zu ermitteln. Zur
+	Erinnerung: Eine Transaktion wird als endlicher Automat modelliert, die
+	jeweiligen Zustände dieses Automaten sind mit den Zahlen 1 bis 199
+	bezeichnet, wobei 1 der Startzustand ist.
+      </para>
+      <para>Die Anfrage in der GetStatus-Operation ist das Element <ulink
+	  url="xsd/urn_veloconnect_transaction-1.0/element/GetStatusRequest.html">vct:GetStatusRequest</ulink>. 
+	Dieses ist vom Typ <link
+	  linkend="vct-RequestType">vct:RequestType</link>. Die Antwort ist das
+	Element <ulink
+	  url="xsd/urn_veloconnect_transaction-1.0/element/GetStatusResponse.html">vct:GetStatusResponse</ulink>. 
+	Dieses erweitert den Typ <link
+	  linkend="vct-ResponseType">vct:ResponseType</link> um das Element
+      vct:TransactionStatus vom Typ
+	<ulink
+	  url="xsd/urn_veloconnect_transaction-1.0/complexType/TransactionStatusType.html">vct:TransactionStatusType</ulink>, 
+	welches beliebig oft wiederholt werden kann. Dieses Element ist eine
+	Folge bestehend aus den Elementen vct:TransactionId (Typ:
+	xsd:normalizedString) und dem Element vct:StatusCode vom Typ
+	<ulink url="xsd/urn_veloconnect_transaction-1.0/simpleType/StatusCodeType.html">vct:StatusCodeType</ulink>. Dieser Typ ist eine Einschränkung 
+      von xsd:integer auf die Zahlen 1 bis 199.
+      </para>
+      <formalpara id="rule-GetStatus">
+	<title>Regel: GetStatus</title>
+	 <para>
+	  <orderedlist>
+	    <listitem><simpara>Jeder &vc;-konforme Server muss die Operation
+		GetStatus implementieren.
+	      </simpara></listitem>
+	    <listitem><simpara>Wird in der Anfrage eine TransactionId
+		übermittelt und gibt es hierzu eine Transaktionsinstanz, so
+		enthält die Antwort den ResponseCode 200 und ein Element
+		TransactionStatus mit dieser TransactionID und dem aktuellen
+		Status der Transaktionsinstanz. Falls es keine
+		Transaktionsinstanz gibt, wo wird der ResponseCode 420
+		zurückgeliefert.</simpara></listitem>
+	    <listitem><simpara>Wird in der Anfrage keine TransactionID
+		übermittelt, so ermittelt der Server alle
+		Transaktionsinstanzen, deren Transaktionskontext hinsichtlich
+		BuyersID und eventuell SellersID mit der Anfrage übereinstimmen. Für jede
+		dieser Transaktionsinstanzen wird ein Element TransactionStatus
+		in die Antwort eingefügt, das die TransactionID und den Status
+		dieser Transaktionsinstanz enthält. Der ResponseCode ist 200.
+	      </simpara></listitem>
+	     <listitem><simpara>Sofern die Anfrage des Client nicht geeignet
+	      ist, um festzulegen, welche Operation ausgeführt werden soll,
+	      kann der Server den ResponseCode 400 bzw. 405 mit einem
+	      GetStatusResponse-Element zurückzugeben. Alternativ ist die
+	      Rückgabe des http-Fehlercodes 404 möglich.</simpara></listitem>
+	</orderedlist>
+       </para>
+      </formalpara>
+    </section>
+    <section id="operation-Rollback">
+      <title>Operation: Rollback</title>
+      <para>Die Anfrage ist ein Element <ulink
+	  url="xsd/urn_veloconnect_transaction-1.0/element/RollbackRequest.html">vct:RollbackRequest</ulink>, 
+	welches vom Typ <link
+	  linkend="vct-RequestType">vct:TransactionRequestType</link> ist. Die
+	Antwort ist ein Element <ulink
+	  url="xsd/urn_veloconnect_transaction-1.0/element/RollbackResponse.html">vct:RollbackResponse</ulink>, 
+	welches vom Typ <link
+	  linkend="vct-RequestType">vct:TransactionResponseType</link> ist. 
+      </para>
+      <formalpara id="rule-Rollback">
+	<title>Regel: Rollback</title>
+	<para>Ein &vc;-konformer Server muss folgenden Bedingungen genügen:
+	<orderedlist>
+	    <listitem><simpara>Die Operation Rollback wird implementiert.
+	      </simpara></listitem>
+	    <listitem><simpara>Falls die durch dieAnfrage spezifizierte
+		Transaktionsinstanz nicht existiert, wird der ResponseCode 420
+		zurückgeliefert.</simpara></listitem>
+	    <listitem><simpara>Falls die Anfrage eine Transaktionsinstanz
+		identfiziert, die sich in einem der Zustände 50 bis 199
+		befindet, so ist der ResponseCode 430 zurückzuliefern.
+	      </simpara></listitem>
+	    <listitem><simpara>Ansonsten ist der ResponseCode 200
+		zurückzuliefern und die Transaktionsinstanz ist zu
+		löschen.</simpara></listitem>
+	</orderedlist>
+	</para>
+      </formalpara>
+    </section>
+  &profil;
+</section>

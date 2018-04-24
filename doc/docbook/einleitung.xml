@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2006)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen veloconnect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+veloconnect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur veloconnect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<section id="einleitung">
+<title>Einleitung</title>
+<para>
+Diese Spezifikation richtet sich an ein Publikum mit entsprechenden
+    Vorkenntnissen (vgl. <xref linkend="dependency"/>). Angesprochen sind zum
+    einen Entscheider, die den Aufwand für eine Umsetzung dieser Spezifikation
+    abschätzen wollen, und zum anderen Entwickler,
+    die eine solche Schnittstelle implementieren. Die allgemeinen Gründe für
+    &vc; brauchen daher hier nicht wiederholt zu werden, man findet sie auf 
+    der Website [<xref linkend="ref_vc"/>].
+</para>
+<para>Der eilige Leser orientiere sich an den Beispielen in <xref
+      linkend="beispiele"/> und schlage dann nach Bedarf die Details nach.
+   </para>
+<para>
+Über die Änderungen gegenüber der Vorgängerversion 1.0 informiert
+    überblicksartig ein Abschnitt am Ende dieses Dokuments (<xref linkend="changes"/>).
+</para>
+<para>
+    Diese Spezifikation beruht auf offenen und verbreiteten Standards, um sich
+    auf die spezifischen Aufgaben konzentrieren zun können, die durch diese
+    Schnittstelle gelöst werden sollen. Als Sprache zur Übermittlung von Daten
+    wird XML eingesetzt, da hiermit strukturierte Daten 
+    übertragen werden 
+    können und die Struktur in flexibler und verläßlicher Weise derart 
+    festgelegt
+    werden kann, dass eine automatische Validierung möglich ist. Damit einher
+    geht natürlich ein gewisser Overhead, der allerdings bei den zur
+    Verfügung stehenden Ressourcen und Komprimierungsmöglichkeiten keine Rolle spielt. Ferner gibt es für die
+    gängigen Betriebssysteme und Programmiersprachen fertige und frei verfügbare
+    Bibliotheken zum Parsen und Generieren von XML-Dokumenten.
+</para>
+<para>
+    Zur Modellierung der Entitäten, die mittels XML beschrieben werden sollten,
+    wird die <quote>Universal Business Language (UBL)</quote> [<xref
+      linkend="ref_UBL"/>] eingesetzt, ein vom OASIS-Konsortium [<xref linkend="ref_oasis"/>] etablierter
+    offener Standard. Dabei handelt es sich um ein umfangreiches XML-Schema
+    zur Beschreibung geschäftsrelevanter Entitäten. Im Unterschied zu anderen
+    Standards wie z.B. OpenTrans oder cXML sind hier nicht Geschäftsprozesse,
+    die am Einkaufsprozedere großer Firmen orientiert sind, fest in der
+    Schemadefinition verankert, sondern es wird ein allgemeines Vokabular zur
+    Verfügung gestellt, mit dem auch die für &vc; spezifischen Prozesse
+    abzubilden sind.
+</para>
+<para>
+    Dieses Dokument ist wie folgt aufgebaut: Nachdem zunächst die Abhängigkeit
+    von anderen Spezifikationen expliziert wird (<xref linkend="dependency"/>),
+    wird ein genereller Überblick über das der Spezifikation zugrunde liegende
+    Modell gegeben (<xref linkend="model"/>). In den folgenden beiden
+    Abschnitten werden die konstituierenden Elemente des XML-Schemas erläutert,
+    welches zur Übermittlung von Daten verwendet wird (<xref
+      linkend="schema"/>, <xref linkend="basic" />). Die generischen Regeln für
+    die über eine &vc;-Schnittstelle kommunizierenden Parteien, sowie die
+    spezifischen Anforderungen für den Bestellvorgang finden sich in <xref
+      linkend="operation"/> bzw. <xref linkend="transaction-Order"/> und <xref
+      linkend="transaction-OrderInOnlineShop"/>. Neu hinzugekommen ist in
+    Version 1.1 der Abschnitt über den Austausch von Katalogdaten (<xref linkend="catalog"/>). Anschließend wird erläutert,
+    welcher Testmechanismus vorgesehen ist (<xref linkend="test"/>), sowie nach
+    welchen Regeln in zukünftigen Versionen der Spezifikation für Auf- und
+    Abwärtskompatibilität gesorgt ist (<xref linkend="version"/>). Den
+    Abschluss bilden einige Beispiele in <xref linkend="beispiele"/>.    
+</para>
+<para>
+    Diese Spezifikation basiert auf der UBL-Spezifikation, deren Urheberrechte
+    das OASIS-Konsortium [<xref linkend="ref_oasis"/>] innehat; die Lizenzbestimmungen finden sich in <xref
+      linkend="license"/>. Die Urheberrechte dieser Spezifikation besitzt der
+    Verbund Selbtsverwalteter Fahrradbetriebe e. V. (VSF) [<xref linkend="ref_vsf"/>]. Die genauen
+    Lizenzbestimmungen finden sich ebenfalls in <xref linkend="license"/>.
+</para>
+<para>
+    Hinweise auf Fehler und Vorschläge werden gerne unter der Adresse
+    <email>spezifikation@veloconnect.de</email> entgegengenommen.
+</para>
+</section>

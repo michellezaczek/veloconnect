@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<section id="dependency">
+<title>Abhängigkeit von anderen Spezifikationen</title>
+<para>
+    Die &vc;-Spezifikation benutzt explizit folgende, öffentlich zugänglichen
+    Spezifikationen. Wir verwenden im Text stillschweigend Begriffe aus
+    diesen Spezifikationen; der Leser konsultiere, falls nötig, die
+    angegebenen Quellen:
+    <itemizedlist>
+       <listitem><simpara>XML [<xref linkend="ref_xml"/>]</simpara>
+       </listitem>
+       <listitem><simpara>XML-Schema [<xref linkend="ref_xmlschema"/>]
+	</simpara>
+       </listitem>
+       <listitem><simpara>XML-Namespace [<xref linkend="ref_xmlns"/>]</simpara>
+       </listitem>
+       <listitem><simpara>Universal Business
+       Language 1.0 (UBL)[<xref linkend="ref_UBL"/>]</simpara>
+       </listitem>
+       <listitem><simpara>HTTP [<xref linkend="ref_http"/>]</simpara>
+       </listitem>
+       <listitem><simpara>HTTPS [<xref linkend="ref_https"/>]</simpara>
+       </listitem>
+       <listitem><simpara>Codes for Units of Measure Used in International
+	  Trade(UN/CEFACT Recommendation 20) [<xref linkend="ref_trade_cefact"/>]</simpara>
+       </listitem>
+      </itemizedlist>
+    </para>
+  </section>

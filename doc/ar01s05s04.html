@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>5.4. Beschreibung von Gegenständen</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s05.html" title="5. Basis-Komponenten" /><link rel="previous" href="ar01s05s03.html" title="5.3. Grundlegende zusamengesetzte Typen" /><link rel="next" href="ar01s06.html" title="6. Operationen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.4. Beschreibung von Gegenständen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s05s03.html">Zurück</a> </td><th width="60%" align="center">5. Basis-Komponenten</th><td width="20%" align="right"> <a accesskey="n" href="ar01s06.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="cac-ItemType"></a>5.4. Beschreibung von Gegenständen</h3></div></div><div></div></div><p>Der Elementtyp <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/ItemType.html" target="_top">cac:ItemType</a> wird verwendet um Gegenstände zu beschreiben. Dazu werden folgende Elemente verwendet:
+      </p><div class="table"><a id="id2512290"></a><p class="title"><b>Tabelle
+      3. cac:ItemType - Elemente</b></p><table summary="cac:ItemType -
+      Elemente" border="1"><colgroup><col /><col /><col
+      /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>cbc:Description</td><td>cbc:TextType?</td><td>Text, der den Artikel beschreibt</td></tr><tr><td>cbc:PackQuantity</td><td>cbc:QuantityType?</td><td>Verpackungseinheit</td></tr><tr><td>cbc:PackSizeNumeric</td><td>udt:NumericType?</td><td>Anzahl in Verpackungseinheit</td></tr><tr><td>cac:BuyersItemIdentification</td><td>cbc:IdentifierType?</td><td>Artikelkennzeichnung des Käufers</td></tr><tr><td>cac:SellersItemIdentification</td><td>cbc:IdentifierType?</td><td>Artikelkennzeichnung des Verkäufers</td></tr><tr><td>cac:StandardItemIdentification</td><td>cbc:IdentifierType?</td><td>Artikelkennzeichnung nach Standards, bevorzugt EAN.</td></tr><tr><td>cac:ManufacturersItemIdentification</td><td>cbc:IdentifierType?</td><td>Artikelnummer des Herstellers.</td></tr>
+<tr><td>cac:TaxCategory</td><td>cac:TaxCategoryType?</td><td>optionale Kennzeichnung von Umsatzsteuers&auml;tzen</td></tr>
+<tr><td>cac:BasePrice</td><td>cac:BasePriceType*</td><td>Basispreis(netto), mehrere
+		Angaben möglich zur Darstellung von Staffelpreisen</td></tr><tr><td>cac:RecommendedRetailPrice</td><td>cac:BasePriceType?</td><td>empfohlener Verkaufpreis(brutto)</td></tr><tr><td>vcc:ItemInformation</td><td>?</td><td>Weitergehende Informationen zum Artikel, wie z.B. Bilder, Explosionszeichnungen, Warengruppen etc.</td></tr></tbody></table></div><p>
+	Für veloconnect-konforme Implementierungen gelten folgende Regeln:
+	</p><div class="orderedlist"><ol type="1"><li>Das Element cbc:Description ist mit einem Text zu
+	      füllen, der es einem sachkundigen Leser erlaubt, den Gegenstand
+	      zu erkennen, der beschrieben wird.</li><li>Das Element cac:SellersItemIdentification enthält
+	      die Kennzeichnung des Gegenstands durch den Verkäufer und
+	      darf nicht leer sein.</li><li>Das Element cac:BuyersItemIdentification kann die
+	      interne Kennzeichnung des Gegenstands durch den Verkäufer
+	      enthalten.</li><li>Falls für den Gegenstand ein EAN-Code bekannt ist,
+	      ist dieser durch das Element cac:StandardItemIdentfication
+	      mitzuteilen. Das hat unabhängig davon zu geschehen, ob eine der
+	      beiden anderen Gegenstandskennzeichnungen schon ein EAN-Code ist.
+	    </li><li>Sollte kein EAN-Code bekannt sein, aber die
+	    Artikelnummer des Herstellers,
+	      ist diese durch das Element cac:ManufacturersItemIdentfication
+	      mitzuteilen. Der Hersteller ist über das Kind-Element
+	    <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/element/IssuerParty.html" target="_top">cac:IssuerParty</a> dieses Elements anzugeben. Entweder über eine ID im Kind-Element PartyIdentification,
+	    bei der die Identifzierung des Herstellers über eine öffentliche
+	    Datenbank möglich ist (z.B. ILN/GLN), oder über den Namen im
+	    Kind-Element PartyName.
+	    </li><li><p>Falls Mengenangaben für den Gegenstand in der
+	      Einheit Paket verwendet werden, ist entweder im Element
+	      PackQuantity anzugeben, welche Menge einem Paket in einer anderen
+	      Einheit enspricht oder im Element PackSizeNumeric anzugeben aus
+	      wieviel Stück ein Paket besteht. Von diesen beiden Elementen darf
+	    höchstens eines verwendet werden. Insbesondere ist die Verwendung
+	      von </p><pre class="programlisting">&lt;PackSizeNumeric&gt;x&lt;/PackSizeNumeric&gt;</pre><p> äquivalent zur Verwendung von
+	</p><pre class="programlisting">&lt;PackQuantity quantityUnitCode="EA"&gt;x&lt;/PackQuantity&gt;.</pre><p>(Hierbei
+	steht x für eine beliebige Zahl).
+      </p></li><li>Es ist mindestens ein cac:BasePrice-Element vorhanden.</li><li>Die in den cac:BasePrice-Elementen angegebenen
+	      Preise sind immer Nettopreise und haben alle die gleiche
+	      Mengeneinheit.</li><li>Falls die Einheit der cac:BasePrice-Elemente die
+	      Einheit Paket ist, so muss die Umrechnung in eine andere diskrete
+	      Einheit oder in eine physikalische Einheit im Element
+	      cbc:PackQuantity oder cbc:PackSizeNumeric angegeben werden.
+	  </li><li>Die durch die cac:BasePrice-Elemente definierte
+	    Preisfunktion ist für alle Mengenangaben mit positiven Werten
+	    definiert, deren Einheit mit der Einheit der cac:BasePrice-Elemente
+	    vergleichbar ist.
+	  </li><li>Der in RecommendedRetailPrice angegebene Preis ist
+	      ein Bruttopreis, es sei denn der Server teilt in seinem <a href="ar01s06s05.html#vcp-VeloconnectProfile" title="Tabelle 7. vcp:VeloconnectProfile - Elemente">Veloconnect-Profil</a>
+	      vermöge der Eigenschaft
+	      <tt class="literal">RecommendedRetailPrice.Netto</tt> mit, dass er
+	      hierfür Nettopreise verwendet. Ferner wird eine Mengeneinheit
+	      verwendet, die vergleichbar ist zur Einheit der
+	      BasePrice-Elemente.
+	  </li><li>Das optionale Element ItemInformation ist gemäß <a href="ar01s09s03.html#rule-ItemInformation">Regel: ItemInformation</a> zu
+	    verwenden. </li>
+	  <li>Sofern unterschiedliche Umsatzsteurs&auml;tze Anwendung finden,
+	      kann der f&uuml;r den Gegenstand geltende Steuersatz mittels des
+	      optionalen Elements TaxCategory mitgetetilt werden. Hierbei wird
+	      als ID f&uuml;r den vollen Steuersatz FULL und f&uuml;r den
+	      erm&auml;ssigten Steuersatz REDUCED verwendet. Als ID des
+	      TaxScheme-Elements wird VAT verwendet. Bei komplexeren
+	      Steuers&auml;tzen kann zur Eindeutigkeit der Steursatz mittels
+	      des Percent-Elements mitgeteilt werden.
+</li>
+</ol></div><p>
+      </p><p>Aus den bisherigen Forderungen ergibt sich, dass für einen
+	Gegenstand stets mindestens eine Einheit explizit angegeben wird.  
+	Falls die Einheit Paket darunter ist, so ist auch die Umrechnung in
+	eine andere diskrete Einheit oder eine physikalische Maßeinheit
+	gegeben.
+      </p><p>Welche Einheiten ein Verkäufer für seine Artikel verwendet, ist
+	letztlich dessen Entscheidung und hängt auch davon ab, ob sein
+	Warenwirtschaftssystem in der Lage ist, mit Einheiten umzugehen. Es ist
+	also durchaus möglich, dass jeder Artikel als Stück betrachtet wird,
+	obwohl eine andere Einheit angemessener wäre. Warenwirtschaftssysteme
+	der Einzelhändler sind im allgemeinen in der Lage, mit dieser Situation
+	umzugehen: der Benutzer muss letztlich pro Artikel einen
+	Umrechnungsfaktor angeben, um die für den Verkauf verwendeten Einheiten
+	mit den Einheiten für die Bestellung zu harmonisieren. Das ist
+	natürlich eine Quelle von Fehlern und Mißverständnissen.
+      </p><p>Es ist davon auszugehen, dass für die beteiligten sachkundigen
+	Personen bei jedem Gegenstand klar ist, welches die korrekte Einheit
+	ist. Die Beschreibung von Gegenständen durch Elemente vom Typ
+	cac:ItemType ermöglicht es, diese Informationen explizit in einer
+	Weise mitzuteilen, dass die maschinelle Umrechung von Einheiten
+	ermöglicht wird. Dass diese Information nicht zur Verfügung gestellt
+	wird, kann letztlich nur daran liegen, dass diese Informationen im
+	Warenwirtschaftssystem nicht zur Verfügung stehen. 
+      </p><p><a id="rule-use-unit"></a><b>Regel: Benutzung von Einheiten. </b>
+	</p><div class="itemizedlist"><ul type="disc"><li>
+	      Ein veloconnect konformer Server muss genau eine der folgenden
+	Forderungen erfüllen:
+	<div class="orderedlist"><ol type="1"><li>Für alle Gegenstände werden die korrrekten
+		Einheiten benützt, wobei es erlaubt ist, auf die
+		Differenzierung in Stück, Paar und Set zu verzichten und als
+		diskrete Einheiten nur die Einheiten Stück und Paket zu
+		verwenden. Welche Einheit korrekt ist, ist nach den Katalogen
+		und Unterlagen zu entscheiden, die den Kunden üblicherweise zur
+		Verfügung stehen. 
+	      </li><li>Es wird für alle Artikel die Einheit Stück
+	      verwendet, und der Server teilt diese Einschränkung in seinem 
+	      <a href="ar01s06s05.html#vcp-VeloconnectProfile" title="Tabelle 7. vcp:VeloconnectProfile - Elemente">Veloconnect-Profil</a>
+	      über die Eigenschaft <tt class="literal">quantityUnitCode.EA</tt> mit.
+	    </li></ol></div>
+      </li><li>Übermittelt der Client eine Mengenangabe für einen Gegenstand, die
+	eine Einheit verwendet, die nicht mit den in der Beschreibung des
+	Gegenstands verwendeten Einheiten vergleichbar ist, ersetzt der Server
+	diese Einheit wie folgt: Wird das Element PackQuantity verwendet, durch
+	die dort verwendete Einheit, ansonsten durch die in den
+	BasePrice-Elementen verwendetete Einheit. Der Client hat die Antwort
+	des Servers unter diesem Aspekt auszuwerten und gegebenenfalls den
+	Benutzer auf die Diskrepanz in den verwendeten Einheiten aufmerksam zu
+	machen. 
+      </li></ul></div><p> 
+     </p><div class="informalexample"><p>Hier noch zwei beliebte Beispiele aus der Fahrradbranche, um zu
+	  illustrieren, welchen Vorteil der korrekte Umgang mit Einheiten hat:
+	</p><p>Der Hersteller verpackt Speichen in Kartons zu je 72 Stück und
+	  verkauft diese in diesen Einheiten. Der Einzelhändler kauft Speichen
+	  in diesen Einheiten ein und verkauft sie stückweise an den
+	  Endkunden. Der Großhändler verwendet also die Einheit Paket zur
+	  Mengenangabe und gibt z.B. mittels
+	  <tt class="literal">&lt;PacksizeNumeric&gt;72&lt;/PacksizeNumeric&gt;</tt>
+	  bekannt, dass ein Paket 72 Stück entspricht. Unter diesen
+	  Voraussetzungen kann der Kunde 1440 Stück Speichen bestellen und
+	  erhält eine Auftragsbestätigung über 20 Pakete Speichen, ohne dass
+	  für diese "Korrektur" ein Eingriff durch Menschen erforderlich
+	  wäre. Das geht natürlich nicht, wenn die Information über die
+	  Packungsgröße bloß in der Artikelbeschreibung steht, und der
+	  Großhändler ein Paket von 72 Speichen in seinem
+	  Warenwirtschaftssystem als ein Stück behandelt.
+	</p><p>Ein Großhändler verkauft Schaltseilzüge. Dieses Seil ist in
+	  Rollen zu je 30 Meter konfektioniert. Der Einzelhändler verarbeitet
+	  und verkauft das Seil nach Länge. Der Großhändler verwendet also für
+	  die Rolle Bremsseil die Einheit Paket und gibt mittels
+	  </p><pre class="programlisting">&lt;PackageQuantity quantityUnitCode="MTR"&gt;30&lt;/PackageQuantity&gt;</pre><p>
+	  bekannt, dass ein Paket einer Länge von 30 Metern entspricht. Unter
+	  diesen Voraussetzungen kann also der Einzelhändler 180 Meter
+	  Bremsseil bestellen und erhält eine Auftragsbestätigung über 6 Rollen
+	  Bremsseil, in der beispielsweise der Einkaufspreis als Preis pro
+	  Rolle und der empfohlene Verkaufspreis als Meterpreis angegeben ist.
+	</p></div><div class="informalexample"><p>Um Mißverständnissen vorzubeugen, ein weiteres Beispiel: Ein
+	  Großhändler verkauft Bremszüge. Diese sind an einem Ende mit einem
+	  Nippel versehen und sind in Längen von 2 Metern und 4 Metern zu
+	  haben. Diese Bremszüge werden in Paketen zu je 50 Stück verkauft. Die
+	  Längenangabe von 2 bzw. 4 Metern sollte nicht zu dem Schluß
+	  verleiten, dass es sich bei dem Paket um eine Menge von 100 bzw. 200
+	  Metern handelt! Ein Paket sind und bleiben 50 Stück, die Länge ist
+	  ein Merkmal des Artikels und wird im allgemeinen dadurch erfasst,
+	  dass zur Unterscheidung verschiedene Artikelnummern verwendet werden.
+	</p></div><div class="informalexample"><p>
+	  In der Praxis gibt es Online-Bestellschnittstellen, die folgendes
+	  fertigbringen: Eine Zeile einer Auftragsbestätigung enthält im
+	  wesentlichen die bestellte Anzahl (als Zahl), die Artikelnummer und
+	  einen Einzelpreis (auch nur als Zahl). Es kann vorkommen, dass der
+	  betreffende Artikel ein Paket aus 100 Stück ist, die Menge die Anzahl
+	  der Pakete angibt und der Einzelpreis tatsächlich der Preis eines
+	  Stücks und nicht der Preis eines Pakets ist. Für andere Paketartikel
+	  wiederum ist der Einzelpreis tatsächlich der Preis eines
+	  Pakets. Offensichtlich ist das unbrauchbar, es wird einfach zu wenig
+	  Information übertragen bzw. die Implementierung der Schnittstelle ist
+	  nicht in der Lage, die fehlenden Informationen dadurch zu ersetzen,
+	  dass sie eine allgemeine Regel einhält, wie z.B. dass der Einzelpreis
+	  sich immer auf die gleiche Menge bezieht wie die Anzahl.
+	</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s05s03.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s05.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s06.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">5.3. Grundlegende zusamengesetzte Typen </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 6. Operationen</td></tr></table></div></body></html>

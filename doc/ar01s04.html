@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>4. Veloconnect XML-Schema</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s03s03.html" title="3.3. Übersicht der Regeln" /><link rel="next" href="ar01s05.html" title="5. Basis-Komponenten" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">4. Veloconnect XML-Schema</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s03s03.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s05.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="schema"></a>4. Veloconnect XML-Schema</h2></div></div><div></div></div><p> Die
+      XML-Syntax der Nachrichten wird in einem <a href="http://www.w3.org/TR/xmlschema-1/" target="_top">XML-Schema</a> festgelegt.
+      Die normative Beschreibung dieses Schemas ist den Dateien mit Endung
+      <tt class="literal">xsd</tt> zu entnehmen, die im Verzeichnis <a href="../xsd" target="_top">xsd</a> zu finden sind. Diese Dateien sind normativ
+      für die syntaktische Korrektheit und können von geeigneten Parsern zur
+      automatischen Validierung verwendet werden. Sofern in dieser
+      Spezifikation Angaben zur Syntax von XML-Elementen gemacht werden,
+      handelt es sich nur um Umschreibungen des in den xsd-Dateien
+      niedergelegten XML-Schemas.
+    </p><p>
+      Zur Beschreibung von geschäftsbezogenen Entitäten wie Preis, Menge,
+      Artikel wird auf das Vokabular zurückgegriffen, das durch die <a href="http://docs.oasis-open.org/ubl/cd-UBL-1.0/" target="_top">Universal Business
+	Language 1.0 (UBL)</a>, zur Verfügung gestellt wird. Das UBL-Schema
+      ist in mehrere <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/" target="_top">Namensräume</a> 
+      zerlegt, wir verwenden davon explizit folgende: </p><div class="itemizedlist"><ul type="disc"><li>urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0</li><li>urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0</li><li>urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0</li></ul></div><p> Dabei nehmen wir einige Änderungen und Ergänzungen in den
+      beiden letzten Namensräumen vor. Diese sind in den Dateien <a href="../xsd/basic-components-1.0.xsd" target="_top">basic-components-1.0.xsd</a>
+      bzw. <a href="../xsd/aggregate-components-1.0.xsd" target="_top">aggregate-components-1.0.xsd</a> 
+      festgehalten. Grundsätzlich sind diese Änderungen jedoch dergestalt, dass
+      Dokumentinstanzen nach dem originalen UBL-Schema auch gültige Dokumente
+      nach dem geänderten Schema sind, damit bei der Implementierung von
+      veloconnect-Schnittstellen auf eventuell vorhandene Softwarekomponenten
+      zurückgegriffen werden kann, die das UBL-Schema verwenden.
+    </p><p> Ferner verwenden wir die eigenen Namensräume </p><div class="itemizedlist"><ul type="disc"><li>urn:veloconnect:profile-1.1 (<a href="../xsd/profile-1.1.xsd" target="_top">profile-1.1.xsd</a>)</li><li>urn:veloconnect:transaction-1.0 (<a href="../xsd/transaction-1.0.xsd" target="_top">transaction-1.0.xsd</a>)</li><li>urn:veloconnect:order-1.1 (<a href="../xsd/order-1.1.xsd" target="_top">order-1.1.xsd</a>)</li><li>urn:veloconnect:catalog-1.1 (<a href="../xsd/catalog-1.1.xsd" target="_top">catalog-1.1.xsd</a>)</li></ul></div><p> 
+      </p><p>
+    In den Schemadateien und in  dieser Spezifikation werden für Namensräume
+      folgende Präfixe verwendet: 
+    </p><div class="itemizedlist"><ul type="disc"><li>udt für
+	    urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0</li><li>cbc für
+	    urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0</li><li>cac für
+	    urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0</li><li>vcc für
+	    urn:veloconnect:catalog-1.1</li><li>vcp für
+	    urn:veloconnect:profile-1.1</li><li>vct für
+	    urn:veloconnect:transaction-1.0</li><li>vco für
+	    urn:veloconnect:order-1.1</li><li>xsd für
+	    http://www.w3.org/2001/XMLSchema</li></ul></div><p> Innerhalb jeder xsd-Datei wird für den aktuellen Namensraum
+      kein Präfix verwendet. Eine nach diesem XML-Schema gültige
+      XML-Dokumentinstanz muss qualifizierte Namen, d.h. mit Namensraumangaben,
+      verwenden. Dies ermöglicht dann insbesondere die Unterscheidung
+      unterschiedlicher Versionen dieser Spezifikation. In <a href="ar01s11.html" title="11. Zukünftige Versionen">Abschnitt 11, „Zukünftige Versionen“</a> wird näher erläutert, wie sich zukünftige Versionen
+      der veloconnect-Spezifikation von dieser unterscheiden können und was bei
+      Implementierungen zu beachten ist, um dem Rechnung zu tragen.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s03s03.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s05.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">3.3. Übersicht der Regeln </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 5. Basis-Komponenten</td></tr></table></div></body></html>

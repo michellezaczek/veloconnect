@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>5.2. Basis-Typen</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s05.html" title="5. Basis-Komponenten" /><link rel="previous" href="ar01s05.html" title="5. Basis-Komponenten" /><link rel="next" href="ar01s05s03.html" title="5.3. Grundlegende zusamengesetzte Typen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.2. Basis-Typen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s05.html">Zurück</a> </td><th width="60%" align="center">5. Basis-Komponenten</th><td width="20%" align="right"> <a accesskey="n" href="ar01s05s03.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2511429"></a>5.2. Basis-Typen</h3></div></div><div></div></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h4 class="title"><a id="id2511434"></a>5.2.1. Kennzeichner</h4></div></div><div></div></div><p>Der Typ <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_UnspecializedDatatypes-1.0/complexType/IdentifierType.html" target="_top">udt:IdentifierType</a>
+	  wird verwendet, um in den Elementinstanzen etwas eindeutig zu
+	  kennzeichnen. Hierbei wird unterstellt, dass die Eindeutigkeit
+	  durch ein zugrunde liegendes Schema von Kennzeichnungen gewährleistet
+	  ist. 
+	</p><p>Ein Element von diesem Typ hat einfachen Inhalt vom Typ <a href="ar01s05.html#xsd-string">xsd:string</a> und zusätzliche optionale
+	  Attribute, um das Kennzeichnungsschema zu identifizieren. Zwei
+	  Elementinstanzen sind als gleich anzusehen, wenn sie hinsichtlich
+	  Elementname, Inhalt und dem Attribut
+	  <tt class="literal">identificationSchemeID</tt> übereinstimmen.
+	</p><p><a id="rule-EAN"></a><b>Regel: EAN-Code. </b>veloconnect-konforme Implementierungen müssen das Attribut
+	    <tt class="literal">identificationSchemeID</tt> auf den Wert
+	    <tt class="literal">EAN/UCC-13</tt> setzen, wenn es sich bei der
+	    Kennzeichnung um einen <a href="http://www.gs1-germany.de/internet/content/produkte/ean/content/produkte/ean/identsysteme/e241" target="_top">EAN-Code</a> handelt. Falls UPC-A-Codes
+	    verwendet werden sind diese durch eine führende 0 in einen EAN-Code
+	    zu transformieren.
+	  </p><p><a id="rule-GLN"></a><b>Regel: ILN/GLN. </b>veloconnect-konforme Implementierungen müssen das Attribut
+	    <tt class="literal">identificationSchemeID</tt> auf den Wert
+	    <tt class="literal">GLN</tt> setzen, wenn es sich bei der
+	    Kennzeichnung um eine <a href="http://www.gs1-germany.de/internet/content/produkte/ean/identsysteme/iln/index_ger.html" target="_top">Internationale Lokationsnummer (ILN)</a>
+	  bzw. Global Location Number (GLN) handelt.
+	  </p></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h4 class="title"><a id="id2511561"></a>5.2.2. Mengenangaben</h4></div></div><div></div></div><p><a id="cbc-QuantityType"></a><b>cbc:QuantityType. </b>
+	  Eine Mengenangabe besteht aus einem Wert (einer Zahl) und einer
+	  Einheit. Zur Darstellung von Mengenangaben wird der Basistyp <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonBasicComponents-1.0/complexType/QuantityType.html" target="_top"> 
+	    cbc:QuantityType</a> verwendet. Der Wert der Mengenangabe wird
+	  im Inhalt einer Elementinstanz als Zeichenkette vom Typ <a href="ar01s05.html#xsd-decimal">xsd:decimal</a> dargestellt, die Einheit
+	  durch das Attribut <span class="emphasis"><em>quantityUnitCode</em></span>. Dieses
+	  Attribut muss stets angegeben werden. Eine Einheit wird dargestellt
+	  durch einen Code aus bis zu drei Buchstaben aus der Codeliste nach
+	  <a href="http://www.unece.org/cefact/recommendations/rec20en.htm" target="_top">TRADE/CEFACT/2001/20 </a>. Diese Liste umfasst einige hundert
+	    Einheiten. Mit Rücksicht auf das Einsatzgebiet der
+	    veloconnect-Spezifikation schränken wir diese Liste wie folgt ein:
+	</p><p><a id="rule-unit"></a><b>Regel: Einheiten. </b>
+	  Ein veloconnect-konformer Client oder Server muss in der Lage sein, die
+	    folgenden Einheiten korrekt zu behandeln:
+	  </p><div class="variablelist"><dl><dt><span class="term">EA</span></dt><dd>Diskret: Stück, Gegenstand,
+		    der als Einheit anzusehen ist.</dd><dt><span class="term">PR</span></dt><dd>Diskret: Paar, besteht aus
+		    zwei Stück, die gleich sind bis auf genau ein Merkmal, das
+		    nur zwei Werte annehmen kann. Zum Beispiel: ein Paar
+		    Schuhe, ein Paar Bremsbacken. </dd><dt><span class="term">PK</span></dt><dd>Diskret: Paket, besteht aus
+		    mehreren gleichen Teilen.</dd><dt><span class="term">SET</span></dt><dd>Diskret: Set, besteht aus
+		    mehren Teilen, die aus funktionalen oder
+		    verkaufstechnischen Gründen zu einer Einheit
+		    zusammengefasst werden.</dd><dt><span class="term">MTR</span></dt><dd>Länge: Meter</dd><dt><span class="term">CMT</span></dt><dd>Länge: Zentimeter</dd><dt><span class="term">MMT</span></dt><dd>Länge: Millimeter</dd><dt><span class="term">KGM</span></dt><dd>Gewicht: Kilogramm</dd><dt><span class="term">GRM</span></dt><dd>Gewicht: Gramm</dd><dt><span class="term">LTR</span></dt><dd>Volumen: Liter</dd><dt><span class="term">MLT</span></dt><dd>Volumen: Milliliter</dd></dl></div><p> Korrekt behandeln heisst: Zwei Mengenangaben sind als
+	    gleich zu behandeln, wenn sie nach Definition der Einheiten gleich
+	    sind.
+	  </p><p>Bei den physikalischen Maßeinheiten für Länge, Gewicht und Volumen
+	  ist offensichtlich, wie verschiedene Einheiten gleicher physikalischer
+	  Größen ineinander umzurechen sind. Zum
+	  Beispiel sind <tt class="literal">&lt;cbc:Quantity
+	    quantityUnitCode="MTR"&gt;0.58&lt;/cbc:Quantity&gt;</tt> und
+	  <tt class="literal">&lt;cbc:Quantity
+	    quantityUnitCode="MMT"&gt;580&lt;/cbc:Quantity&gt;</tt> 
+	  als gleich zu behandeln.
+	</p><p><a id="rule-discrete-unit"></a><b>Regel: Diskrete Einheiten. </b>Bei den diskreten Einheiten ist das nicht offensichtlich. Wir
+	    setzen folgende Regeln für veloconnect-konforme Implementierungen fest:
+	  </p><div class="orderedlist"><ol type="1"><li>Die Einheiten Stück, Paar und Set sind untereinander
+		  nicht zu vergleichen und sind auch nicht mit einer der
+		  physikalischen Größen zu vergleichen.</li><li>Eine Umrechnung einer Mengenangabe mit der Einheit
+		  Paket in eine andere Einheit Y, ist nur dann möglich, wenn Y
+		  eine von Paket verschiedene Einheit ist, und wenn explizit
+		  eine Zahl U angegeben wird, so dass 1 Paket einer Menge von U
+		  Y entspricht.
+		</li></ol></div><p> Die Beschreibung von Gegenständen erfolgt mit dem
+	    Elementtyp <a href="ar01s05s04.html" title="5.4. Beschreibung von Gegenständen">cac:ItemType</a>. Dieser
+	    Elementtyp erlaubt die geforderte explizite Angabe zur Umrechung
+	    der Paket-Einheit in eine andere Einheit.
+	  </p><p><a id="rule-other-units"></a><b>Regel: Andere Einheiten nach TRADE/CEFACT/2001/20 [<a href="ar01s14.html#ref_trade_cefact">10</a>]. </b>Es widerspricht nicht der veloconnect-Spezifikation, andere als die
+	    oben genannten Einheiten aus der TRADE/CEFACT/2001/20-Liste zu verwenden.  Ein
+	    veloconnect-konformer Server darf auf eine Nachricht mit einer
+	    Fehlermeldung antworten, wenn der Client eine andere als eine der
+	    oben explizit aufgeführten Einheiten verwendet. Ein veloconnect-konformer
+	    Client muss eine solche Einheit verarbeiten, wenn sie vom Server
+	    geliefert wird. Dazu kann er diese Einheit entweder als Einheit
+	    betrachten, die mit keiner anderen vergleichbar ist, oder durch den
+	    Benutzer eine Umrechnung in eine bekannte Einheit festlegen lassen.
+	  </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s05.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s05.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s05s03.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">5. Basis-Komponenten </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 5.3. Grundlegende zusamengesetzte Typen</td></tr></table></div></body></html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:udt="urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0"
+    xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+    xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentTypes-1.0"
+    xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+    xmlns:vcc="urn:veloconnect:catalog-1.1"
+    targetNamespace="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0"/>
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"/>
+  <xsd:import namespace="urn:veloconnect:catalog-1.1" schemaLocation="catalog-1.1.xsd"/>
+
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentTypes-1.0"  schemaLocation="ubl/common/UBL-CoreComponentTypes-1.0.xsd"/>
+  <xsd:redefine 
+    schemaLocation="ubl/common/UBL-CommonAggregateComponents-1.0.xsd">
+    <xsd:complexType name="ItemType">
+      <xsd:annotation><xsd:documentation>
+        <ccts:Component>
+          <ccts:ComponentType>ABIE</ccts:ComponentType>
+          <ccts:DictionaryEntryName>Item. Details</ccts:DictionaryEntryName>
+          <ccts:Definition>information directly relating to an item</ccts:Definition>
+          <ccts:ObjectClass>Item</ccts:ObjectClass>
+          <ccts:AlternativeBusinessTerms>article, product, goods item</ccts:AlternativeBusinessTerms>
+        </ccts:Component>
+
+Redefinition: Elemente RecommendedRetailPrice, ItemInformation hinzugefügt.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+	<xsd:extension base="ItemType">
+	  <xsd:sequence>
+	    <xsd:element ref="RecommendedRetailPrice"
+			 minOccurs="0" maxOccurs="1"/>
+	    <xsd:element ref="vcc:ItemInformation"
+			 minOccurs="0" maxOccurs="1"/>
+	  </xsd:sequence>
+	</xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+    
+  </xsd:redefine>
+
+  <xsd:element name="RecommendedRetailPrice" type="BasePriceType">
+     <xsd:annotation><xsd:documentation>Empfohlener Verkaufspreis, kann explizit auf Basismenge bezogen werden.</xsd:documentation>
+     </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="UnitPrice" type="cbc:PriceAmountType">
+     <xsd:annotation><xsd:documentation>Einzelpreis (netto): die Einheit, auf der sich dieser Preis bezieht, 
+ergibt sich gemäß Spezifikation aus dem Kontext.</xsd:documentation>
+     </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ItemReplacement" type="ItemReplacementType"/>
+  <xsd:complexType name="ItemReplacementType">
+    <xsd:annotation><xsd:documentation>Vorschlag für Ersatzartikel. Type qualifiziert diesen Vorschlag:
+	identical : identischer Artikel, nur andere Artikelnummer
+package: identischer Artikel, nur andere Packungsgröße
+recommended: vergleichbarer Artikel, Empfehlung</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ItemIdentificationType">
+	<xsd:sequence>
+	  <xsd:element name="ReplacementCode" type="ReplacementCodeType"/>
+	  <xsd:element ref="cbc:Description" minOccurs="0" maxOccurs="1"/>
+	</xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
+  <xsd:simpleType name="ReplacementCodeType">
+     <xsd:annotation><xsd:documentation>Zur Qualifizierung eines Ersatzartikels</xsd:documentation>
+     </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="identical">
+          <xsd:annotation><xsd:documentation>identical : identischer Artikel, nur andere Artikelnummer
+</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="package">
+          <xsd:annotation><xsd:documentation>package: identischer Artikel, nur andere Packungsgröße</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="recommended">
+          <xsd:annotation><xsd:documentation>recommended: vergleichbarer Artikel, Empfehlung</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+</xsd:schema>

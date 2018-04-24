@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="urn:veloconnect:catalog-1.1"
+    xmlns:vct="urn:veloconnect:transaction-1.0"
+    xmlns:vco="urn:veloconnect:order-1.1"
+    xmlns:udt="urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0"
+    xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+    xmlns:cct="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentTypes-1.0"
+    targetNamespace="urn:veloconnect:catalog-1.1"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+  <xsd:import namespace="urn:veloconnect:order-1.1"/>
+  <xsd:import namespace="urn:veloconnect:transaction-1.0"/>
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0"/>
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"/>
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentTypes-1.0"/>
+
+  <xsd:element name="CreateTextSearchRequest">
+    <xsd:annotation>
+      <xsd:documentation>Einfache Volltextsuche über Artikelnummer und Artikelbeschreibung. Durch Leerzeichen getrennte Suchwörter werden mit UND verknüpft. Gesucht wird immer nach einem beliebigen Teilstring.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+         <xsd:extension base="vct:RequestType">
+	    <xsd:sequence>
+	       <xsd:element name="SearchString" type="udt:TextType"
+                            minOccurs="0" maxOccurs="1"/>
+	    </xsd:sequence>
+	 </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreateTextSearchResponse">
+    <xsd:annotation>
+      <xsd:documentation>Antwort auf Suchanfrage: Anzahl der Treffer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+	<xsd:extension base="vct:TransactionResponseType">
+	  <xsd:sequence>
+	     <xsd:element name="TotalCount" type="xsd:integer"/>
+          </xsd:sequence>
+	</xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="SearchResultRequest">
+    <xsd:annotation>
+      <xsd:documentation>Abholen der Suchergebnisse.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+         <xsd:extension base="vct:TransactionRequestType">
+	    <xsd:sequence>
+	     <xsd:element name="StartIndex" type="xsd:integer"/>
+	     <xsd:element name="Count" type="xsd:integer"/>
+	     <xsd:element name="ResultFormat" type="ResultFormatType"/> 
+	     <xsd:element name="DoNotClose" type="xsd:boolean" 
+			  minOccurs="0" maxOccurs="1"/>
+	    </xsd:sequence>
+	 </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="SearchResultResponse">
+    <xsd:annotation>
+      <xsd:documentation>Ausliefern der Suchergebnisse.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+	<xsd:extension base="vct:TransactionResponseType">
+	  <xsd:sequence>
+	     <xsd:element name="StartIndex" type="xsd:integer"/>
+	     <xsd:element name="Count" type="xsd:integer"/>
+	     <xsd:element name="TotalCount" type="xsd:integer"/>
+	     <xsd:element name="ResultFormat" type="ResultFormatType"/> 
+	     <xsd:choice minOccurs="0" maxOccurs="1">
+	        <xsd:sequence>
+	            <xsd:element ref="cac:Item"
+                                 minOccurs="1" maxOccurs="unbounded" />
+	        </xsd:sequence>
+	        <xsd:sequence>
+	            <xsd:element ref="vco:ItemDetail"
+                                 minOccurs="1" maxOccurs="unbounded" />
+	        </xsd:sequence>
+	        <xsd:sequence>
+	            <xsd:element ref="cac:SellersItemIdentification"
+                                 minOccurs="1" maxOccurs="unbounded" />
+	        </xsd:sequence>
+             </xsd:choice>
+          </xsd:sequence>
+	</xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="GetClassificationSchemeRequest" type="vct:RequestType">
+    <xsd:annotation>
+      <xsd:documentation>Abfrage der verwendete Klassifikationsschemata.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="GetClassificationSchemeResponse">
+    <xsd:annotation>
+      <xsd:documentation>Übermittlung der verwendeten Klassifikationsschemata.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+	<xsd:extension base="vct:ResponseType">
+	  <xsd:sequence>
+	     <xsd:element ref="ClassificationScheme" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+	</xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:simpleType name="ResultFormatType">
+    <xsd:annotation>
+      <xsd:documentation>Steuerung des Formats der Trefferliste</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="COUNT">
+	<xsd:annotation>
+	  <xsd:documentation>COUNT: Es wird nur die Anzahl zurückgegeben.</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ITEM_DETAIL">
+	<xsd:annotation>
+	  <xsd:documentation>ITEM_DETAIL: Zurückgeliefert wird eine Liste von ItemDetail-Elementen</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ITEM_TYPE">
+	<xsd:annotation>
+	  <xsd:documentation>ITEM_TYPE: Zurückgeliefert wird eine Liste von ItemType-Elementen</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ID_ONLY">
+	<xsd:annotation>
+	  <xsd:documentation>ID_ONLY: Zurückgeliefert wird eine Liste von SellersItemIdentification</xsd:documentation>
+	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="InformationDispositionType">
+    <xsd:annotation><xsd:documentation>Art der Information:</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="picture">
+          <xsd:annotation><xsd:documentation>picture : Bild</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="detail_picture">
+          <xsd:annotation><xsd:documentation>detail_picture : Detailaufnahme</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="exploded_drawing">
+          <xsd:annotation><xsd:documentation>exploded_drawing : Explosionszeichnung</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="technical_drawing">
+          <xsd:annotation><xsd:documentation>technical_drawing : technische Zeichnung</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="manual">
+          <xsd:annotation><xsd:documentation>manual : Einbau-,Betriebs-, Pflegeanleitung</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="manual_professional">
+          <xsd:annotation><xsd:documentation>manual_professional : Einbau-,Betriebs-, Pflegeanleitung für Fachkundige</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="manual_customer">
+          <xsd:annotation><xsd:documentation>manual_customer : Einbau-,Betriebs-, Pflegeanleitung für Endkunden</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="tech_spec">
+          <xsd:annotation><xsd:documentation>tech_spec : Technische Spezifikation</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="general">
+          <xsd:annotation><xsd:documentation>general : allgemeine Infos</xsd:documentation>
+	  </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="InformationURLType">
+    <xsd:annotation><xsd:documentation>Links auf weiterführende Informationen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="URI" type="xsd:anyURI" />
+      <xsd:element name="Disposition" type="InformationDispositionType"
+	minOccurs="1" maxOccurs="unbounded" />
+      <xsd:element name="Description" type="cct:TextType"
+	minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="ClassificationSchemeGroup">
+    <xsd:annotation><xsd:documentation>Eintrag eines Klassifikationsschemas</xsd:documentation>
+    </xsd:annotation>
+   <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="ID" type="udt:IdentifierType" />
+      <xsd:element name="ParentID" type="udt:IdentifierType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Description" type="cct:TextType" />
+    </xsd:sequence>
+  </xsd:complexType>
+ </xsd:element>
+  
+  <xsd:element name="ClassificationScheme">
+    <xsd:annotation><xsd:documentation>Eintrag eines Klassifikationsschemas</xsd:documentation>
+    </xsd:annotation>
+   <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="ClassificationSchemeID"/>
+        <xsd:choice>
+	 <xsd:element name="ClassificationSchemeURI" type="xsd:anyURI"/>
+         <xsd:element ref="ClassificationSchemeGroup" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:choice>
+      </xsd:sequence>
+      <xsd:attribute name="singleMapping" type="xsd:boolean" default="true"/>
+  </xsd:complexType>
+ </xsd:element>
+  
+  <xsd:complexType name="ClassificationGroupMemberType">
+    <xsd:annotation><xsd:documentation>Subsumierung unter eine Gruppe einer Klassifikation</xsd:documentation>
+    </xsd:annotation>
+      <xsd:sequence>
+        <xsd:element ref="ClassificationSchemeID"/>
+        <xsd:element name="GroupID" type="udt:IdentifierType"/>
+      </xsd:sequence>
+      <xsd:attribute name="primaryGroup" type="xsd:boolean" default="true"/>
+  </xsd:complexType>
+  
+  <xsd:element name="ClassificationSchemeID" type="udt:IdentifierType">
+    <xsd:annotation><xsd:documentation>ID eines Klassifikationsschemas</xsd:documentation>
+    </xsd:annotation>
+ </xsd:element>
+
+ <xsd:element name="ItemInformation">
+    <xsd:annotation><xsd:documentation>Weitergehende Informationen zu einem Artikel, wird verwendet in cac:ItemType</xsd:documentation></xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="InformationURL" type="InformationURLType"
+                minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="ClassificationGroupMember" 
+                type="ClassificationGroupMemberType"
+                minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="ScalePriceGroup" 
+                type="ClassificationGroupMemberType"
+                minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+ </xsd:element>
+
+</xsd:schema>

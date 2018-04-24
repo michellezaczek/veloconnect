@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<section id="model"> 
+    <title>Überblick</title>
+    <para>
+      Die &vc;-Spezifikation geht von folgender Modellsituation aus: Zwischen
+      einem <emphasis>Client</emphasis> (typischerweise das
+      Warenwirtschaftsprogramm eines Einzelhändlers) und einem
+      <emphasis>Server</emphasis> (typischerweise das Warenwirtschaftsprogramms
+      eines Großhändlers oder Herstellers) werden Daten ausgetauscht, um
+      bestimmte <emphasis>Geschäftsvorfälle</emphasis>, wie z. B. das Bestellen
+      von Ware, auszulösen. Für die Zwecke dieser Geschäftsvorfälle vertritt
+      der Client den <emphasis>Käufer</emphasis> und der Server den
+      <emphasis>Verkäufer</emphasis>.
+    </para>
+    <para>Die Kommunikation zwischen Client und Server und die damit
+    ausgelösten "Seiteneffekte" können wir grob in drei Schichten unterteilen:
+      <variablelist>
+        <varlistentry><term>Transport:</term>
+	<listitem><simpara>Übermittlung der Daten gemäß
+	    etablierter Standardprotokolle, wie z.B. http.</simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry><term>Nachricht:</term>
+	<listitem><simpara>Syntax der übermittelten Daten; Regeln,
+	    in welcher Reihenfolge, welche Daten zu übermitteln sind</simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry><term>Geschäftsvorfall:</term>
+	<listitem><simpara>Bedeutung der übermittelten Daten;
+	    welche Geschäftsvorfälle werden ausgelöst; welche Beziehung haben
+	    die übermittelten Daten zu bestehenden
+	    Warenwirtschaftssystememen.</simpara>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+    <para>Gegenstand dieser Spezifikation sind die Schichten Nachricht und
+      Geschäftsvorfall. Die Syntax der Daten wird mittels eines XML-Schemas
+      festgelegt (<xref linkend="schema"/>). Die Abfolge der Nachrichten wird
+      im Überblick im folgenden behandelt und detailiert in <xref
+      linkend="operation"/>, <xref linkend="transaction-Order"/> und <xref
+	linkend="transaction-OrderInOnlineShop"/>. Dort erfolgen auch die
+      Festlegungen zur Schicht Geschäftsvorfall, soweit sie in dieser
+      Spezifikation erforderlich sind. Gerade weil der Datenaustausch über eine
+      &vc;-Schnittstelle den Zweck hat, Geschäftsvorfälle in der realen Welt
+      auszulösen, wie z.B. das Bestellen von Ware, ist es nötig
+      stillschweigende Voraussetzungen, die beim Übergang zwischen der Schicht
+      Nachricht und Geschäftsvorfall eine Rolle spielen, explizit zu machen.
+      Ferner wird der Käufer aufgrund der Informationen, die ihm übermittelt
+      werden, Entscheidungen treffen; er sollte also darauf vertrauen können,
+      dass die übermittelten Informationen von hinreichender Qualität und
+      unmißverständlich sind. (Eine beliebte Quelle von Mißverständnissen sind
+      hier Mengen- und Preisangaben.)
+    </para>
+    <para>
+      Der Nachrichtenaustausch zwischen Client und Server setzt sich aus
+      <emphasis>Operationen</emphasis> zusammen. In einer
+      <emphasis>Operation</emphasis> übermittelt der Client eine
+      <emphasis>Anfrage (Request)</emphasis> an den Server und erhält von
+      diesem eine <emphasis>Antwort (Response)</emphasis>.  Sowohl Anfrage als
+      auch Antwort werden als XML-Dokumente festgelegt. Genauer: zu jeder
+      Nachricht wird angegeben, welches Element aus dem in der Spezifikation
+      festgelegten XML-Schema (<xref linkend="schema"/>) als Wurzelelement der
+      Nachricht verwendet wird. Komplexere Szenarien des Nachrichtenaustauschs
+      werden als <emphasis>Transaktionen</emphasis> modelliert. Eine
+      Transaktion setzt sich aus mehreren Operationen zusammmen, die in genau
+      definierter Weise aufeinanderfolgen (<xref linkend="transaction"/>).
+    </para>
+    <para>
+      Die Art und Weise wie eine Nachricht übermittelt wird (Transportschicht),
+      wird durch die <emphasis>Bindung</emphasis> festgelegt. Die Bindung legt
+      fest, welches Protokoll zur Übertragung verwendet wird und wie die
+      Nachricht zu <emphasis>serialisieren</emphasis> ist.  
+    </para>
+    <para>
+      Bei jeder einzelnen Operation oder Transaktion wird angegeben, ob diese
+<emphasis>verbindlich</emphasis>, oder ob diese <emphasis>optional</emphasis>
+ist. Die Verbindlichkeit kann auch so formuliert sein, dass aus mehreren
+Operationen oder Transaktionen mindestens eine auszuwählen ist. Ein
+&vc;-konformer Server muss eine verbindliche Operation in mindestens einer
+Bindung implementieren.
+    </para>
+    <para>
+      Zu den verbindlichen Operationen gehört die
+      <emphasis>GetProfile</emphasis>-Operation (<xref
+	linkend="operation-GetProfile"/>). Mittels dieser Operation kann ein
+      Client ermitteln, welche Transaktionen und Operationen ein Server mit
+      welchen Bindungen unterstützt. 
+    </para>
+    <section id="binding">
+      <title>Bindungen</title>
+      <para>
+      Die gegenwärtige Version von &vc; kennt vier Bindungen:
+      </para>
+      <itemizedlist spacing="compact">
+	<listitem><simpara>URL</simpara></listitem>
+	<listitem><simpara>URL-S</simpara></listitem>
+	<listitem><simpara>XML-POST</simpara></listitem>
+	<listitem><simpara>XML-POST-S</simpara></listitem>
+      </itemizedlist>
+      <formalpara id="rule-standardURL">
+	<title>Regel: Standard-URL</title>
+	<para>
+        Ein &vc;-konformer Server ist unter einer festgelegten Standard-URL zu
+	erreichen. Diese wird dem Kunden (Käufer) zusammmen mit weiteren
+	Zugangsparametern wie z.B. Benutzername und Passwort mitgeteilt. 
+	Die GetProfile-Operation wird unter der
+	Standard-URL verarbeitet. Für alle anderen Operationen können
+	abweichende URLs festgelegt sein, die Antwort auf einen
+	GetProfile-Request enthält diese Informationen (<xref
+	  linkend="operation-GetProfile"/>).
+      </para>
+      </formalpara>
+      <formalpara id="rule-HTTP-client">
+         <title>Regel: HTTP-Protokoll (Client)</title>
+         <para>Der Client implementiert das HTTP/1.1 Protokoll [<xref
+	  linkend="ref_http"/>] vollständig
+	(z.B. durch Benutzung einer Standardbibiothek). Die vom Server
+	gelieferte Nachricht wird nur dann gemäß dieser Spezifikation
+	behandelt, wenn die Übertragung gemäß des HTTP-Protokolls erfolgreich
+	abgeschlossen ist. Sofern der Server einen Redirect (HTTP-Status-Code
+	3xx) vorschlägt, ist diesem zu folgen. 
+	 </para>
+      </formalpara>
+      <formalpara id="rule-URL-binding">
+	<title>Regel: URL-Bindung</title>
+	<para>
+	  In der URL-Bindung wird die Anfrage als Folge von Parametern
+	  serialisiert, die gemäß des Medientyps <ulink
+	    url="http://www.w3.org/MarkUp/html-spec/html-spec_8.html">application/x-www-form-urlencoded</ulink> 
+	  als Zeichenkette kodiert wird. Wie eine Anfrage als Folge von
+	  Parametern aufzufassen ist, wird jeweils bei den einzelnen
+	  Operationen angegeben. Zur Durchführung der Operation wird entweder
+	  vom Client mittels der GET-Methode die URL-Adresse angesteuert, die
+	  sich als Verkettung der zur Operation gehörigen URL, dem Zeichen "?"
+	  und den kodierten Parametern ergibt, oder der Client überträgt
+	  mittels der POST-Methode die kodierten Parameter an die zur Operation
+	  gehörige URL. Die Auswahl zwischen GET und POST bleibt dem Client
+	  überlassen; d.h. der Server muss beide Varianten implementieren, wenn
+	  er die URL-Bindung realisiert.  Die Antwort wird als XML-Datei
+	  serialisiert und als Inhaltstyp application/xml zurückgeliefert. Die
+	  URL-S-Bindung unterscheidet sich von der URL-Bindung nur darin, dass
+	  an Stelle von HTTP/1.1 [<xref linkend="ref_http"/>]
+	  zur Übermittlung das Protokoll "HTTP over TLS" (https, rfc 2818)
+	[<xref linkend="ref_https"/>]
+	  verwendet wird.
+	</para>
+      </formalpara>
+      <formalpara id="rule-XML-POST">
+	<title>Regel: XML-POST-Bindung</title>
+	<para>
+	Bei der XML-POST-Bindung werden sowohl Anfrage als auch Antwort als
+	  XML-Datei serialisiert und als Inhaltstyp application/xml übertragen.
+	  Die Anfrage verwendet die POST-Methode des HTTP/1.1-Protokolls. Die
+	  XML-POST-S-Bindung unterscheidet sich von der XML-POST-Bindung nur
+	  darin, dass an Stelle von http zur Übermittlung das Protokoll https
+	  verwendet wird.</para>
+      </formalpara>
+    </section>
+    <section id="transaction">
+      <title>Transaktionen</title>
+      <para>
+	Die Abfolge der Operationen in einer <emphasis>Transaktion</emphasis>
+	wird durch den Transaktionsgraph beschrieben. Der
+	<emphasis>Transaktionsgraph</emphasis> ist ein endlicher Automat mit
+	einem ausgezeichneten <emphasis>Startzustand</emphasis> und einem oder
+	mehreren <emphasis>finalen Zuständen</emphasis>. Die Zustände werden
+	mit Nummern von 1 bis 199 bezeichnet. Dabei gilt folgendes: Der
+	Startzustand hat die Nummer 1, finale Zustände haben Nummern von 100
+	bis 199, alle anderen Zustände haben Nummern zwischen 2 und 99.
+	Übergänge zwischen den einzelnen Zuständen erfolgen durch Operationen
+	oder gegebenenfalls durch andere Ereignisse auf dem Server.
+      </para>
+      <para>Wird eine Transaktion zwischen Client und Server durch
+	entsprechendes Durchführen von Operationen realisiert, so wird dadurch
+	eine <emphasis>Instanz der Transaktion</emphasis> konstituiert. Die
+	Identität der Instanz wird gegeben durch die Identitäten von Käufer und
+	Verkäufer, sowie eine vom Server generierte Zeichenkette, die
+	TransactionId (vgl. <link linkend="vct-RequestType">RequestType</link>,
+	<link linkend="vct-ResponseType">ResponseType</link>). Zu einer Instanz
+	gehört auch der <emphasis>Transaktionskontext</emphasis>: er umfasst
+	die genannten Kennzeichner, den gegenwärtigen Zustand der Transaktion
+	und mögliche weitere Daten, die durch die Operationen dieser
+	Transaktionsinstanz modifiziert werden.
+      </para>
+      <para>
+	Ein Client kann zu jeder Transaktionsinstanz, an der er beteiligt ist,
+	beim Server mittels der Operation <link
+	  linkend="operation-GetStatus">GetStatus</link>, den gegenwärtigen
+	Zustand der Transaktion abfragen, und er kann die Transaktion mittels
+	der Operation <link linkend="operation-Rollback">Rollback</link>
+	abbrechen, sofern sich die Transaktionsinstanz in einem Zustand
+	befindet, der ein Rollback erlaubt. Ein finaler Zustand erlaubt
+	grundsätzlich kein Rollback, beim Startzustand ist ein Rollback
+	jederzeit möglich und völlig ohne Wirkung. Per Konvention ist bei
+	Zuständen mit Nummer 2 bis 49 ein Rollback möglich, bei Nummer 50 bis
+	99 ist dies nicht möglich.
+      </para>
+      <para>
+Eine Transaktionsinstanz durchläuft folgenden Lebenszyklus: Durch Ausführen
+	einer der Operationen, die im Startzustand anwendbar sind, wird die
+	Transaktionsinstanz gegebenfalls erzeugt. Sobald sich die
+	Transaktionsinstanz in einem finalen Zustand befindet, steht der
+	Transaktionskontext für eine neue Transaktionsinstanz zur Verfügung.
+	Die Transaktionsinstanz existiert allerdings noch weiter, bis eines der
+	folgenden Ereignisse auftritt:
+<itemizedlist>
+	  <listitem><simpara>der Transaktionskontext wird für eine neue
+	      Transaktionsinstanz benötigt,</simpara></listitem>
+	  <listitem><simpara>eine implementierungsabhängige Zeitspanne, die
+	      mindestens 300 Sekunden beträgt, ist
+	      verstrichen.</simpara></listitem>
+</itemizedlist>
+Unabhängig vom Zustand kann der Server nach frühestens 2 Stunden nach
+      der letzten durchgeführten Operation einen Rollback ausführen und die
+      Transaktionsinstanz löschen.
+      </para>
+    </section>
+    <section id="rule-summary">
+    <title>Übersicht der Regeln</title>
+    <para>Es folgt eine Übersicht über alle in dieser Spezifikation
+    formulierten Regeln:</para>
+      <section>
+      <title>Regeln zur Benutzung der Datentypen:</title>
+      <para><itemizedlist>
+	    <listitem><simpara><link linkend="rule-unit">Einheiten</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-discrete-unit">diskrete Einheiten</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-other-units">andere
+	    Einheiten nach TRADE/CEFACT/2001/20</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-use-unit">Benutzung von Einheiten</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-BasePriceType">Basispreis</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-EAN">EAN-Code</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-GLN">ILN</link></simpara>
+	    </listitem>
+	  </itemizedlist>
+	  </para>
+      </section>
+      <section>
+      <title>Regeln für Server:</title>
+      <para><itemizedlist>
+	    <listitem><simpara><link
+		  linkend="rule-standardURL">Standard-URL</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-URL-binding">URL-Bindung</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-XML-POST">XML-POST-Bindung</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-GetStatus">Operation:
+		  GetStatus</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-Rollback">Operation:
+		  Rollback</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-CreateOrder">Operation:
+		  CreateOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-serialize-vco-OrderRequestLine">Serialisierung:
+		  OrderRequestLine</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-OrderRequestLine-Server">OrderRequestLine</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-RequestReplacement">RequestReplacement</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-RequestReplacement">ItemReplacement</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-ReplacementCode">ReplacementCode</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-Availability">Availability</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-AvailabilityCode">AvailabilityCode</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-UpdateOrder">Operation:
+		  UpdateOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-ViewOrder">Operation:
+		  ViewOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-GetItemDetails">Operation:
+		  GetItemDetails</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-GetItemDetailsList">Operation:
+		  GetItemDetailsList</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-OrderInOnlineShop-server">Transaktion:
+		  OrderInOnlineShop</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="transaction-TextSearch">Transaktion:
+		  TextSearch</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-CreateTextSearch">Operation:
+		  CreateTextSearch</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-GetClassificationScheme">Operation:
+		  GetClassificationScheme</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-ItemInformation">Regel:
+		  ItemInformation</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-SearchResult">Operation:
+		  SearchResult</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-test">Testbetrieb</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-downwards-compatibility-server">Abwärtskompatibilität</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="rule-upwards-compatibility-server">Aufwärtskompatibilität</link></simpara>
+	    </listitem>
+	  </itemizedlist>
+	  </para>
+      </section>
+      <section>
+      <title>Regeln für Client:</title>
+      <para><itemizedlist>
+	    <listitem><simpara><link linkend="rule-standardURL">Standard-URL</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-HTTP-client">HTTP-Protokoll</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-URL-binding">URL-Bindung</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-XML-POST">XML-POST-Bindung</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+	    linkend="rule-serialize-vco-OrderRequestLine">Serialisierung: OrderRequestLine</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-OrderRequestLine-Client">OrderRequestLine</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-UpdateOrderRequest">UpdateOrderRequest</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link linkend="rule-OrderResponse-Client">OrderResponse</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+	    linkend="rule-serialize-GetItemDetailsRequest">Serialisierung: GetItemDetailsRequest</link></simpara>
+	  </listitem>
+	    <listitem><simpara><link
+	    linkend="rule-serialize-vco-GetItemDetailsListRequest">Serialisierung: GetItemDetailsListRequest</link></simpara>
+	  </listitem>
+	  </itemizedlist>
+	  </para>
+      </section>
+      <section>
+	<title>Operationen und Transaktionen</title>
+	<para>Folgende Operationen müssen von einem &vc;-konformen Server
+	  implementiert werden:
+        <itemizedlist>
+	    <listitem><simpara><link
+		  linkend="operation-GetProfile">GetProfile</link>, und zwar in
+		der URL oder URL-S-Bindung</simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-GetStatus">GetStatus</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-Rollback">Rollback</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-CreateOrder">CreateOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-UpdateOrder">UpdateOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-FinishOrder">FinishOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-ViewOrder">ViewOrder</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-GetItemDetails">GetItemDetails</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-GetItemDetailsList">GetItemDetailsList</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-CreateTextSearch">CreateTextSearch</link></simpara>
+	    </listitem>
+	    <listitem><simpara><link
+		  linkend="operation-SearchResult">SearchResult</link></simpara>
+	    </listitem>
+	  </itemizedlist> Die Operationen CreateOrder, UpdateOrder, FinishOrder
+	  und ViewOrder werden sowohl in der Transaktion <link
+	    linkend="transaction-Order">Order</link> als auch in der Transaktion
+	  <link
+	    linkend="transaction-OrderInOnlineShop">OrderInOnlineShop</link>
+	  verwendet. Von diesen beiden Transaktionen muss mindestens eine
+	  implementiert werden. Ferner ist die Transaktion <link
+	  linkend="transaction-TextSearch">TextSearch</link> zu implementieren.</para>
+      </section>
+    </section>
+  </section>

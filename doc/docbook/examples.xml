@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<section id="beispiele">
+  <title>Beispiele</title> <para>Diese Beispiele gehen von folgender Situation
+    aus: Verkäufer A hat seinem Kunden B mitgeteilt, dass er die
+    &vc;-Schnittstelle wie folgt erreicht: <itemizedlist>
+      <listitem><simpara>BuyersID ist B127645</simpara> </listitem>
+      <listitem><simpara>Passwort ist secret</simpara> </listitem>
+      <listitem><simpara>Die Standard-URL ist
+	  http://b2b.beispielserver.com/</simpara> </listitem> 
+    </itemizedlist>
+    Im Unterschied zu Version 1.0 werden die Beispiel XML-Nachrichten nicht als
+    Text angezeigt, sondern als Link auf eine Datei. Bei Anzeige dieser Dateien
+    im Browser ist zu beachten,
+    dass standardmäßig nicht der Quelltext der XML-Datei angezeigt wird.
+ </para> 
+  <section> <title>GetProfile</title> 
+    <para>Auf die Anfrage 
+      <programlisting>http://b2b.beispielserver.com/?BuyersID=B127645&amp;Password=secret
+&amp;RequestName=GetProfileRequest</programlisting>
+(Zeilenumbruch nur zur besseren Lesbarkeit!) 
+      wird folgende <ulink url="examples/profile.xml">Antwort</ulink> zurückgeliefert.
+Hieran sind zwei Besonderheiten
+      erkennbar: Die Transaktionen Order und OrderInOnlineShop werden sowohl in
+      der URL- als auch in der XML-POST-Bindung implementiert. Die Transaktion
+      OrderInOnlineShop ist nicht unter der Standard-URL anzusprechen, sondern
+      unter einer abweichenden URL. </para> 
+  </section> 
+  <section>
+    <title>Abfrage von Artikeldetails (Operation: GetItemDetails)</title> 
+    <para>Der Client fragt nun die Details zum
+      Artikel mit der Bestellnummer 42213526300 wie folgt ab:
+      <programlisting>http://b2b.beispielserver.com/?BuyersID=B127645&amp;Password=secret
+&amp;RequestName=GetItemDetailsRequest&amp;SellersItemIdentification=42213526300</programlisting> 
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      Es wird folgende <ulink url="examples/details.xml">Antwort</ulink> zurückgeliefert.
+Die Antwort enthält unter anderem folgende Informationen: 
+      <itemizedlist>
+	<listitem><simpara>Der Artikel hat den EAN-Code 4032191511108.
+	  </simpara></listitem>
+	<listitem><simpara>Der
+	    Artikel wird in Packungen zu je 100 Stück
+	    verkauft.</simpara></listitem> 
+	<listitem><simpara>Ein Paket kostet
+	    bei Abnahme von weniger als 5 Paketen 34,50 Euro, ab einer Abnahme
+	    von 5 Paketen 29,50 Euro.</simpara></listitem>
+	<listitem><simpara>Der empfohlene Verkaufspreis beträgt 0,70 Euro pro
+	    Stück.</simpara></listitem>
+     </itemizedlist> 
+    </para> 
+  </section>
+  <section>
+    <title>Abfrage von Artikeldetails (Operation: GetItemDetailsList)</title> 
+    <para>Der Client fragt nun in einer Anfrage die Details zu
+      den Artikeln mit den Bestellnummern 42213526300, 42038057510, 42213526301
+      in der URL-Bindung wie folgt ab:
+      <programlisting>http://b2b.beispielserver.com/?BuyersID=B127645&amp;Password=secret
+&amp;RequestName=GetItemDetailsListRequest&amp;Quantity.42213526300=500&amp;quantityUnitCode.42213526300=EA
+&amp;SellersItemIdentification=42038057510
+&amp;SellersItemIdentification=42213526301
+</programlisting> 
+(Zeilenumbrüche nur zur besseren Lesbarkeit!) Äquivalent ist die Übermittlung
+      folgender <ulink url="examples/details_list.xml">XML-Nachricht</ulink>.
+</para>
+<para>
+      Es wird folgende <ulink url="examples/details_list_a.xml">Antwort</ulink> zurückgeliefert.
+Die Antwort zur zweiten und dritten Bestellnummer enthält folgende Informationen: 
+      <itemizedlist>
+	<listitem><simpara>Bestellnummer 42038057510 ist veraltet und durch
+	    42038057500 zu ersetzen.
+	  </simpara></listitem>
+	<listitem><simpara>Bestellnummer 42213526301 ist unbekannt.</simpara></listitem>
+     </itemizedlist> 
+    </para> 
+  </section>
+  <section>
+    <title>Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)
+    </title>
+    <para>Der Käufer erzeugt eine neue Bestellung. Hierzu werden an die URL
+      <literal>http://b2b.beispielserver.com/</literal> mittels der
+      POST-Methode des HTTP-Protokolls folgende <ulink url="examples/order1.xml">Daten</ulink> vom Medientyp
+      <literal>application/xml</literal> übertragen.
+      Alternativ dazu könnte auch folgende URL abgerufen werden
+      <programlisting><![CDATA[
+http://b2b.beispielserver.com/?BuyersID=127654&Password=secret
+&RequestName=CreateOrderRequest
+&Quantity.42213526300=500&quantityUnitCode.42213526300=EA
+&BuyersItemIdentification.42213526300=7285
+&Quantity.42038057500=20&quantityUnitCode.42038057500=EA
+&BuyersItemIdentification.42038057500=7290
+&Quantity.52090311600=100&quantityUnitCode.52090311600=MTR
+&BuyersItemIdentification.52090311600=7295
+]]></programlisting>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      bzw. an die URL <literal>http://b2b.beispielserver.com/</literal> mittels
+      der POST-Methode des HTTP-Protokolls folgende Daten vom Medientyp
+      <literal>application/x-www-form-urlencoded</literal> übermittelt werden:
+      <programlisting><![CDATA[
+BuyersID=127654&Password=secret&RequestName=CreateOrderRequest
+&Quantity.42213526300=500&quantityUnitCode.42213526300=EA
+&BuyersItemIdentification.42213526300=7285
+&Quantity.42038057500=20&quantityUnitCode.42038057500=EA
+&BuyersItemIdentification.42038057500=7290
+&Quantity.52090311600=100&quantityUnitCode.52090311600=MTR
+&BuyersItemIdentification.52090311600=7295
+]]></programlisting>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!).
+    </para>
+    <para>Die Antwort des Servers sieht beispielsweise <ulink url="examples/order2.xml">so</ulink> aus.
+      Hieran ist folgendes zu erkennen:
+      <itemizedlist>
+	<listitem><simpara>Die erzeugte Transaktionsinstanz hat die
+	    TransactionID <literal>order-1</literal>. 
+	  </simpara></listitem>
+	<listitem><simpara>Die Transaktion befindet sich im Zustand 2,
+	d.h. im Updatezustand.
+	  </simpara></listitem>
+	<listitem><simpara>Jeder Artikel wird in einer bestimmten Packungsgröße
+	    verkauft; die Speichen zu je 100 Stück, die Bremsinnenzüge zu je 10
+	    Stück und die Bremsaußenhülle zu
+	    Rollen je 30 Meter. 
+	  </simpara></listitem>
+	<listitem><simpara>Bei der Bremsaußenhülle wurde die Bestellmenge
+	von 100 Meter auf 4 Rollen, d.h. 120 Meter, aufgerundet. Bei den
+	anderen beiden Artikeln wurden die Bestellmengen ohne Änderung in die
+	entsprechende Anzahl von Packungen umgerechnet.
+	  </simpara></listitem>
+	<listitem><simpara>Von der Bremsaußenhülle sind nur zwei Rollen
+	    lieferbar, es wird empfohlen, an Stelle der grauen die schwarze
+	    Bremsaußenhülle zu bestellen.
+	  </simpara></listitem>
+	<listitem><simpara>Die Staffelpreise und die empfohlenen
+	Verkaufspreise beziehen sich teilweise nicht auf die Einheit, in der
+	    die Bestellmenge angegeben ist.
+	  </simpara></listitem>
+	<listitem><simpara>Das System des Verkäufers liefert die übertragenen
+	    internen Artikelnummern des Käufers zurück.
+	  </simpara></listitem>
+      </itemizedlist>
+    </para>
+  </section>
+  <section>
+    <title>Bestellung ändern (Transaktion: Order, Operation: UpdateOrder)
+    </title>
+    <para>Der Käufer entscheidet sich, der Empfehlung zu folgen und die
+	Bremsaußenhülle in schwarz zu bestellen, und zwar die gesamte
+	Bestellmenge, um den Staffelpreis auszunützen. Hierzu übermittelt er 
+      die folgende <ulink url="examples/order3.xml">Anfrage</ulink>.
+	Der Server antwortet darauf <ulink url="examples/order4.xml">wie zu erwarten</ulink>.
+      </para>
+  </section>
+  <section>
+    <title>Bestellung abschließen (Transaktion: Order, Operation: FinishOrder)
+    </title>
+      <para>Der Käufer schließt nun die Bestellung durch Aufruf der folgenden
+	URL ab:
+<programlisting><![CDATA[
+http://b2b.beispielserver.com/?BuyersID=127654&Password=secret
+&RequestName=FinishOrderRequest&TransactionId=order-1
+]]></programlisting>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!).	Der Server antwortet mit der
+      <ulink url="examples/order6.xml">Auftragsbestätigung</ulink>. Diese teilt auch die
+	Nummer mit, unter der dieser Auftrag im Warenwirtschaftssystem des
+	Verkäufers abgelegt ist.
+    </para>
+  </section>
+  <section>
+    <title>Bestellung in Verbindung mit Online-Shop 
+      (Transaktion: OrderInOnlineShop)</title>
+    <para>Wir gehen von folgendem Szenario aus: Der Käufer hat im Online-Shop
+      des Verkäufers bereits einen Artikel in den Warenkorb gelegt und hat in seinem
+      eigenen Warenwirtschaftssystem eine Bestellung mit weiteren Artikeln
+      angelegt. Diese beiden Bestellungen sollen synchronisiert und
+      abgeschlossen werden. Der Client verwendet hierzu die Transaktion
+      OrderInOnlineShop. Als erstes informiert er sich vermöge der Anfrage
+      <programlisting><![CDATA[
+http:shop.beispielserver.com/vc_order.jsp?BuyersID=127654&Password=secret
+&RequestName=ViewOrderRequest&TransactionId=online-basket
+]]></programlisting>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      über den Inhalt des Warenkorbs. Die abweichende URL und die TransactionID
+      hat er dem &vc;-Profil des Servers entnommen. Folgende <ulink url="examples/order2a.xml">Antwort</ulink> wird zurückgeliefert.
+      Durch Abgleich mit den eigenen Stammdaten oder durch Abfrage beim
+      Benutzer ermittelt der Client die interne Artikelnummer und fügt den
+      Inhalt des Warenkorbs in die Bestellung ein. Die noch nicht im Warenkorb
+      befindlichen Positionen dieser Bestellung werden dem Server durch
+      Übermittlung folgenden <ulink url="examples/order3a.xml">XML-Dokuments</ulink> an die URL
+      <literal>http://shop.beispielserver.com/vc_order.jsp</literal>
+      mitgeteilt.
+      Der Server antwortet hierauf <ulink url="examples/order4a.xml">so</ulink>.
+      Nunmehr sind Warenkorb und Bestellung abgeglichen. Würde der Benutzer im
+      Online-Shop den aktuellen Warenkorb abrufen, enthielte dieser genau die
+      gleichen drei Positionen, die die Bestellung im eigenen
+      Warenwirtschaftssystem enthält. Die Bestellung wird nun mit der Anfrage
+<programlisting><![CDATA[
+http://shop.beispielserver.com/vc_order.jsp?BuyersID=127654&Password=secret
+&RequestName=FinishOrderRequest&TransactionId=online-basket
+]]></programlisting>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      abgeschlossen, worauf der Server die erwartete <ulink url="examples/order6a.xml">Auftragsbestätigung</ulink> zurückliefert.
+      Damit ist nun auch der Warenkorb im Online-Shop wieder leer und die
+      Bestellung im Warenwirtschaftssystem des Käufers als bestellt markiert.
+    </para>
+  </section>
+  <section>
+     <title>Suche nach Artikeln (Transaktion:TextSearch)</title>
+     <para>Im Beispiel suchen wir nach allen Artikeln, deren Artikelnummer oder
+      -bezeichnung die Teilzeichenketten stop, emsschuh und dual enthalten.
+   Dazu wird zunächst die Suche  mit Hilfe der folgenden Anfrage (URL-Bindung)
+<programlisting><![CDATA[
+http://shop.beispielserver.com/?BuyersID=127654&Password=secret
+&RequestName=CreateTextSearchRequest&SearchString=stop%20emsschuh%20dual
+]]></programlisting>
+oder durch den POST einer äquivalenten <ulink url="examples/search1.xml">XML-Datei</ulink> initialisert.
+     </para>
+     <para>Das Suchergebnis wird sieht dann beispielsweise <ulink
+	url="examples/search2.xml">so</ulink> aus, d.h. es wurden sechs Artikel
+      gefunden. Nun können die
+      Suchergebnisse abgeholt werden.
+     </para>
+     <para>Die Anfrage
+<programlisting><![CDATA[
+http://shop.beispielserver.com/?BuyersID=127654&Password=secret
+&RequestName=SearchResultRequest&TransactionID=2
+&StartIndex=3&Count=2&ResultFormat=ITEM_TYPE
+]]></programlisting>
+    fordert die Treffer mit dem Index 3 und 4 an (also den 4. und den
+      5. Treffer) und zwar im Format ITEM_TYPE. Äquivalent ist der POST der
+      folgenden <ulink url="examples/search3.xml">XML-Datei</ulink>. Die
+      Treffer werden wie in folgender <ulink url="examples/search4.xml">XML-Datei</ulink> ausgeliefert.     
+  </para>
+  </section>
+  <section>
+     <title>Klassifikationsschemata</title>
+     <para>Um die Beispieldateien übersichtlich zu halten, gehen wir von
+      folgendem Dummy-Beispiel aus: Es gibt zwei Warengruppen, nämlich
+      "Bremsbeläge"  und "Kool-Stop Cartridge Einschübe", wobei letzter
+      Untergruppe der ersteren ist. Ferner gibt es für Mengenrabatte die
+      Rabattgruppe "Kool-Stop V-Brake". Die Abfrage
+<programlisting><![CDATA[
+http://shop.beispielserver.com/?BuyersID=127654&Password=secret
+&RequestName=GetClassificationSchemeRequest
+]]></programlisting>
+liefert dann folgendes <ulink url="examples/class.xml">Ergebnis</ulink>.
+  </para>
+  </section>
+  <section>
+     <title>ItemInformation</title>
+     <para>Wir setzen das vorangegange Beispiel voraus und fragen die
+      Artikeldetails von Artikel 209-50 per GetItemDetailsRequest ab. Dieser
+      Artikel ist in der Warengruppe "Kool-Stop Cartridge Einschübe" sowie in
+      der Rabattgruppe "Kool-Stop V-Brake". Ferner wird auf weiterführende
+      Informationen verlinkt.
+Die Antwort des Servers könnte <ulink url="examples/class1.xml">so</ulink> aussehen.
+  </para>
+  </section>
+</section>

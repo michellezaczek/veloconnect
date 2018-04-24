@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12.7. Bestellung in Verbindung mit Online-Shop 
+      (Transaktion: OrderInOnlineShop)</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s12.html" title="12. Beispiele" /><link rel="previous" href="ar01s12s06.html" title="12.6. Bestellung abschließen (Transaktion: Order, Operation: FinishOrder)&#10;    " /><link rel="next" href="ar01s12s08.html" title="12.8. Suche nach Artikeln (Transaktion:TextSearch)" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">12.7. Bestellung in Verbindung mit Online-Shop 
+      (Transaktion: OrderInOnlineShop)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s12s06.html">Zurück</a> </td><th width="60%" align="center">12. Beispiele</th><td width="20%" align="right"> <a accesskey="n" href="ar01s12s08.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2525654"></a>12.7. Bestellung in Verbindung mit Online-Shop 
+      (Transaktion: OrderInOnlineShop)</h3></div></div><div></div></div><p>Wir gehen von folgendem Szenario aus: Der Käufer hat im Online-Shop
+      des Verkäufers bereits einen Artikel in den Warenkorb gelegt und hat in seinem
+      eigenen Warenwirtschaftssystem eine Bestellung mit weiteren Artikeln
+      angelegt. Diese beiden Bestellungen sollen synchronisiert und
+      abgeschlossen werden. Der Client verwendet hierzu die Transaktion
+      OrderInOnlineShop. Als erstes informiert er sich vermöge der Anfrage
+      </p><pre class="programlisting">
+http:shop.beispielserver.com/vc_order.jsp?BuyersID=127654&amp;Password=secret
+&amp;RequestName=ViewOrderRequest&amp;TransactionId=online-basket
+</pre><p>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      über den Inhalt des Warenkorbs. Die abweichende URL und die TransactionID
+      hat er dem veloconnect-Profil des Servers entnommen. Folgende <a href="examples/order2a.xml" target="_top">Antwort</a> wird zurückgeliefert.
+      Durch Abgleich mit den eigenen Stammdaten oder durch Abfrage beim
+      Benutzer ermittelt der Client die interne Artikelnummer und fügt den
+      Inhalt des Warenkorbs in die Bestellung ein. Die noch nicht im Warenkorb
+      befindlichen Positionen dieser Bestellung werden dem Server durch
+      Übermittlung folgenden <a href="examples/order3a.xml" target="_top">XML-Dokuments</a> an die URL
+      <tt class="literal">http://shop.beispielserver.com/vc_order.jsp</tt>
+      mitgeteilt.
+      Der Server antwortet hierauf <a href="examples/order4a.xml" target="_top">so</a>.
+      Nunmehr sind Warenkorb und Bestellung abgeglichen. Würde der Benutzer im
+      Online-Shop den aktuellen Warenkorb abrufen, enthielte dieser genau die
+      gleichen drei Positionen, die die Bestellung im eigenen
+      Warenwirtschaftssystem enthält. Die Bestellung wird nun mit der Anfrage
+</p><pre class="programlisting">
+http://shop.beispielserver.com/vc_order.jsp?BuyersID=127654&amp;Password=secret
+&amp;RequestName=FinishOrderRequest&amp;TransactionId=online-basket
+</pre><p>
+(Zeilenumbrüche nur zur besseren Lesbarkeit!)
+      abgeschlossen, worauf der Server die erwartete <a href="examples/order6a.xml" target="_top">Auftragsbestätigung</a> zurückliefert.
+      Damit ist nun auch der Warenkorb im Online-Shop wieder leer und die
+      Bestellung im Warenwirtschaftssystem des Käufers als bestellt markiert.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s12s06.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s12.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s12s08.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">12.6. Bestellung abschließen (Transaktion: Order, Operation: FinishOrder)
+     </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 12.8. Suche nach Artikeln (Transaktion:TextSearch)</td></tr></table></div></body></html>

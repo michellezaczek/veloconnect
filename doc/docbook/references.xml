@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<section id="references">
+<title>Referenzen</title>
+  <simpara></simpara>
+  <bibliography>
+    <title></title>
+    <bibliomixed id="ref_vc" xreflabel="1">
+	<bibliomisc>
+	  <ulink url="http://www.veloconnect.de"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_oasis" xreflabel="2">
+	<bibliomisc>
+	  <ulink url="http://www.oasis-open.org"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_UBL" xreflabel="3">
+	<bibliomisc>
+	  <ulink url="http://docs.oasis-open.org/ubl/cd-UBL-1.0/"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_vsf" xreflabel="4">
+	<bibliomisc>
+	   <ulink url="http://www.vsf.de"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_xml" xreflabel="5">
+      <bibliomisc>
+	<ulink url="http://www.w3.org/TR/2004/REC-xml-20040204/"/>
+      </bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_xmlschema" xreflabel="6">
+	<bibliomisc>
+	<ulink url="http://www.w3.org/TR/xmlschema-1/"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_xmlns" xreflabel="7">
+	<bibliomisc>
+	<ulink url="http://www.w3.org/TR/1999/REC-xml-names-19990114/"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_http" xreflabel="8">
+	<bibliomisc>
+	<ulink url="http://www.w3.org/Protocols/rfc2616/rfc2616.txt"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_https" xreflabel="9">
+	<bibliomisc>
+	<ulink url="http://www.faqs.org/rfcs/rfc2818.html"/>
+	</bibliomisc>
+    </bibliomixed>
+    <bibliomixed id="ref_trade_cefact" xreflabel="10">
+	<bibliomisc>
+	<ulink url="http://www.unece.org/cefact/recommendations/rec20en.htm">
+United Nations Centre for Trade Facilitation and Electronic Business
+	  (UN/CEFACT):  Trade Facilitation Recommendation Nr. 20 -  Codes for Units of Measure Used in International Trade</ulink>
+	</bibliomisc>
+    </bibliomixed>
+  </bibliography>
+</section>
+
+

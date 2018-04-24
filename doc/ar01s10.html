@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>10. Testbetrieb</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s09s03.html" title="9.3. vcc:ItemInformation" /><link rel="next" href="ar01s11.html" title="11. Zukünftige Versionen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">10. Testbetrieb</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s09s03.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s11.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="test"></a>10. Testbetrieb</h2></div></div><div></div></div><p>Sowohl in Anfragen als auch in Antworten kann das Element IsTest
+      verwendet werden. Die Verwendung dieses Indikators soll es ermöglichen,
+      Client-Implementierungen zu testen und möglichen Fehlern im
+      Zusammmenspiel der beteiligten Koponenten auf den Grund zu gehen, ohne
+      dabei geschäftliche Transaktionen auszulösen. Damit dies gewährleistet
+      ist, gelten für einen veloconnect-konformen Server, bzw. für dessen Betreiber
+      folgende Regeln:
+      </p><p><a id="rule-test"></a><b>Regel: Testbetrieb. </b>
+      </p><div class="orderedlist"><ol type="1"><li>Jedem, der ein berechtigtes Interesse daran hat,
+	      ist in angemessener Zeit ein Zugang zur Benutzung der
+	      veloconnect-Schnittstelle zu gewähren. Ob das Interesse berechtigt ist,
+	      entscheidet im Einzelfall der Betreiber des Servers. Die
+	      Entwicklung einer veloconnect-Schnittstelle für einen Client begründet
+	      in der Regel ein berechtigtes Interesse. Der Zugang kann auf eine
+	      angemessene Zeit befristet werden und kann voraussetzen, dass
+	      sich der Interessent zur Vertraulichkeit verpflichtet und den
+	      Zugang nur für die angegebenen Zwecke verwendet. </li><li>Wird in einer Anfrage oder einer Antwort das
+	      Element IsTest nicht benutzt, so ist dies äquivalent zur
+	      Verwendung dieses Elements mit dem Inhalt false.</li><li>In einer Operation haben die jeweiligen
+	      IsTest-Element in Anfrage und Antwort den gleichen Wert. Ist
+	      dieser Wert <tt class="literal">true</tt>, so wird die Operation als
+	      Test betrachtet.</li><li>In einer Transaktion darf einer Operation, die als
+	      Test durchgeführt wird, weder eine Operation, die nicht als Test
+	      durchgeführt wird, folgen noch vorausgehen. Falls der Client eine
+	      Anfrage schickt, die hierzu in Widerspruch steht, so hat der
+	      Server den Fehlercode 435 zurückzuliefern.</li><li>Eine Operation, die als Test durchgeführt wird,
+	      darf keine geschäftlichen Transaktionen zwischen Käufer und
+	      Verkäufer auslösen.</li><li>Die Antworten, die ein Server in einer
+	      Test-Operation zurückgibt, unterscheiden sich nicht von der
+	      gleichen Operation, die nicht als Test durchgeführt wird; es sei
+	      denn, dies ist zur Erfüllung der vorangegangenen Regel
+	      erforderlich.</li></ol></div><p>
+      </p><p>Es sei hier nur kurz skizziert, dass die Implementierung dieser
+      Testfunktion kaum zusätzlichen Aufwand erfordert: Der Testbetrieb erfolgt
+      genauso wie der reguläre Betrieb, nur bei Operationen, die eine
+      geschäftliche Transaktion auslösen, wird intern im Testbetrieb ein
+      Rollback ausgelöst und nach aussen eine fingierte Antwort
+      zurückgeliefert. Beim gegenwärtigen Stand der Spezifikation betrifft dies
+      einzig und allein die Operation FinishOrder.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s09s03.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s11.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">9.3. vcc:ItemInformation </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 11. Zukünftige Versionen</td></tr></table></div></body></html>

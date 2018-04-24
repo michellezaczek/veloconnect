@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<CreateOrderRequest  xmlns="urn:veloconnect:order-1.1"
+xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+xmlns:vct="urn:veloconnect:transaction-1.0">
+  <vct:BuyersID>B127645</vct:BuyersID>
+  <vct:Credential><vct:Password>secret</vct:Password></vct:Credential>
+  <OrderRequestLine>
+      <cac:SellersItemIdentification>
+	<cac:ID>42213526300</cac:ID>
+      </cac:SellersItemIdentification>
+      <cbc:Quantity quantityUnitCode="EA">500</cbc:Quantity>
+      <cac:BuyersItemIdentification>
+	<cac:ID>7285</cac:ID>
+      </cac:BuyersItemIdentification>
+  </OrderRequestLine>
+  <OrderRequestLine>
+      <cac:SellersItemIdentification>
+	<cac:ID>42038057500</cac:ID>
+      </cac:SellersItemIdentification>
+      <cbc:Quantity quantityUnitCode="EA">20</cbc:Quantity>
+      <cac:BuyersItemIdentification>
+	<cac:ID>7290</cac:ID>
+      </cac:BuyersItemIdentification>
+  </OrderRequestLine>
+  <OrderRequestLine>
+      <cac:SellersItemIdentification>
+	<cac:ID>52090311600</cac:ID>
+      </cac:SellersItemIdentification>
+      <cbc:Quantity quantityUnitCode="MTR">100</cbc:Quantity>
+      <cac:BuyersItemIdentification>
+	<cac:ID>7295</cac:ID>
+      </cac:BuyersItemIdentification>
+  </OrderRequestLine>
+</CreateOrderRequest>

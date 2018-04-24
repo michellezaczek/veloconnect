@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:cur="urn:oasis:names:specification:ubl:schema:xsd:CurrencyCode-1.0"
+    xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+    targetNamespace="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:UnspecializedDatatypes-1.0"  schemaLocation="ubl/common/UBL-UnspecializedDatatypes-1.0.xsd"/>
+  <xsd:import namespace="urn:oasis:names:specification:ubl:schema:xsd:CurrencyCode-1.0"  schemaLocation="ubl/codelist/UBL-CodeList-CurrencyCode-1.0.xsd"/>
+
+  <xsd:redefine schemaLocation="ubl/common/UBL-CommonBasicComponents-1.0.xsd">
+  </xsd:redefine>
+  <xsd:element name="DeliveryDate" type="DateType">
+     <xsd:annotation><xsd:documentation>Lieferdatum; DeliveryDateTime löst Zeit zu fein auf.</xsd:documentation>
+     </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BacklogIndicator" type="IndicatorType">
+     <xsd:annotation><xsd:documentation>Indikator, ob nicht lieferbare Artikel nachgeliefert werden.</xsd:documentation>
+     </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

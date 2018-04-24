@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>5.3. Grundlegende zusamengesetzte Typen</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s05.html" title="5. Basis-Komponenten" /><link rel="previous" href="ar01s05s02.html" title="5.2. Basis-Typen" /><link rel="next" href="ar01s05s04.html" title="5.4. Beschreibung von Gegenständen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.3. Grundlegende zusamengesetzte Typen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s05s02.html">Zurück</a> </td><th width="60%" align="center">5. Basis-Komponenten</th><td width="20%" align="right"> <a accesskey="n" href="ar01s05s04.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2511896"></a>5.3. Grundlegende zusamengesetzte Typen</h3></div></div><div></div></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h4 class="title"><a id="cac-ItemIdentificationType"></a>5.3.1. Kennzeichnung eines Gegenstands</h4></div></div><div></div></div><p>Der Elementtyp <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/ItemIdentificationType.html" target="_top">cac:ItemIdentificationType</a> wird verwendet, um Gegenstände zu identifizieren. Er besitzt die folgenden Elemente:
+	  </p><div class="table"><a id="id2511925"></a><p class="title"><b>Tabelle 1. cac:ItemIdenticationType - Elemente</b></p><table summary="cac:ItemIdenticationType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>cac:ID</td><td>udt:IdentifierType</td><td>Kennzeichnung, wie z.B. Artikelnummer oder EAN-Code</td></tr><tr><td>cac:PhysicalAttribute</td><td>cac:PhysicalAttributeType*</td><td>identifzierende Merkmale</td></tr><tr><td>cac:MeasurementDimension</td><td>cac:DimensionType*</td><td>Maße zur Identifizierung eines Gegenstands</td></tr></tbody></table></div><p>
+	Das Vorkommen von Elementen wird in dieser Tabelle (und folgenden) 
+	auf diese Weise qualifiziert:
+		      </p><div class="variablelist"><dl><dt><span class="term">Keine Angabe</span></dt><dd>Element muss verwendet
+			      werden.</dd><dt><span class="term">*</span></dt><dd>Element kann beliebig oft
+			      vorkommen.</dd><dt><span class="term">+</span></dt><dd>Element muss mindestens einmal
+			      vorkommen.</dd><dt><span class="term">?</span></dt><dd>Element kann höchstens einmal
+			      vorkommen.</dd></dl></div><p>
+	  </p><p>
+	  Zur Zeit gehen wir davon aus, dass ein Gegenstand beim Verkäufer
+	  durch eine kennzeichnende Zeichenkette eindeutig identifiziert wird,
+	  z.B. durch eine interne Artikelnummer oder durch einen EAN-Code.
+	</p><p>Es ist allerdings auch denkbar, dass zur Identifizierung eines
+	  Gegenstands zusätzlich zur Artikelnummer weitere Angaben wie
+	  z.B. Bekleidungsgröße oder Farbe erforderlich sind. Der Elementtyp
+	  ItemIdentificationType ist auch für diese Fälle geeignet. Wir werden
+	  allerdings erst genauere Regeln hierfür festlegen, wenn sich in der
+	  Praxis zeigt, dass dies benötigt wird.
+	</p><p>Bis auf weiteres gilt daher: veloconnect-konforme Implementierungen
+	  verwenden ausser dem Element <tt class="literal">cac:ID</tt> kein anderes
+	  der Kindelemente von ItemIdentifcationType.
+	</p></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h4 class="title"><a id="cac-BasePriceType"></a>5.3.2. Basispreise</h4></div></div><div></div></div><p>Der Elementtyp <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/BasePriceType.html" target="_top">cac:BasePriceType</a> wird verwendet, um Preise mitzuteilen, die sich auf eine Menge beziehen:
+	  </p><div class="table"><a id="id2512107"></a><p class="title"><b>Tabelle 2. cac:BasePriceType - Elemente</b></p><table summary="cac:BasePriceType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>cbc:PriceAmount</td><td>cbc:PriceAmountType</td><td>Der Betrag des Preises.</td></tr><tr><td>cbc:BaseQuantity</td><td>cbc:QuantityType?</td><td>Basismenge 
+		    für den Preis</td></tr><tr><td>cbc:MaximumQuantity</td><td>cbc:QuantityType?</td><td>maximale Menge für Gültigkeit des Preises</td></tr><tr><td>cbc:MinimumQuantity</td><td>cbc:QuantityType?</td><td>minimale Menge für Gültigkeit des Preises</td></tr></tbody></table></div><p>
+	</p><p><a id="rule-BasePriceType"></a><b>Regel: BasePriceType. </b>Für veloconnect-konforme Implementierungen gelten folgende Regeln:
+	  </p><div class="orderedlist"><ol type="1"><li>In einer Instanz vom Typ cac:BasePriceType muss
+		mindestens eines der Kind-Elemente vom Typ cbc:QuantityType
+		vorhanden sein.
+	      </li><li>
+		In allen Kind-Elementen einer Elementinstanz e vom Typ
+		cbc:QuantityType darf nur ein und dieselbe Mengeneinheit
+		(quantityUnitCode) verwendet werden. Diese nennen wir die
+		Mengeneinheit von e. Ist eine Mengenangabe m gegeben, so nennen
+		wir e gültig für m, wenn die Mengeneinheit von e mit der
+		Mengeneinheit von m vergleichbar ist und m in dem Bereich
+		liegt, der durch cbc:MinimumQuantity und cbc:MaximumQuantity in
+		offensichtlicher Weise bestimmt ist. Insbesondere ist e nicht
+		gültig für m, wenn die Mengeneinheiten nicht vergleichbar sind,
+		und es ist gültig für m, wenn die Mengeneinheiten vergleichbar
+		sind und die Elemente cbc:MaximumQuantity und
+		cbc:MinimumQuantity nicht vorhanden sind.
+	      </li><li>Werden in einem Instanzelement mehrere
+		gleichnamige Kind-Elemente von diesem Typ verwendet, so wird
+		damit eine Funktion mitgeteilt, die einer Mengenangabe einen
+		Preis zuordnet, und zwar wie folgt: Gegeben sei die
+		Mengenangabe m. Es werden unter den genannten Kind-Elementen
+		alle ermittelt, die für m gültig sind. Wenn es kein solches
+		Element gibt, dann ist die Funktion für dieses Argument m nicht
+		definiert. Ansonsten wird aus den für m gültigen Elementen der
+		kleinste Preisbetrag als Funktionswert festgesetzt.
+	      </li></ol></div><p>
+	 </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s05s02.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s05.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s05s04.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">5.2. Basis-Typen </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 5.4. Beschreibung von Gegenständen</td></tr></table></div></body></html>

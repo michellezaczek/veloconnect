@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2006)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen veloconnect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+veloconnect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur veloconnect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+  <section id="operation-GetProfile"> 
+    <title>Operation: GetProfile</title>
+    <para>Die Operation GetProfile muss von jedem &vc;-konformen Server in
+      der URL-Bindung oder der URL-S-Bindung implementiert werden. Auf eine
+      Anfrage <ulink
+      url="xsd/urn_veloconnect_profile-1.1/element/GetProfileRequest.html">vcp:GetProfileRequest</ulink> vom Typ <link linkend="vct-RequestType">vct:RequestType</link> liefert ein
+      &vc;-konformer Server die Antwort <ulink
+      url="xsd/urn_veloconnect_profile-1.1/element/GetProfileResponse.html">vcp:GetProfileResponse</ulink> zurück. Diese
+      erweitert den Typ <link
+      linkend="vct-ResponseType">vct:ResponseType</link> um die beiden
+    optionalen Elemente vcp:SellerName und vcp:Message und das Pflicht-Element <ulink
+      url="xsd/urn_veloconnect_profile-1.1/element/VeloconnectProfile.html">vcp:VeloconnectProfile</ulink>.
+    </para>
+    <para>
+    Im Element vcp:SellerName soll der Name des Lieferanten im Klartext
+    angegeben werden, vcp:Message kann dazu benutzt werden eine kurze
+    Information an den Benutzer des Client zu übergeben. Vor Benutzung der
+    anderen Operationen und Transaktionen sollte der Client, die Angaben in
+    vcp:VeloconnectProfile auswerten, da die dortigen Informationen Einfluss
+    auf die Aufbereitung der Daten für den Endbenutzer haben können. Es kann
+    davon ausgegangen werden, dass die Informationen im Profil 24 Stunden
+    gültig bleiben.
+    </para><para>
+Das Element <ulink
+      url="xsd/urn_veloconnect_profile-1.1/element/VeloconnectProfile.html">vcp:VeloconnectProfile</ulink> ist wie folgt definiert:
+      <table id="vcp-VeloconnectProfile">
+	<title>vcp:VeloconnectProfile - Elemente</title>
+	<tgroup cols="3">
+	  <thead>
+	    <row>
+	      <entry>Name</entry>
+	      <entry>Typ/Vorkommen</entry>
+	      <entry>Beschreibung</entry>
+	    </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry>vcp:Implements</entry>
+	      <entry>vcp:ImplementsType*</entry>
+	      <entry>Information über implementierte Operationen, Transaktionen
+		und ihre Bindungen</entry>
+	    </row>
+	    <row>
+	      <entry>vcp:Property</entry><entry>vcp:PropertyType*</entry><entry>Eigenschaften 
+		des Servers als Schlüssel-Wert-Paare</entry>
+	    </row>
+	  </tbody>
+	</tgroup>
+	</table>
+      <table id="vcp-ImplementsType">
+	<title>vcp:ImplementsType - Elemente</title>
+	<tgroup cols="3">
+	  <thead>
+	    <row>
+	      <entry>Name</entry>
+	      <entry>Typ/Vorkommen</entry>
+	      <entry>Beschreibung</entry>
+	    </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry>entweder:
+		vcp:Transaction</entry><entry>vcp:TransactionType</entry><entry>Name 
+		der Transaktion</entry>
+	    </row>
+	    <row>
+	      <entry>oder:
+		vcp:Operation</entry><entry>vcp:OperationType</entry><entry>Name 
+		der Operation</entry>
+	    </row>
+	    <row>
+	      <entry>vcp:Binding</entry><entry>vcp:BindingType</entry><entry>Bindung</entry>
+	    </row>
+	    <row>
+	      <entry>vcp:URI</entry><entry>xsd:anyURI?</entry><entry>URL, unter
+		der die Transaktion bzw. Operation zu erreichen ist, falls
+		diese von der Standard-URL abweicht.</entry>
+	    </row>
+	  </tbody>
+	</tgroup>
+	</table>
+      <table id="vcp-PropertyType">
+	<title>vcp:PropertyType - Elemente</title>
+	<tgroup cols="3">
+	  <thead>
+	    <row>
+	      <entry>Name</entry>
+	      <entry>Typ/Vorkommen</entry>
+	      <entry>Beschreibung</entry>
+	    </row>
+	  </thead>
+	  <tbody>
+	    <row>
+	      <entry>vcp:Key</entry><entry>vcp:PropertyKeyType</entry><entry>Schlüssel</entry>
+	    </row>
+	    <row>
+	      <entry>vcp:Value</entry><entry>xsd:normalizedString</entry><entry>Wert</entry>
+	    </row>
+	  </tbody>
+	</tgroup>
+	</table> Die zulässigen Inhalte der Typen
+      <ulink
+      url="xsd/urn_veloconnect_profile-1.1/simpleType/BindingType.html">vcp:BindingType</ulink>, <ulink
+      url="xsd/urn_veloconnect_profile-1.1/simpleType/OperationType.html">vcp:OperationType</ulink>, <ulink
+      url="xsd/urn_veloconnect_profile-1.1/simpleType/TransactionType.html">vcp:TransactionType</ulink> und
+      <ulink
+      url="xsd/urn_veloconnect_profile-1.1/simpleType/PropertyKeyType.html">vcp:PropertyKeyType</ulink> sind folgenden Listen zu entnehmen:
+      <variablelist id="vcp-BindingType">
+	<title>vcp:BindingType</title>
+	<varlistentry>
+	  <term>URL</term>
+	  <listitem><simpara><xref linkend="binding"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>URL-S</term>
+	  <listitem><simpara><xref linkend="binding"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>XML-POST</term>
+	  <listitem><simpara><xref linkend="binding"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>XML-POST-S</term>
+	  <listitem><simpara><xref linkend="binding"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+        </variablelist>
+	<variablelist id="vcp-OperationType">
+	<title>vcp:OperationType</title>
+	<varlistentry>
+	  <term>GetItemDetails</term>
+	  <listitem><simpara><xref linkend="operation-GetItemDetails"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>GetItemDetailsList</term>
+	  <listitem><simpara><xref linkend="operation-GetItemDetailsList"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>GetClassificationScheme</term>
+	  <listitem><simpara><xref linkend="operation-GetClassificationScheme"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>GetStatus</term>
+	  <listitem><simpara><xref linkend="operation-GetStatus"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Rollback</term>
+	  <listitem><simpara><xref linkend="operation-Rollback"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+        </variablelist>
+	<variablelist id="vcp-TransactionType">
+	<title>vcp:TransactionType</title>
+	<varlistentry>
+	  <term>Order</term>
+	  <listitem><simpara><xref linkend="transaction-Order"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>OrderInOnlineShop</term>
+	  <listitem><simpara><xref linkend="transaction-OrderInOnlineShop"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>TextSearch</term>
+	  <listitem><simpara><xref linkend="transaction-TextSearch"/>
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+        </variablelist>
+	<variablelist id="vcp-PropertyKeyType">
+	<title>vcp:PropertyKeyType</title>
+	<varlistentry>
+	  <term>OrderInOnlineShop.TransactionID</term>
+
+	  <listitem><simpara>Feste TransactionID zur Kennzeichnung der
+	      Transaktion OrderInOnlineShop (<xref
+		linkend="transaction-OrderInOnlineShop"/>)
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Order.Availability</term>
+	  <listitem><para>Indikator, ob Informationen zur Lieferbarkeit
+	  bereitgestellt werden. Mögliche Werte: 
+	      <variablelist>
+		<varlistentry>
+		  <term>true</term>
+		  <listitem><simpara>Lieferbarkeit wird grundsätzlich
+		      mitgeteilt</simpara>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>false</term>
+		  <listitem><simpara>grundsätzlich keine Angaben zur
+		      Lieferbarkeit</simpara>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	      </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Order.DeliveryDate</term>
+	  <listitem><para>Indikator, ob und wie terminierte Bestellungen
+	      möglich sind. Mögliche Werte: 
+	      <variablelist>
+		<varlistentry>
+		  <term>false</term>
+		  <listitem><simpara>terminierte Bestellung nicht
+		      möglich</simpara>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>order</term>
+		  <listitem><simpara>das Lieferdatum bezieht sich auf die
+		      gesamte Bestellung</simpara>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>line</term>
+		  <listitem><simpara>für jede Bestellzeile kann ein
+		      individuelles Datum angegeben werden</simpara>
+		  </listitem>
+		</varlistentry>
+	      </variablelist> (vgl. <xref linkend="transaction-Order"/>)
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Order.ExpectingDelivery</term>
+	  <listitem><para>Falls der Server die Verfügbarkeit von Artikeln
+	      mitteilt, hierbei den Code expecting_delivery verwendet, aber
+	      keine Angaben zum erwarteten Lieferdatum macht, so wird mit
+	      dieser Eigenschaft die Anzahl von Tagen mitgeteilt, innnerhalb
+	      derer mit einer Lieferung zu rechnen ist. (vgl. <xref
+		linkend="transaction-Order"/>)
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Order.Backlog</term>
+	  <listitem><para>Indikator, ob und wie die Nachlieferung gesteuert
+	      werden kann. Mögliche Werte:
+	      <variablelist>
+		<varlistentry>
+		  <term>false</term>
+		  <listitem><simpara>keine Steuerung möglich</simpara>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>order</term>
+		  <listitem><simpara>einheitliche Steuerung für die gesamte
+		      Bestellung</simpara>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>line</term>
+		  <listitem><simpara>für jede Bestellzeile kann die
+		      Nachlieferung gesteuert werden</simpara>
+		  </listitem>
+		</varlistentry>
+	      </variablelist> (vgl. <xref linkend="transaction-Order"/>)
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Order.BacklogDefault</term>
+	  <listitem><para>Indikator zum grundsätzlichen Verhalten bei 
+	    nicht lieferbaren Artikeln. Mögliche Werte: 
+	      <variablelist>
+		<varlistentry>
+		  <term>false</term>
+		  <listitem><simpara>keine Nachlieferung</simpara>
+		  </listitem>
+		</varlistentry>
+		<varlistentry>
+		  <term>true</term>
+		  <listitem><simpara>Nachlieferung</simpara>
+		  </listitem>
+		</varlistentry>
+	      </variablelist> (vgl. <xref linkend="transaction-Order"/>)
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>RecommendedRetailPrice.Netto</term>
+	  <listitem><para>Indikator, ob die empfohlenen Verkaufspreise als
+	      Nettopreise angegeben sind. Mögliche Werte:
+	    <variablelist>
+	      <varlistentry>
+		<term>false</term>
+		<listitem><simpara>empfohlene Verkauspreise sind
+		    brutto</simpara>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>true</term>
+		<listitem><simpara>empfohlene Verkaufspreise sind
+		    netto</simpara>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>quantityUnitCode.EA</term>
+	  <listitem><simpara>Indikator, ob grundsätzlich nur Stück als Einheit
+	      verwendet wird. Mögliche Werte: false, true. (vgl. Regel:
+	    Benutzung von Einheiten in <xref
+		linkend="cac-ItemType"/>)
+	    </simpara>
+	  </listitem>
+	</varlistentry>
+        </variablelist> Ein &vc;-konformer Server muss nicht zu jedem Schlüssel
+      einen Wert angeben. Falls für die Werte eine Auswahliste angegeben ist,
+      kann ein &vc;-Client, davon ausgehen, dass der entsprechende Schlüssel
+      den ersten Wert in dieser Liste hat, wenn im Profil dieser Schlüssel
+      nicht aufgeführt wird oder der Wert nicht mit einem Wert aus der Liste
+      übereinstimmt.
+    </para>
+  </section>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<GetClassificationSchemeResponse xmlns="urn:veloconnect:catalog-1.1" xmlns:vct="urn:veloconnect:transaction-1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0">
+ <vct:BuyersID>B127645</vct:BuyersID>
+ <vct:ResponseCode>200</vct:ResponseCode>
+ <ClassificationScheme>
+   <ClassificationSchemeID>WG</ClassificationSchemeID>
+   <ClassificationSchemeGroup>
+       <ID>BRE</ID>
+       <Description>Bremsbeläge</Description>
+   </ClassificationSchemeGroup>
+   <ClassificationSchemeGroup>
+       <ID>BRE_KS</ID>
+       <ParentID>BRE</ParentID>
+       <Description>Kool-Stop Cartridge Einschübe</Description>
+   </ClassificationSchemeGroup>
+ </ClassificationScheme>
+ <ClassificationScheme>
+   <ClassificationSchemeID>RG</ClassificationSchemeID>
+   <ClassificationSchemeGroup>
+       <ID>7114</ID>
+       <Description>Kool-Stop V-Brake</Description>
+   </ClassificationSchemeGroup>
+ </ClassificationScheme>
+</GetClassificationSchemeResponse>

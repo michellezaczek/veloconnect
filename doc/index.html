@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>veloconnect 1.1 - Spezifikation (19.9.2006)</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="next" href="ar01s02.html" title="2. Abhängigkeit von anderen Spezifikationen" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">veloconnect 1.1 - Spezifikation (19.9.2006)</th></tr><tr><td width="20%" align="left"> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s02.html">Weiter</a></td></tr></table><hr /></div><div class="article" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title"><a id="id2395076"></a>veloconnect 1.1 - Spezifikation (19.9.2006)</h2></div><div><div class="author"><h3 class="author"><span class="honorific">Dr</span>. <span class="firstname">Ludwig</span> <span class="surname">Balke</span></h3></div></div><div><p class="copyright">Copyright © 2006 Verbund Selbstverwalteter Fahrradbetriebe
+	e. V. (VSF)</p></div></div><div></div><hr /></div><div class="toc"><p><b>Inhaltsverzeichnis</b></p><dl><dt><span class="section"><a href="index.html#einleitung">1. Einleitung</a></span></dt><dt><span class="section"><a href="ar01s02.html">2. Abhängigkeit von anderen Spezifikationen</a></span></dt><dt><span class="section"><a href="ar01s03.html">3. Überblick</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s03.html#binding">3.1. Bindungen</a></span></dt><dt><span class="section"><a href="ar01s03s02.html">3.2. Transaktionen</a></span></dt><dt><span class="section"><a href="ar01s03s03.html">3.3. Übersicht der Regeln</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s04.html">4. Veloconnect XML-Schema</a></span></dt><dt><span class="section"><a href="ar01s05.html">5. Basis-Komponenten</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s05.html#xsd-primitives">5.1. Primitive Datentypen</a></span></dt><dt><span class="section"><a href="ar01s05s02.html">5.2. Basis-Typen</a></span></dt><dt><span class="section"><a href="ar01s05s03.html">5.3. Grundlegende zusamengesetzte Typen</a></span></dt><dt><span class="section"><a href="ar01s05s04.html">5.4. Beschreibung von Gegenständen</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s06.html">6. Operationen</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s06.html#vct-RequestType">6.1. RequestType</a></span></dt><dt><span class="section"><a href="ar01s06s02.html">6.2. ResponseType</a></span></dt><dt><span class="section"><a href="ar01s06s03.html">6.3. Operation: GetStatus</a></span></dt><dt><span class="section"><a href="ar01s06s04.html">6.4. Operation: Rollback</a></span></dt><dt><span class="section"><a href="ar01s06s05.html">6.5. Operation: GetProfile</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s07.html">7. Transaktion: Order</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s07.html#operation-CreateOrder">7.1. Operation: CreateOrder</a></span></dt><dt><span class="section"><a href="ar01s07s02.html">7.2. Operation: UpdateOrder</a></span></dt><dt><span class="section"><a href="ar01s07s03.html">7.3. Operation: FinishOrder</a></span></dt><dt><span class="section"><a href="ar01s07s04.html">7.4. Operation: ViewOrder</a></span></dt><dt><span class="section"><a href="ar01s07s05.html">7.5. Operation: GetItemDetails</a></span></dt><dt><span class="section"><a href="ar01s07s06.html">7.6. Operation: GetItemDetailsList
+      (neu in Version 1.1)</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s08.html">8. Transaktion: OrderInOnlineShop</a></span></dt><dt><span class="section"><a href="ar01s09.html">9. Katalogdaten (neu in Version 1.1)</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s09.html#transaction-TextSearch">9.1. Transaktion: TextSearch</a></span></dt><dt><span class="section"><a href="ar01s09s02.html">9.2. Operation: GetClassificationScheme</a></span></dt><dt><span class="section"><a href="ar01s09s03.html">9.3. vcc:ItemInformation</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s10.html">10. Testbetrieb</a></span></dt><dt><span class="section"><a href="ar01s11.html">11. Zukünftige Versionen</a></span></dt><dt><span class="section"><a href="ar01s12.html">12. Beispiele</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s12.html#id2525269">12.1. GetProfile</a></span></dt><dt><span class="section"><a href="ar01s12s02.html">12.2. Abfrage von Artikeldetails (Operation: GetItemDetails)</a></span></dt><dt><span class="section"><a href="ar01s12s03.html">12.3. Abfrage von Artikeldetails (Operation: GetItemDetailsList)</a></span></dt><dt><span class="section"><a href="ar01s12s04.html">12.4. Bestellung erzeugen (Transaktion: Order, Operation: CreateOrder)
+    </a></span></dt><dt><span class="section"><a href="ar01s12s05.html">12.5. Bestellung ändern (Transaktion: Order, Operation: UpdateOrder)
+    </a></span></dt><dt><span class="section"><a href="ar01s12s06.html">12.6. Bestellung abschließen (Transaktion: Order, Operation: FinishOrder)
+    </a></span></dt><dt><span class="section"><a href="ar01s12s07.html">12.7. Bestellung in Verbindung mit Online-Shop 
+      (Transaktion: OrderInOnlineShop)</a></span></dt><dt><span class="section"><a href="ar01s12s08.html">12.8. Suche nach Artikeln (Transaktion:TextSearch)</a></span></dt><dt><span class="section"><a href="ar01s12s09.html">12.9. Klassifikationsschemata</a></span></dt><dt><span class="section"><a href="ar01s12s10.html">12.10. ItemInformation</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s13.html">13. Urheberrechtliche Hinweise</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s13.html#id2523816">13.1. veloconnect</a></span></dt><dt><span class="section"><a href="ar01s13s02.html">13.2. UBL</a></span></dt></dl></dd><dt><span class="section"><a href="ar01s14.html">14. Referenzen</a></span></dt><dt><span class="section"><a href="ar01s15.html">15. Änderungen/Neuerungen</a></span></dt><dd><dl><dt><span class="section"><a href="ar01s15.html#id2526348">15.1. Syntaktische Änderungen</a></span></dt><dt><span class="section"><a href="ar01s15s02.html">15.2. Änderungen an Operationen/Transaktionen</a></span></dt><dt><span class="section"><a href="ar01s15s03.html">15.3. Neue Operationen/Transaktionen</a></span></dt></dl></dd></dl></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="einleitung"></a>1. Einleitung</h2></div></div><div></div></div><p>
+Diese Spezifikation richtet sich an ein Publikum mit entsprechenden
+    Vorkenntnissen (vgl. <a href="ar01s02.html" title="2. Abhängigkeit von anderen Spezifikationen">Abschnitt 2, „Abhängigkeit von anderen Spezifikationen“</a>). Angesprochen sind zum
+    einen Entscheider, die den Aufwand für eine Umsetzung dieser Spezifikation
+    abschätzen wollen, und zum anderen Entwickler,
+    die eine solche Schnittstelle implementieren. Die allgemeinen Gründe für
+    veloconnect brauchen daher hier nicht wiederholt zu werden, man findet sie auf 
+    der Website [<a href="ar01s14.html#ref_vc">1</a>].
+</p><p>Der eilige Leser orientiere sich an den Beispielen in <a href="ar01s12.html" title="12. Beispiele">Abschnitt 12, „Beispiele“</a> und schlage dann nach Bedarf die Details nach.
+   </p><p>
+Über die Änderungen gegenüber der Vorgängerversion 1.0 informiert
+    überblicksartig ein Abschnitt am Ende dieses Dokuments (<a href="ar01s15.html" title="15. Änderungen/Neuerungen">Abschnitt 15, „Änderungen/Neuerungen“</a>).
+</p><p>
+    Diese Spezifikation beruht auf offenen und verbreiteten Standards, um sich
+    auf die spezifischen Aufgaben konzentrieren zun können, die durch diese
+    Schnittstelle gelöst werden sollen. Als Sprache zur Übermittlung von Daten
+    wird XML eingesetzt, da hiermit strukturierte Daten 
+    übertragen werden 
+    können und die Struktur in flexibler und verläßlicher Weise derart 
+    festgelegt
+    werden kann, dass eine automatische Validierung möglich ist. Damit einher
+    geht natürlich ein gewisser Overhead, der allerdings bei den zur
+    Verfügung stehenden Ressourcen und Komprimierungsmöglichkeiten keine Rolle spielt. Ferner gibt es für die
+    gängigen Betriebssysteme und Programmiersprachen fertige und frei verfügbare
+    Bibliotheken zum Parsen und Generieren von XML-Dokumenten.
+</p><p>
+    Zur Modellierung der Entitäten, die mittels XML beschrieben werden sollten,
+    wird die „<span class="quote">Universal Business Language (UBL)</span>“ [<a href="ar01s14.html#ref_UBL">3</a>] eingesetzt, ein vom OASIS-Konsortium [<a href="ar01s14.html#ref_oasis">2</a>] etablierter
+    offener Standard. Dabei handelt es sich um ein umfangreiches XML-Schema
+    zur Beschreibung geschäftsrelevanter Entitäten. Im Unterschied zu anderen
+    Standards wie z.B. OpenTrans oder cXML sind hier nicht Geschäftsprozesse,
+    die am Einkaufsprozedere großer Firmen orientiert sind, fest in der
+    Schemadefinition verankert, sondern es wird ein allgemeines Vokabular zur
+    Verfügung gestellt, mit dem auch die für veloconnect spezifischen Prozesse
+    abzubilden sind.
+</p><p>
+    Dieses Dokument ist wie folgt aufgebaut: Nachdem zunächst die Abhängigkeit
+    von anderen Spezifikationen expliziert wird (<a href="ar01s02.html" title="2. Abhängigkeit von anderen Spezifikationen">Abschnitt 2, „Abhängigkeit von anderen Spezifikationen“</a>),
+    wird ein genereller Überblick über das der Spezifikation zugrunde liegende
+    Modell gegeben (<a href="ar01s03.html" title="3. Überblick">Abschnitt 3, „Überblick“</a>). In den folgenden beiden
+    Abschnitten werden die konstituierenden Elemente des XML-Schemas erläutert,
+    welches zur Übermittlung von Daten verwendet wird (<a href="ar01s04.html" title="4. Veloconnect XML-Schema">Abschnitt 4, „Veloconnect XML-Schema“</a>, <a href="ar01s05.html" title="5. Basis-Komponenten">Abschnitt 5, „Basis-Komponenten“</a>). Die generischen Regeln für
+    die über eine veloconnect-Schnittstelle kommunizierenden Parteien, sowie die
+    spezifischen Anforderungen für den Bestellvorgang finden sich in <a href="ar01s06.html" title="6. Operationen">Abschnitt 6, „Operationen“</a> bzw. <a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a> und <a href="ar01s08.html" title="8. Transaktion: OrderInOnlineShop">Abschnitt 8, „Transaktion: OrderInOnlineShop“</a>. Neu hinzugekommen ist in
+    Version 1.1 der Abschnitt über den Austausch von Katalogdaten (<a href="ar01s09.html" title="9. Katalogdaten (neu in Version 1.1)">Abschnitt 9, „Katalogdaten (neu in Version 1.1)“</a>). Anschließend wird erläutert,
+    welcher Testmechanismus vorgesehen ist (<a href="ar01s10.html" title="10. Testbetrieb">Abschnitt 10, „Testbetrieb“</a>), sowie nach
+    welchen Regeln in zukünftigen Versionen der Spezifikation für Auf- und
+    Abwärtskompatibilität gesorgt ist (<a href="ar01s11.html" title="11. Zukünftige Versionen">Abschnitt 11, „Zukünftige Versionen“</a>). Den
+    Abschluss bilden einige Beispiele in <a href="ar01s12.html" title="12. Beispiele">Abschnitt 12, „Beispiele“</a>.    
+</p><p>
+    Diese Spezifikation basiert auf der UBL-Spezifikation, deren Urheberrechte
+    das OASIS-Konsortium [<a href="ar01s14.html#ref_oasis">2</a>] innehat; die Lizenzbestimmungen finden sich in <a href="ar01s13.html" title="13. Urheberrechtliche Hinweise">Abschnitt 13, „Urheberrechtliche Hinweise“</a>. Die Urheberrechte dieser Spezifikation besitzt der
+    Verbund Selbtsverwalteter Fahrradbetriebe e. V. (VSF) [<a href="ar01s14.html#ref_vsf">4</a>]. Die genauen
+    Lizenzbestimmungen finden sich ebenfalls in <a href="ar01s13.html" title="13. Urheberrechtliche Hinweise">Abschnitt 13, „Urheberrechtliche Hinweise“</a>.
+</p><p>
+    Hinweise auf Fehler und Vorschläge werden gerne unter der Adresse
+    <tt class="email">&lt;<a href="mailto:spezifikation@veloconnect.de">spezifikation@veloconnect.de</a>&gt;</tt> entgegengenommen.
+</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ar01s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"> </td><td width="40%" align="right" valign="top"> 2. Abhängigkeit von anderen Spezifikationen</td></tr></table></div></body></html>

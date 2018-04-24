@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<CreateTextSearchResponse xmlns="urn:veloconnect:catalog-1.1" 
+   xmlns:vct="urn:veloconnect:transaction-1.0">
+ <vct:BuyersID>B127645</vct:BuyersID>
+ <vct:ResponseCode>200</vct:ResponseCode>
+ <vct:TransactionID>2</vct:TransactionID>
+ <vct:StatusCode>2</vct:StatusCode>
+ <vct:IsTest>false</vct:IsTest>
+
+ <TotalCount>6</TotalCount>
+</CreateTextSearchResponse>

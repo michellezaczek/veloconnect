@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>9.2. Operation: GetClassificationScheme</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s09.html" title="9. Katalogdaten (neu in Version 1.1)" /><link rel="previous" href="ar01s09.html" title="9. Katalogdaten (neu in Version 1.1)" /><link rel="next" href="ar01s09s03.html" title="9.3. vcc:ItemInformation" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">9.2. Operation: GetClassificationScheme</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s09.html">Zurück</a> </td><th width="60%" align="center">9. Katalogdaten (neu in Version 1.1)</th><td width="20%" align="right"> <a accesskey="n" href="ar01s09s03.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-GetClassificationScheme"></a>9.2. Operation: GetClassificationScheme</h3></div></div><div></div></div><p>
+    Es ist gängige Praxis, zur Strukturierung des Sortiments Artikel in
+    Warengruppen zusammenzufassen. Manche Lieferanten gewähren Mengenrabatte in
+    der Form, dass zur Ermittlung des Rabatts Artikel zu Gruppen
+    zusammengefasst werden. Die Zusammenfassung in Gruppen kann generisch als
+    Klassifikation der Artikel nach einem Klassifikationsschema aufgefasst
+    werden. Zur Mitteilung verwendeter Klassifikationsschemata kann die
+    Operation GetClassificationScheme verwendet werden.
+   </p><p>
+    Die Operation GetClassificationScheme besteht aus der Anfrage <a href="xsd/urn_veloconnect_catalog-1.1/element/GetClassificationSchemeRequest.html" target="_top">vcc:GetClassificationSchemeRequest</a> vom Typ vct:RequestType. Der Server antwortet hierauf mit <a href="xsd/urn_veloconnect_catalog-1.1/element/GetClassificationSchemeResponse.html" target="_top">vcc:GetClassificationSchemeResponse</a>, welches den Typ vct:ResponseType um eine nicht leere Folge von Elementen <a href="xsd/urn_veloconnect_catalog-1.1/element/ClassificationScheme.html" target="_top">vcc:ClassificationScheme</a> erweitert.
+   </p><p>
+     Das Element vcc:ClassificationScheme hat das Attribut singleMapping,
+      welches per default auf true gesetzt ist, und besteht aus dem Element
+      vcc:ClassificationSchemeID vom Typ udt:IdentifierType, gefolgt von
+      wahlweise vcc:ClassificationSchemeURI vom Typ xsd:anyURI oder einer
+      nicht leeren Liste von Elementen <a href="xsd/urn_veloconnect_catalog-1.1/element/ClassificationSchemeGroup.html" target="_top">vcc:ClassificationSchemeGroup</a>.
+   </p><p>
+     Das Element vcc:ClassificationSchemeGroup besteht aus folgenden Elementen:
+      </p><div class="table"><a id="id2522354"></a><p class="title"><b>Tabelle 19. vcc:ClassificationSchemeGroup - Elemente</b></p><table summary="vcc:ClassificationSchemeGroup - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vcc:ID</td><td>udt:IdentifierType</td><td>Eindeutige Kennzeichnung der Gruppe innerhalb eines Schemas</td></tr><tr><td>vcc:ParentID</td><td>udt:IdentifierType?</td><td>Verweis auf übergeordnete Gruppe bei hierarchischer Gruppenstruktur</td></tr><tr><td>vcc:Description</td><td>cct:TextType</td><td>Bezeichnung der Gruppe</td></tr></tbody></table></div><p>
+   </p><p><a id="rule-GetClassificationScheme"></a><b>Regel: ClassificationScheme. </b></p><div class="itemizedlist"><ul type="disc"><li>
+         Ein veloconnect-konformer Server muss alle verwendeten
+	Klassifikationsschemata mit Hilfe der Operation GetClassificationScheme
+	mitteilen. Referenzen auf eine bestimmte Gruppe eines
+	Klassifikationsschemas bestehen aus der ID des Schemas und der ID der
+	Gruppe. 
+      </li><li>Falls bei einem Klassifikationsschema das Attribut singleMapping
+den Wert true hat, muss gewährleistet sein, dass es zu jedem Artikel höchstens
+eine Gruppe dieses Schemas gibt, der dieser Artikel zugeordnet wird.
+      </li><li>Bei einem Klassifikationsschema ist zu unterscheiden zwischen
+	einem proprietären, nur für den jeweiligen Lieferanten gültigen Schema
+	und einem standardisierten, d.h. öffentlich und lieferantenunabhängig
+	festgelegten Schema. Bei einem proprietären Schema teilt der Server
+	alle Gruppen dieses Schemas über Elemente vcc:ClassificationSchemeGroup
+	mit. Bei einem standardisierten Schema wird die Gruppenstruktur über
+	eine URL mitgeteilt, die es erlaubt, die erforderlichen Informationen
+	über die Gruppen dieses Schemas zu ermitteln.
+      </li></ul></div><p>
+    </p><p>Da es zur Zeit in der Fahrradbranche keine standardisierten Klassifikationsschemata zu
+	geben scheint, die brauchbar sind und auch üblicherweise angewendet
+	werden, ist die Benutzung eines standardisierten Schemas zunächst nur
+	eine hypothetische Möglichkeit für den zukünfigen Einsatz 
+        von veloconnect.
+      </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s09.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s09.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s09s03.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">9. Katalogdaten (neu in Version 1.1) </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 9.3. vcc:ItemInformation</td></tr></table></div></body></html>

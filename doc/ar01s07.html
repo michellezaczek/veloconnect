@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7. Transaktion: Order</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s06s05.html" title="6.5. Operation: GetProfile" /><link rel="next" href="ar01s07s02.html" title="7.2. Operation: UpdateOrder" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">7. Transaktion: Order</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06s05.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s07s02.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="transaction-Order"></a>7. Transaktion: Order</h2></div></div><div></div></div><p> Ein
+    veloconnect-konformer Server muss von den Transaktionen Order und
+    OrderInOnlineShop (vgl. nächsten Abschnitt) mindestens eine implementieren.
+    Die Transaktion Order besitzt drei Zustände: </p><div class="itemizedlist"><ul type="disc"><li>den Startzustand 1</li><li>den Updateszustand 2</li><li>den Endzustand 100</li></ul></div><p> und kennt vier Operationen: </p><div class="itemizedlist"><ul type="disc"><li>CreateOrder</li><li>UpdateOrder</li><li>FinishOrder</li><li>ViewOrder</li></ul></div><p> Die
+    einzelnen Operationen sind wie folgt definiert: </p><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-CreateOrder"></a>7.1. Operation: CreateOrder</h3></div></div><div></div></div><p>Die
+      Anfrage ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/CreateOrderRequest.html" target="_top">vco:CreateOrderRequest</a>, 
+      die Antwort ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/OrderResponse.html" target="_top">vco:OrderResponse</a>. 
+      Das Element vco:CreateOrderRequest erweitert den Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:RequestType</a> um das Element <a href="xsd/urn_veloconnect_order-1.1/element/OrderRequestLine.html" target="_top">vco:OrderRequestLine</a>, 
+      welches mindestens einmal vorkommen muss. Dieses besitzt die folgenden
+      Elemente: </p><div class="table"><a id="id2461856"></a><p class="title"><b>Tabelle 10. vco:OrderRequestLine - Elemente</b></p><table summary="vco:OrderRequestLine - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>cac:SellersItemIdentification</td><td>cac:ItemIdenficationType</td><td>Kennzeichnung 
+		des zu bestellenden Artikels</td></tr><tr><td>cbc:Quantity</td><td>cbc:QuantityType</td><td>Menge</td></tr><tr><td>cac:BuyersItemIdentification</td><td>cac:ItemIdenficationType?</td><td>optional: 
+		Artikelnummer des Käufers</td></tr><tr><td>cbc:DeliveryDate</td><td>cbc:Date?</td><td>optional: 
+		gewünschtes Lieferdatum</td></tr><tr><td>cbc:BacklogIndicator</td><td>cbc:IndicatorType?</td><td>optional: 
+		Indikator für Nachlieferung</td></tr></tbody></table></div><p> </p><p><a id="rule-CreateOrderRequest"></a><b>Regel:
+	CreateOrderRequest. </b>Ein veloconnect-konformer Client vehält sich
+	wie folgt: Für die Zwecke der Transaktion Order wird davon ausgegangen,
+	dass die Bestellung normalisiert ist, d.h. je zwei verschiedene Zeilen
+	der Bestellung beziehen sich auf verschiedene Artikelkennzeichnungen
+	des Verkäufers (kurz: Bestellnummer). Zu jeder Zeile dieser Bestellung
+	wird ein Element OrderRequestLine wie folgt angelegt: </p><p><a id="rule-OrderRequestLine-Client"></a><b>Regel:
+	OrderRequestLine(Client). </b></p><div class="orderedlist"><ol type="1"><li>Das Element SellersItemIdentifcation enthält die
+	      Bestellnummer. </li><li>Das
+	      Element Quantity enthält die Bestellmenge (vgl. Absatz <a href="ar01s05s02.html#cbc-QuantityType">cbc:QuantityType</a>).
+	    </li><li>Das optionale Element
+	      BuyersItemIdentification kann für die Angabe der Artikelnummer
+	      des Käufers verwendet werden.</li><li>Das optionale Element DeliveryDate wird nur
+	      verwendet, wenn vom Benutzer explizit eine Lieferung zu einem
+	      späteren Zeitpunkt gewünscht wird. Das Programm muss diese
+	      Eingabemöglichkeit nicht vorsehen. Falls es dies doch tut, ist
+	      dafür Sorge zu tragen, dass die Eingabe des Benutzers möglichen
+	      Einschränkungen des Servers genügt. Insbesondere ist diese
+	      Eingabemöglichkeit nicht anzubieten, wenn der Server die Angabe
+	      eines Liefertermins nicht unterstützt.Ferner darf das Datum nicht
+	      in der Vergangenheit liegen.</li><li>Es wird davon ausgegangen, dass zwischen Käufer
+	      und Verkäufer eine Verreinbarung herrscht, ob nicht lieferbare
+	      Artikel üblicherweise nachzuliefern sind oder nicht. Das Element
+	      BacklogIndicator ist nur zu verwenden, wenn der Benutzer eine
+	      explizite Abweichung von dieser Regel wünscht. Dem Benutzer kann
+	      diese Möglichkeit eröffnet werden, muss aber nicht. </li></ol></div><p> </p><p>Wird die URL
+      oder die URL-S-Bindung verwendet, muss jedes dieser Elemente in eine
+      Folge von Parametern übersetzt werden. Dies geschieht wie folgt: Sei X
+      der Inhalt des ID-Elements von SellersItemIdentification. Name und Wert
+      der für die Serialisierung verwendeten Parameter sind dann wie folgt:
+      </p><div class="table"><a id="serialize-vco-OrderRequestLine"></a><p class="title"><b>Tabelle 11. URL-Parameter für
+	  vco:OrderRequestLine</b></p><table summary="URL-Parameter für&#10;&#9;  vco:OrderRequestLine" border="1"><colgroup><col /><col /></colgroup><thead><tr><th>Name</th><th>Wert</th></tr></thead><tbody><tr><td>Quantity.X</td><td>Inhalt des Elements
+		Quantity</td></tr><tr><td>quantityUnitCode.X</td><td>Inhalt des Attributs
+		quantityUnitCode des Elements Quantity</td></tr><tr><td>DeliveryDate.X</td><td>Inhalt des Elements
+		DeliveryDate.</td></tr><tr><td>BacklogIndicator.X</td><td>Inhalt des Elements
+		BacklogIndicator.</td></tr><tr><td>BuyersItemIdentification.X</td><td>Inhalt des
+		ID-Elements von BuyersItemIdentification</td></tr></tbody></table></div><p> </p><p><a id="rule-serialize-vco-OrderRequestLine"></a><b>Regel: Serialisierung
+	von vco:OrderRequestLine. </b>Ein veloconnect-konformer Server darf
+	die Transaktion Order in der URL- oder URL-S-Bindung nur dann
+	implementieren, wenn gewährleistet ist: </p><div class="orderedlist"><ol type="1"><li>Jeder Artikel ist durch eine Artikelnummer
+	      eindeutig gekennzeichnet, d.h. zur Kennzeichnung von Gegenständen
+	      wird nur das ID-Element in Elementen
+	      cac:SellersItemIdentification benötigt.</li><li>Es werden keine Artikelnummern verwendet, in denen
+	      das Zeichen <tt class="literal">=</tt> vorkommt.</li></ol></div><p> </p><p> Das Element
+      vco:OrderResponse erweitert den Typ <a href="ar01s06s02.html" title="6.2. ResponseType">vct:TransactionResponseType</a> um die
+      Elemente <a href="xsd/urn_veloconnect_order-1.1/element/OrderResponseLine.html" target="_top">vco:OrderResponseLine</a>,
+       <a href="xsd/urn_veloconnect_order-1.1/element/RequestReplacement.html" target="_top">vco:RequestReplacement</a>, 
+       <a href="xsd/urn_veloconnect_order-1.1/element/ItemUnknown.html" target="_top">vco:ItemUnknown</a>, 
+      die jeweils beliebig oft vorkommen können. </p><p>Das Element
+      vco:OrderResponseLine ist aus folgenden Elementen aufgebaut: </p><div class="table"><a id="vco-OrderResponseLine"></a><p class="title"><b>Tabelle 12. OrderResponseLine - Elemente</b></p><table summary="OrderResponseLine - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>cbc:Quantity</td><td>cbc:QuantityType</td><td>Menge</td></tr><tr><td>cac:Item</td><td>cac:ItemType</td><td>Beschreibung 
+		des bestellten Artikels</td></tr><tr><td>cac:UnitPrice</td><td>cbc:PriceAmountType</td><td>Einzelpreis</td></tr><tr><td>vco:Availability?</td><td>vco:AvailabilityType</td><td>Liefererbarkeit 
+		(vgl. Absatz <a href="ar01s07.html#vco-AvailabilityType">vco:AvailabilityType</a>)</td></tr><tr><td>cbc:DeliveryDate</td><td>cbc:Date?</td><td>Lieferdatum</td></tr><tr><td>cbc:BacklogIndicator</td><td>cbc:IndicatorType?</td><td>Indikator 
+		für Nachlieferung</td></tr></tbody></table></div><p>
+    </p><p> Das Element vco:RequestReplacement besteht aus zwei
+      Elementen: </p><div class="table"><a id="vco-RequestReplacement"></a><p class="title"><b>Tabelle 13. vco:RequestReplacement - Elemente</b></p><table summary="vco:RequestReplacement - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>cac:SellersItemIdentifcation</td><td>cac:ItemIdentificationType</td><td>Vom 
+		Käufer bestellter Artikel</td></tr><tr><td>cac:ItemReplacement</td><td>cac:ItemReplacementType+</td><td>Ersatzvorschlag</td></tr></tbody></table></div><p> Der Typ <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/complexType/ItemReplacementType.html" target="_top">cac:ItemReplacementType</a>
+      erweitert den Type cac:ItemIdentificationType um ein verbindliches Element
+      cac:ReplacementCode vom Typ cac:ReplacementCodeType sowie ein optionales
+      Element cbc:Description. Der Typ <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/simpleType/ReplacementCodeType.html" target="_top">cac:ReplacementCodeType</a> kann nur
+      folgende Zeichenketten als Inhalt haben: </p><div class="itemizedlist"><ul type="disc"><li>identical</li><li>package</li><li>recommended</li></ul></div><p>
+    </p><p>Das Element <a href="xsd/urn_veloconnect_order-1.1/element/ItemUnknown.html" target="_top">vco:ItemUnknown</a> enthält ein Element cac:SellersItemIdentification.
+    </p><p><a id="vco-AvailabilityType"></a><b>vco:AvailabilityType. </b> Der
+	Typ <a href="xsd/urn_veloconnect_order-1.1/complexType/AvailabilityType.html" target="_top">vco:AvailabilityType</a> besteht aus folgenden Elementen: </p><div class="table"><a id="id2462470"></a><p class="title"><b>Tabelle 14. vco:AvailabilityType - Elemente</b></p><table summary="vco:AvailabilityType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vco:Code</td><td>vco:AvailabilityCodeType</td><td>Code 
+		  für Lieferbarkeit, kann nur folgende Werte annehmen:
+		  available, partially_available, expecting_delivery,
+		  not_available</td></tr><tr><td>vco:AvailableQuantity</td><td>cbc:QuantityType?</td><td>lieferbare 
+		  Menge</td></tr><tr><td>cbc:ExpectedDeliveryDate</td><td>cbc:DateType?</td><td>erwartete 
+		  Lieferung</td></tr><tr><td>cac:ItemReplacement</td><td>cac:ItemReplacementType?</td><td>Ersatzvorschlag</td></tr></tbody></table></div><p> </p><p><a id="rule-CreateOrder"></a><b>Regel: CreateOrder. </b>
+	Ein veloconnect-konformer Server reagiert auf ein Anfrage CreateOrderRequest
+	wie folgt: </p><div class="orderedlist"><ol type="1"><li>Falls in der Anfrage keine
+	      transactionID übermitttelt wird, wird ein neue
+	      Transaktionsinstanz erzeugt. Falls dies nicht möglich ist, wird
+	      der Responsecode 421 zurückgeliefert.</li><li>Falls in der Anfrage eine transactionID
+	      übermittelt wird, wird überprüft, ob hierzu schon eine
+	      Transaktionsinstanz existiert. Falls eine solche existiert und
+	      sich diese weder im Startzustand noch im Endzustand befindet,
+	      wird die Bearbeitung der Anfrage abgebrochen und der ResponseCode
+	      430 zurückgeliefert. Ansonsten wird der Transaktionskontext
+	      gelöscht und die Transaktionsinstanz in den Zustand 1 versetzt.
+	    </li><li>Mit jedem Element
+	      OrderRequestLine wird gemäß der Regel <a href="ar01s07.html#rule-OrderRequestLine-Server">OrderRequestLine(Server)</a> 
+	      verfahren. Hierbei werden im Transaktionskontext Elemente
+	      OrderResponseLine angelegt, sowie eventuelle Elemente
+	      RequestReplacement erzeugt.</li><li>Aus dem Transaktionskontext werden die Elemente
+	      OrderResponseLine in die Antwort eingefügt, sowie die im
+	      vorherigen Schritt erzeugten Elemente RequestReplacement. Die
+	      Antwort wird mit ResponseCode 200 an den Client ausgeliefert und
+	      die Transaktionsinstanz wechselt in den Zustand 2
+	      (Updateszustand).
+	    </li></ol></div><p> </p><p><a id="rule-OrderRequestLine-Server"></a><b>Regel:
+	OrderRequestLine(Server). </b>Es sei ein Element
+	OrderRequestLine gegeben. Der Transaktionskontext wird wie folgt
+	modifiziert: </p><div class="orderedlist"><ol type="1"><li>Es wird überprüft, ob
+	      SellersItemIdentification eine gültige Artikelkennzeichnung ist.
+	      Falls dies nicht der Fall ist, und <a href="ar01s07.html#rule-RequestReplacement">Regel:
+		RequestReplacement</a> anwendbar ist, wird gemäß dieser
+	      Regel ein
+	      RequestReplacement-Element erzeugt, ansonsten wird die übergebene
+	      SellersItemIdentification in ein ItemUnknown-Element verpackt.
+</li><li><p>Falls SellersItemIdentification eine gültige
+	      Artikelkennzeichnung ist, wird ein Element OrderResponseLine erzeugt. Die
+	      Elemente Quantity, DeliveryDate, BacklogIndicator werden
+	      übernommen, wobei folgende Modifikationen möglich sind:
+	      </p><div class="orderedlist"><ol type="a"><li>Falls für die Bestellmenge nur
+		    gewisse Werte zulässig sind, kann die Menge auf den
+		    nächsten gültigen Wert angepasst werden. (Beispiel: Als
+		    Einheit wird Stück verwendet, die Abgabe erfolgt aber nur
+		    in Packungen zu 100 Stück.)</li><li>Falls das gewünschte Lieferdatum nicht
+		    eingehalten werden kann, kann das Datum auf einen anderen
+		    Wert gesetzt werden. Dieser sollte möglichst nahe beim
+		    gewünschten Termin liegen.</li><li>Falls der Server nicht in der Lage ist,
+		    Angaben zum Liefertermin zu verarbeiten oder nur unter
+		    Einschränkungen, müssen diese Enschränkungen im <a href="ar01s06s05.html#vcp-VeloconnectProfile" title="Tabelle 7. vcp:VeloconnectProfile - Elemente">veloconnect-Profil</a>
+		    in der Eigenschaft Order.DeliveryDate angegeben
+		    werden.</li><li>Sofern das
+		    gewünschte Nachlieferungsverhalten nicht realisiert werden
+		    kann, ist das Element BacklogIndicator entsprechend zu
+		    setzen.</li></ol></div></li><li>Das Element BuyersItemIdentfication
+	      sollte übernommen werden, muss aber nicht, falls das System nicht
+	      in der Lage ist, diese Information im Transaktionskontext zu
+	      speichern. </li><li>Aus dem
+	      Warenwirtschaftssystem werden die Stammdaten des identifizierten
+	      Artikels ermittelt und im Element Item abgelegt. </li><li>Der Nettoeinzelpreis des Artikels ist
+	      im Element UnitPrice abzulegen. Dieser Einzelpreis bezieht sich
+	      auf die in Quantity angegebenen Einheit.
+	      Der Gesamtpreis eines Posten ergibt sich also durch
+	      Multiplikation des Einzelpreises (UnitPrice) mit der Anzahl
+	      (Quantity).
+	    </li><li>Die Verfügbarkeit des Artikels sollte aus aktuell
+	      verfügbaren Daten des Warenwirtschaftssystems ermittelt werden
+	      und gemäß Regel: Availability im Element Availability abgelegt
+	      werden. Falls der Server diese Information nicht zur Verfügung
+	      stellt, muss dies im <a href="ar01s06s05.html#vcp-VeloconnectProfile" title="Tabelle 7. vcp:VeloconnectProfile - Elemente">veloconnect-Profil</a>
+	      mittels der Eigenschaft Order.Availability angegeben werden.
+	    </li><li>Das erzeugte Element
+	      OrderResponseLine wird im Transaktionskontext gespeichert und
+	      ersetzt dort ein eventuell schon vorhandenes Element mit der
+	      gleichen Artikelkennzeichnung. Falls die angegebene Menge den
+	      Wert 0 hat, so wird das Element aus dem Transaktionskontext
+	      entfernt.</li></ol></div><p> </p><p><a id="rule-RequestReplacement"></a><b>Regel:
+	RequestReplacement. </b>Erhält der Server vom Client eine
+	Artikelkennzeichnung, die nicht mehr zum aktuellen Sortiment gehört,
+	aber dennoch soweit vom Server interpretiert werden kann, dass er einen
+	oder mehrere Ersatzvorschläge unterbreiten will, so wird dies mit dem
+	Element vco:RequestReplacement mitgeteilt. Das Kind-Element
+	vco:SellersItemIdentification wird unverändert aus der Anfrage
+	übernommen, für jeden Ersatzartikel wird ein Element
+	cac:ItemReplacement gemäß nachfolgender Regel gebildet.</p><p><a id="rule-ItemReplacement"></a><b>Regel:
+	ItemReplacement. </b>Ersatzartikel werden durch ein Element
+	<a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/element/ItemReplacement.html" target="_top">cac:ItemReplacement</a> mitgeteilt. Das Kind-Element cac:ReplacementCode vom Typ <a href="xsd/urn_oasis_names_specification_ubl_schema_xsd_CommonAggregateComponents-1.0/simpleType/ReplacementCodeType.html" target="_top">cac:ReplacementCodeType</a>
+	qualifiziert den Vorschlag wie folgt: </p><div class="table"><a id="rule-ReplacementCode"></a><p class="title"><b>Tabelle 15. Regel: ReplacementCode</b></p><table summary="Regel: ReplacementCode" border="1"><colgroup><col /><col /></colgroup><thead><tr><th>Inhalt</th><th>Bedeutung</th></tr></thead><tbody><tr><td>identical</td><td>Der
+		  Ersatzartikel unterschiedet sich vom zu ersetzenden Artikel
+		  nur durch die Artikelnummer. (Zum Beispiel anwendbar, wenn
+		  eine Umstellung der Artikelnummern stattgefunden hat und der
+		  Client noch die alten verwendet)</td></tr><tr><td>package</td><td>Der Ersatzartikel
+		  unterscheidet sich vom zu ersetzenden Artikel nur durch die
+		  Verpackungseinheit.</td></tr><tr><td>recommended</td><td>Der Verkäufer hält den
+		  Ersatzartikel für einen adäquaten Ersatz und spricht eine
+		  Empfehlung aus. In diesem Fall wird empfohlen, die
+		  Artikelbeschreibung im nachfolgenden Element cbc:Description mitzuteilen.</td></tr></tbody></table></div><p>
+      </p><p><a id="rule-Availability"></a><b>Regel:
+	Availability. </b>Die Verfügbarkeit eines Artikels wird in
+	einem Element vom Typ vco:AvailabilityType mitgeteilt. Die Inhalte
+	seiner Kind-Elemente einer veloconnect-konformen Implementierung genügen den
+	folgenden Regeln. </p><div class="orderedlist"><ol type="1"><li><p>Im Element vco:Code
+	      wird die Verfügbarkeit wie folgt kodifiziert: </p><div class="table"><a id="rule-AvailabilityCode"></a><p class="title"><b>Tabelle 16. Regel:
+		  Availability-Code</b></p><table summary="Regel:&#10;&#9;&#9;  Availability-Code" border="1"><colgroup><col /><col /></colgroup><thead><tr><th>Inhalt</th><th>Bedeutung</th></tr></thead><tbody><tr><td>available</td><td>Der
+			Artikel ist in der gewünschten Menge lieferbar.</td></tr><tr><td>partially_available</td><td>Der
+			Artikel ist nur in einer Teilmenge lieferbar. </td></tr><tr><td>expecting_delivery</td><td>Der
+			Artikel ist nicht in der gewünschten Menge lieferbar,
+			eine Lieferung wird aber durch den Käufer in absehbarer
+			Zeit erwartet.</td></tr><tr><td>not_available</td><td>Der Artikel ist
+			nicht lieferbar. Weitere Angaben sind nicht
+			möglich.</td></tr></tbody></table></div><p>
+	    </p></li><li>Im Element AvailableQuantity
+	      wird die lieferbare Menge angegeben. Eine Angabe erfolgt nur,
+	      wenn der Code partially_availlable oder expecting_delivery
+	      verwendet wird. Falls der Code partially_available verwendet
+	      wird, muss die lieferbare Menge angegeben werden.</li><li>Im Element cbc:ExpectedDeliveryDate
+	      wird mitgeteilt, wann der Verkäufer voraussichtlich die
+	      angeforderte Menge liefern kann. Dieses Element ist nur dann zu
+	      verwenden, wenn der Code expecting_delivery verwendet wird. Wenn
+	      in diesem Falle dieses Element nicht ausgefüllt wird, muss der
+	      Server in seinem <a href="ar01s06s05.html#vcp-VeloconnectProfile" title="Tabelle 7. vcp:VeloconnectProfile - Elemente">Veloconnect-Profil</a> mit
+	      der Eigenschaft Order.expectingDelivery angeben, in welchem
+	      Zeitraum mit der Lieferung zu rechnen wird.</li><li>Falls der Verkäufer einen oder mehrere
+	      Ersatzartikel angeben möchte, kann dies mit dem Element
+	      ItemReplacement gemäß <a href="ar01s07.html#rule-ItemReplacement">Regel:
+		ItemReplacement</a> geschehen.</li></ol></div><p> </p><p><a id="rule-OrderResponse-Client"></a><b>Regel:
+	OrderResponse(Client). </b>Ein veloconnect-konformer Client ordnet
+	jedem der zurückgelieferten Elemente OrderResponseLine und
+	RequestReplacement eine Zeile der normalisierten Bestellung mittels der
+	Bestellnummer (SellersItemIdentification) zu, und überprüft für jede
+	Zeile der normalisierten Bestellung, ob einer der folgenden Fälle
+	vorliegt. Jedes Vorkommnis eines solchen Falles ist dem Benutzer mit
+	allen relevanten Information mitzuteilen. Dieser hat daraufhin die
+	Möglichkeit, die Bestellung abzuändern und den Bestellvorgang
+	fortzusetzen oder abzubrechen. Alternativ besteht auch die Möglichkeit,
+	Regeln festzulegen, wie in jedem dieser Fälle die Bestellung
+	modifiziert werden soll und unter welchen Bedingungen mit der
+	modifizierten Bestellunge fortgefahren wird oder diese abgebrochen
+	wird. Für jeden einzelnen Posten der Bestellung ist jeder der folgenden
+	Fälle zu berücksichtigen: </p><div class="orderedlist"><ol type="1"><li> Die Zeile
+	      ist einem Element ItemUnknown zugeordnet worden. 
+	      Es ist davon auszugehen,
+	      dass die Bestellnummer falsch ist. </li><li> Die Zeile ist einem Element RequestReplacement
+	      zugeordnet worden. Es ist davon auszugehen, dass die
+	      Bestellnummer veraltet ist. </li><li> Der Artikel ist nicht oder nicht vollständig
+	      lieferbar. (Für diesen und die folgenden Fälle ist vorausgesetzt,
+	      dass der Zeile ein Element OrderResponseLine zugeordnet
+	      wurde.)</li><li>Die jeweiligen
+	      Mengenangabe sind  verschieden. </li><li>In der Bestellung ist ein Lieferdatum explizit
+	      angegeben und dieses weicht ab von der Angabe in
+	      OrderResponseLine.</li><li>In
+	      der Bestellung ist ein Nachlieferungsverhalten explizit gefordert
+	      und dieses weicht ab von der Angabe in
+	      OrderResponseLine</li></ol></div><p> </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06s05.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s07s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">6.5. Operation: GetProfile </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 7.2. Operation: UpdateOrder</td></tr></table></div></body></html>

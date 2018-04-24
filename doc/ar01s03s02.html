@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3.2. Transaktionen</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s03.html" title="3. Überblick" /><link rel="previous" href="ar01s03.html" title="3. Überblick" /><link rel="next" href="ar01s03s03.html" title="3.3. Übersicht der Regeln" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.2. Transaktionen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s03.html">Zurück</a> </td><th width="60%" align="center">3. Überblick</th><td width="20%" align="right"> <a accesskey="n" href="ar01s03s03.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="transaction"></a>3.2. Transaktionen</h3></div></div><div></div></div><p>
+	Die Abfolge der Operationen in einer <span class="emphasis"><em>Transaktion</em></span>
+	wird durch den Transaktionsgraph beschrieben. Der
+	<span class="emphasis"><em>Transaktionsgraph</em></span> ist ein endlicher Automat mit
+	einem ausgezeichneten <span class="emphasis"><em>Startzustand</em></span> und einem oder
+	mehreren <span class="emphasis"><em>finalen Zuständen</em></span>. Die Zustände werden
+	mit Nummern von 1 bis 199 bezeichnet. Dabei gilt folgendes: Der
+	Startzustand hat die Nummer 1, finale Zustände haben Nummern von 100
+	bis 199, alle anderen Zustände haben Nummern zwischen 2 und 99.
+	Übergänge zwischen den einzelnen Zuständen erfolgen durch Operationen
+	oder gegebenenfalls durch andere Ereignisse auf dem Server.
+      </p><p>Wird eine Transaktion zwischen Client und Server durch
+	entsprechendes Durchführen von Operationen realisiert, so wird dadurch
+	eine <span class="emphasis"><em>Instanz der Transaktion</em></span> konstituiert. Die
+	Identität der Instanz wird gegeben durch die Identitäten von Käufer und
+	Verkäufer, sowie eine vom Server generierte Zeichenkette, die
+	TransactionId (vgl. <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">RequestType</a>,
+	<a href="ar01s06s02.html" title="6.2. ResponseType">ResponseType</a>). Zu einer Instanz
+	gehört auch der <span class="emphasis"><em>Transaktionskontext</em></span>: er umfasst
+	die genannten Kennzeichner, den gegenwärtigen Zustand der Transaktion
+	und mögliche weitere Daten, die durch die Operationen dieser
+	Transaktionsinstanz modifiziert werden.
+      </p><p>
+	Ein Client kann zu jeder Transaktionsinstanz, an der er beteiligt ist,
+	beim Server mittels der Operation <a href="ar01s06s03.html" title="6.3. Operation: GetStatus">GetStatus</a>, den gegenwärtigen
+	Zustand der Transaktion abfragen, und er kann die Transaktion mittels
+	der Operation <a href="ar01s06s04.html" title="6.4. Operation: Rollback">Rollback</a>
+	abbrechen, sofern sich die Transaktionsinstanz in einem Zustand
+	befindet, der ein Rollback erlaubt. Ein finaler Zustand erlaubt
+	grundsätzlich kein Rollback, beim Startzustand ist ein Rollback
+	jederzeit möglich und völlig ohne Wirkung. Per Konvention ist bei
+	Zuständen mit Nummer 2 bis 49 ein Rollback möglich, bei Nummer 50 bis
+	99 ist dies nicht möglich.
+      </p><p>
+Eine Transaktionsinstanz durchläuft folgenden Lebenszyklus: Durch Ausführen
+	einer der Operationen, die im Startzustand anwendbar sind, wird die
+	Transaktionsinstanz gegebenfalls erzeugt. Sobald sich die
+	Transaktionsinstanz in einem finalen Zustand befindet, steht der
+	Transaktionskontext für eine neue Transaktionsinstanz zur Verfügung.
+	Die Transaktionsinstanz existiert allerdings noch weiter, bis eines der
+	folgenden Ereignisse auftritt:
+</p><div class="itemizedlist"><ul type="disc"><li>der Transaktionskontext wird für eine neue
+	      Transaktionsinstanz benötigt,</li><li>eine implementierungsabhängige Zeitspanne, die
+	      mindestens 300 Sekunden beträgt, ist
+	      verstrichen.</li></ul></div><p>
+Unabhängig vom Zustand kann der Server nach frühestens 2 Stunden nach
+      der letzten durchgeführten Operation einen Rollback ausführen und die
+      Transaktionsinstanz löschen.
+      </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s03.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s03.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s03s03.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">3. Überblick </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 3.3. Übersicht der Regeln</td></tr></table></div></body></html>

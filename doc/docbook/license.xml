@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<section id="license">
+<title>Urheberrechtliche Hinweise</title>
+<section><title>&vc;</title>
+<simpara>
+Dieses Dokument, sowie die weiteren zu dieser Spezifikation gehörigen
+      Dokumente, unterliegen, soweit nicht explizit etwas anderes festgelegt
+      ist, folgenden Lizenzbestimmungen:
+      </simpara>
+<simpara>Copyright &copy; Verbund Selbstverwalteter Fahrradbetriebe
+	e.V. (2005)</simpara>
+<simpara>
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert 
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+	und die folgenden Bestimmungen sind in jeder Kopie enthalten. 
+      </simpara>
+<simpara>Veränderungen, die über die Erfordernisse einer Übersetzung
+	hinausgehen, sind nur erlaubt, wenn die veränderte Version nicht den
+	Namen &vc; benützt und deutliche Hinweise darauf enthält, dass
+	diese geänderte Version auf der &vc;-Spezifikation beruht und
+	inhaltliche Veränderungen vorgenommen worden sind. Ferner ist der
+	Urheber	dieser Modifikationen zu benennen.
+</simpara>
+<simpara>Zweck dieser Spezifikation ist die Implementierung von Software. Der
+	Urheber dieser Spezifikation weist ausdrücklich darauf hin, dass sich
+	aus dem Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+	Implementierungen ableiten und umgekehrt aus den Implementierungen
+	keinerlei Ansprüche an den Urheber der Spezifikation
+	entstehen. Insbesondere übernimmt der Urheber dieser Spezifikation
+	keinerlei Verantwortung für die Konformität einer Implementierung zur
+	&vc;-Spezifikation und verlangt auch keine Lizenzgebühren für die
+	Benutzung der Spezifikation.
+</simpara>
+<simpara>
+	Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht
+	dafür, dass diese Spezifikation fehlerfrei oder für einen bestimmten 
+	Zweck geeignet ist. Die hiermit gewährten Rechte sind unwiderruflich.
+</simpara>
+</section>
+<section><title>UBL</title>
+<simpara>Die zur UBL gehörigen Dokumente unterliegen folgender Lizenz:
+    </simpara>
+<simpara>
+  Universal Business Language (UBL) Schema 1.0
+</simpara>
+<simpara>  Copyright &copy; OASIS Open (2004). All Rights Reserved.</simpara>
+<simpara>
+  This document and translations of it may be copied and furnished to others, and
+  derivative works that comment on or otherwise explain it or assist in its
+  implementation may be prepared, copied, published and distributed, in whole or
+  in part, without restriction of any kind, provided that the above copyright
+  notice and this paragraph are included on all such copies and derivative works.
+</simpara>
+<simpara>
+  However, this document itself may not be modified in any way, such as by
+  removing the copyright notice or references to OASIS, except as needed for the
+  purpose of developing OASIS specifications, in which case the procedures for
+  copyrights defined in the OASIS Intellectual Property Rights document must be
+  followed, or as required to translate it into languages other than English.
+
+</simpara>
+<simpara>
+  The limited permissions granted above are perpetual and will not be revoked by
+  OASIS or its successors or assigns.
+
+</simpara>
+<simpara>
+  This document and the information contained herein is provided on an "AS IS"
+  basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+  LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT
+  INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR
+  A PARTICULAR PURPOSE.
+</simpara>
+</section>
+</section>

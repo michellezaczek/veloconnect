@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7.5. Operation: GetItemDetails</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s07.html" title="7. Transaktion: Order" /><link rel="previous" href="ar01s07s04.html" title="7.4. Operation: ViewOrder" /><link rel="next" href="ar01s07s06.html" title="7.6. Operation: GetItemDetailsList&#10;      (neu in Version 1.1)" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">7.5. Operation: GetItemDetails</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s07s04.html">Zurück</a> </td><th width="60%" align="center">7. Transaktion: Order</th><td width="20%" align="right"> <a accesskey="n" href="ar01s07s06.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-GetItemDetails"></a>7.5. Operation: GetItemDetails</h3></div></div><div></div></div><p>Diese Operation ist unabhängig von der Transaktion Order. Da sie
+      inhaltlich mit dem Bestellvorgang zusammenhängt, wird sie hier
+      aufgeführt. Die Anfrage ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsRequest.html" target="_top">vco:GetItemDetailsRequest</a>, 
+      dieses erweitert den Typ vct:RequestType um das verbindliche Element
+      cac:SellersItemIdentification und das optionale Element cbc:Quantity.
+      </p><p><a id="rule-serialize-GetItemDetailsRequest"></a><b>Regel: Serialisierung von GetItemDetailsRequest. </b>Zusätzlich zu den Paramtern von RequestType werden folgende
+	Parameter verwendet:
+	</p><div class="itemizedlist"><ul type="disc"><li>SellersItemIdentification</li><li>Quantity</li><li>quantityUnitCode</li></ul></div><p>
+	Als Wert des ersten Parameters ist der Inhalt des ID-Elements des
+gleichnamigen Elements zu verwenden, als Wert des zweiten Parameters der Inhalt
+des Elements Quanity und als Wert des dritten Parameters der Wert des Attributs
+quantityUnitCode des Elements Quantity.
+      </p><p>
+ Die
+      Antwort ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/GetItemDetailsResponse.html" target="_top">vco:GetItemDetailsResponse</a>, 
+      welches den Typ vct:ResponseType um die optionalen Elemente vco:Item (vom
+      Typ cac:ItemType), vco:Availability und vco:RequestReplacement
+      erweitert. </p><p><a id="rule-GetItemDetails"></a><b>Regel:
+	GetItemDetails. </b> Ein veloconnect-konformer Server muss die
+	Operation GetItemDetails implementieren und reagiert auf eine Anfrage
+	GetItemDetailsRequest wie folgt: </p><div class="orderedlist"><ol type="1"><li>Es
+	      wird überprüft, ob SellersItemIdentification eine gültige
+	      Artikelkennzeichnung ist. Falls nicht, wird - sofern dies möglich
+	      ist - aus den Angaben ein Element RequestReplacement gemäß <a href="ar01s07.html#rule-RequestReplacement">Regel:
+		RequestReplacement</a> erzeugt, und es wird mit Punkt 4.
+	      fortgefahren. Ansonsten wird ein Element ItemUnknown aus der
+	      übergebenen SellersItemIdentification erzeugt und mit Punkt 4. fortgefahren.</li><li>Aus dem
+	      Warenwirtschaftssystem werden die Stammdaten des identifizierten
+	      Artikels ermittelt und im Element Item abgelegt. </li><li>Die Verfügbarkeit des Artikels sollte
+	      aus aktuell verfügbaren Daten des Warenwirtschaftssystems
+	      ermittelt werden und gemäß <a href="ar01s07.html#rule-Availability">Regel: Availability</a> im Element
+	      Availability abgelegt werden. Falls der Server diese Information
+	      nicht zur Verfügung stellt, muss dies im VeloconnectProfil
+	      angegeben werden. </li><li>Die
+	      ermittelten Angaben sind mit ResponseCode 200
+	      zurückzugeben.</li></ol></div><p> </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s07s04.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s07.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s07s06.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">7.4. Operation: ViewOrder </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 7.6. Operation: GetItemDetailsList
+      (neu in Version 1.1)</td></tr></table></div></body></html>

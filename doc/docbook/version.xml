@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+  <section id="version"> <title>Zukünftige Versionen</title> 
+    <para>Es ist damit zu rechnen, dass diese Spezifikation weiterentwickelt
+      wird. In Planung ist die Übermittlung von Katalogdaten und - wenn hierfür
+      ein klarer Bedarf zu erkennen ist - für die Übermittlung von
+      Lieferscheinen und Rechnungen. Es ist also dafür Sorge zu tragen, dass
+      Server und Client, die unterschiedliche Versionen der &vc;-Spezifikation
+      implementieren, reibungslos zusammenarbeiten können. Die
+      Weiterentwicklung der Spezifikation wird daher folgenden Regeln
+      unterworfen:
+    </para>
+    <formalpara id="rule-version-policy">
+       <title>Regel: Versions-Richtlinie</title>
+       <para>
+       <orderedlist>
+          <listitem><simpara>Jede &vc;-Spezifikation wird nach dem Schema
+	      {version}.{revision} numeriert. Hierbei ist {version} die
+	      <emphasis>Versionsnummer</emphasis> und {revision} die
+	      <emphasis>Revisionsnummer</emphasis>. Die vorliegende
+	    Spezifikation hat also die Versionsnummer 1 und die Revisionsnummer
+	    0.
+	    Eine Spezifikation ist
+	      neuer als eine andere, wenn ihre Versionsnummer größer ist, oder
+	      wenn die Versionsnummern übereinstimmen und die Revisionsnummer
+	      größer ist.
+	    </simpara>
+	  </listitem>
+	  <listitem><simpara>Innerhalb eines Zeitraums von 12 Monaten findet
+	      höchstens ein Wechsel der Versionsnummer statt.</simpara>
+	  </listitem>
+	  <listitem><simpara>Die in der Spezifikation definierten Namensräume
+	      werden alle nach dem Muster
+	      urn:veloconnect:{name}-{version}.{revision} bezeichnet. Die
+	      Versionsnummer stimmt mit der Versionsnummer der Spezifikation
+	      überein. Eine Änderung der Revisionsnummer findet nur statt, wenn
+	      die Schemadefinitionen für diesen Namensraum geändert
+	      werden.</simpara>
+	  </listitem>
+	  <listitem><simpara>Zu jedem Namensraum, der in einer
+	      &vc;-Spezifikation verwendet wird, gibt es in jeder neueren
+	      Spezifikation mit gleicher Versionsnummer genau einen Namensraum,
+	      dessen Bezeichnung bis auf die Revisionsnummer mit diesem
+	      übereinstimmt.</simpara>
+	  </listitem>
+	  <listitem><simpara>Die Modifikationen der Schemadefinitionen werden
+	      wie folgt sein. Sei D ein nach der Spezifikation u.v gültiges
+	      XML-Dokument und u.y eine neuere Spezifikation. Wir können D
+	      derart zu einem XML-Dokument E transformieren, dass wir die
+	      Bezeichner von Namensräumen durch ihre im vorherigen Abschnitt
+	      zugeordneten Bezeichner der neueren Spezifikation ersetzen. Das
+	      transformierte Dokument E wird dann auch wieder ein nach der
+	      Spezifikation u.y gültiges Dokument sein.</simpara>
+	  </listitem>
+	  <listitem><simpara>Sei D ein nach der Spezifikation u.v gültiges
+	      XML-Dokument und x.y eine neuere Spezifikation, wobei x und u
+	      verschieden sind. Falls eine zum vorherigen Fall analoge
+	      Transformation der Namensräume zum Dokument E möglich ist und das
+	      Wurzelelement von E im neueren Schema deklariert ist, dann ist
+	      das Dokument E auch wieder ein nach der Spezifikation x.y
+	      gültiges Dokument.</simpara>
+	  </listitem>
+	</orderedlist>
+      </para>
+    </formalpara>
+    <para>Letzlich bedeutet diese Regel eine weitgehende Abwärtskompatibiltät.
+    Ebenso zeigt dies, dass Implementierungen Namensräume im wesentlichen als
+    Signal verwenden, um zu erkennen nach welchem Stand der Spezifikation die
+    beteiligten Parteien arbeiten, und die Verwendung der unqualifizierten
+    Namen zu keinen Missverständnissen führt. 
+    Für Client und Server hat es unterschiedliche
+    Konsequenzen, wenn sie mit einer Gegenseite kommunizieren, die einen
+    anderen Stand der Spezifikation implementiert. Für die Implementierung
+    von Clients werden einige Empfehlungen ausgesprochen, für Server einige
+    diesbezügliche Regeln formuliert.
+    </para>
+    <formalpara id="version-client">
+      <title>Empfehlung für Client-Implementierungen</title>
+      <para>
+        <itemizedlist>
+	   <listitem><simpara>Die Implementierung sollte keine Annahmen über
+	   das Nichtvorhandensein von Elementen oder Attributen machen. Es kann
+	   durchaus sein, dass eine neuere Spezifikation z.B. zwischen zwei
+	   Kindelementen ein weiteres optionales Element einfügt.</simpara>
+	  </listitem>
+	  <listitem><simpara>Ebenso kann es sein, dass für Typen, die als
+	      Aufzählung definiert sind, weitere Werte erlaubt werden. Die
+	      Implementierung sollte auf diesen Fall gefasst sein und
+	      gegebenenfalls einen Hinweis an den Benutzer generieren.</simpara>
+	  </listitem>
+	  <listitem><simpara>Da nicht davon auszugehen ist, dass die Server
+	      jeweils den neuesten Stand der Spezifikation implementieren,
+	      müssen gegebenenfalls auch veraltete Operationen, d.h.
+	      Operationen, die in der aktuellen Spezifikation nicht mehr
+	      vorgesehen sind, unterstützt werden. </simpara>
+	  </listitem>
+	</itemizedlist>
+	</para>
+    </formalpara>
+    <formalpara id="rule-downwards-compatibility-server">
+      <title>Regel: Abwärtskompatibilität (Server)</title>
+      <para>Im Umgang mit Clients, die einen älteren Stand der Spezifikation
+	implementieren, muss ein &vc;-konformer Server folgende Regeln
+	beachten:
+	<orderedlist>
+	  <listitem><simpara>Sofern eine Anfrage des Client mit der oben
+	      beschriebenen Transformation der Namensräume in eine gültige
+	      Anfrage umgesetzt werden kann, ist diese transformierte Anfrage
+	      gemäß der Spezifikation zu beantworten</simpara>
+	  </listitem>
+	  <listitem><simpara>Andernfalls hat der Server die Wahl, ob die
+	      Anfrage gemäß einer früheren Sepzifikation beantwortet wird oder
+	      ob der Fehlercode 406 zurückgeliefert wird.</simpara>
+	  </listitem>
+	</orderedlist>
+       </para>
+    </formalpara>
+    <formalpara id="rule-upwards-compatibility-server">
+      <title>Regel: Aufwärtskompatibilität (Server)</title>
+      <para>Im Umgang mit Clients, die einen neueren Stand der Spezifikation
+	implementieren, muss ein &vc;-konformer Server folgende Regeln
+	beachten:
+	<orderedlist>
+	  <listitem><simpara>Sofern eine Anfrage des Client durch eine
+	      entsprechende Transformation der Namensräume in eine gültige
+	      Anfrage umgesetzt werden kann, ist diese transformierte Anfrage
+	      gemäß der Spezifikation zu beantworten</simpara>
+	  </listitem>
+	  <listitem><simpara>Andernfalls wird der Fehlercode 405
+	      zurückgeliefert.</simpara>
+	  </listitem>
+	</orderedlist>
+       </para>
+    </formalpara>
+  </section>
+	      

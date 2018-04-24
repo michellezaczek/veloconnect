@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12. Beispiele</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s11.html" title="11. Zukünftige Versionen" /><link rel="next" href="ar01s12s02.html" title="12.2. Abfrage von Artikeldetails (Operation: GetItemDetails)" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">12. Beispiele</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s11.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s12s02.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="beispiele"></a>12. Beispiele</h2></div></div><div></div></div><p>Diese Beispiele gehen von folgender Situation
+    aus: Verkäufer A hat seinem Kunden B mitgeteilt, dass er die
+    veloconnect-Schnittstelle wie folgt erreicht: </p><div class="itemizedlist"><ul type="disc"><li>BuyersID ist B127645</li><li>Passwort ist secret</li><li>Die Standard-URL ist
+	  http://b2b.beispielserver.com/</li></ul></div><p>
+    Im Unterschied zu Version 1.0 werden die Beispiel XML-Nachrichten nicht als
+    Text angezeigt, sondern als Link auf eine Datei. Bei Anzeige dieser Dateien
+    im Browser ist zu beachten,
+    dass standardmäßig nicht der Quelltext der XML-Datei angezeigt wird.
+ </p><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2525269"></a>12.1. GetProfile</h3></div></div><div></div></div><p>Auf die Anfrage 
+      </p><pre class="programlisting">http://b2b.beispielserver.com/?BuyersID=B127645&amp;Password=secret
+&amp;RequestName=GetProfileRequest</pre><p>
+(Zeilenumbruch nur zur besseren Lesbarkeit!) 
+      wird folgende <a href="examples/profile.xml" target="_top">Antwort</a> zurückgeliefert.
+Hieran sind zwei Besonderheiten
+      erkennbar: Die Transaktionen Order und OrderInOnlineShop werden sowohl in
+      der URL- als auch in der XML-POST-Bindung implementiert. Die Transaktion
+      OrderInOnlineShop ist nicht unter der Standard-URL anzusprechen, sondern
+      unter einer abweichenden URL. </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s11.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s12s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">11. Zukünftige Versionen </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 12.2. Abfrage von Artikeldetails (Operation: GetItemDetails)</td></tr></table></div></body></html>

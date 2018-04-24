@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vco:GetItemDetailsResponse xmlns:vco="urn:veloconnect:order-1.1" xmlns:vct="urn:veloconnect:transaction-1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0" xmlns:vcc="urn:veloconnect:catalog-1.1">
+  <vct:BuyersID>B127645</vct:BuyersID>
+  <vct:ResponseCode>200</vct:ResponseCode>
+  <vct:IsTest>false</vct:IsTest>
+  <cac:Item>
+    <cbc:Description>KOOL-STOP Tectonic Pads (Chart-Index H4) Nachschub-Bestückung, für Carbon-Felgen</cbc:Description>
+    <cac:SellersItemIdentification>
+      <cac:ID>209-50</cac:ID>
+    </cac:SellersItemIdentification>
+    <cac:ManufacturersItemIdentification>
+      <cac:ID>RE 518 KS</cac:ID>
+    </cac:ManufacturersItemIdentification>
+    <cac:BasePrice>
+      <cbc:PriceAmount amountCurrencyID="EUR">5.75</cbc:PriceAmount>
+      <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+    </cac:BasePrice>
+    <cac:BasePrice>
+      <cbc:PriceAmount amountCurrencyID="EUR">5.58</cbc:PriceAmount>
+      <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+      <cbc:MinimumQuantity quantityUnitCode="EA">25</cbc:MinimumQuantity>
+    </cac:BasePrice>
+    <cac:BasePrice>
+      <cbc:PriceAmount amountCurrencyID="EUR">5.46</cbc:PriceAmount>
+      <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+      <cbc:MinimumQuantity quantityUnitCode="EA">50</cbc:MinimumQuantity>
+    </cac:BasePrice>
+    <cac:BasePrice>
+      <cbc:PriceAmount amountCurrencyID="EUR">5.29</cbc:PriceAmount>
+      <cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+      <cbc:MinimumQuantity quantityUnitCode="EA">100</cbc:MinimumQuantity>
+    </cac:BasePrice>
+    <vcc:ItemInformation>
+     <vcc:InformationURL>
+        <vcc:URI>http://www.koolstop.com/brakes/Tectonic.jpg</vcc:URI>
+        <vcc:Disposition>picture</vcc:Disposition>
+     </vcc:InformationURL>
+     <vcc:InformationURL>
+        <vcc:URI>http://www.koolstop.com/brakes/index.html#Anchor-international-29754</vcc:URI>
+        <vcc:Disposition>tech_spec</vcc:Disposition>
+     </vcc:InformationURL>
+     <vcc:ClassificationGroupMember>
+       <vcc:ClassificationSchemeID>WG</vcc:ClassificationSchemeID>
+       <vcc:GroupID>BRE_KS</vcc:GroupID>
+     </vcc:ClassificationGroupMember>
+     <vcc:ScalePriceGroup>
+       <vcc:ClassificationSchemeID>RG</vcc:ClassificationSchemeID>
+       <vcc:GroupID>7114</vcc:GroupID>
+     </vcc:ScalePriceGroup>
+    </vcc:ItemInformation>
+  </cac:Item>
+  <vco:Availability>
+    <vco:Code>available</vco:Code>
+  </vco:Availability>
+</vco:GetItemDetailsResponse>

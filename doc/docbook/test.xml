@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+  <section id="test"> 
+    <title>Testbetrieb</title>
+    <para>Sowohl in Anfragen als auch in Antworten kann das Element IsTest
+      verwendet werden. Die Verwendung dieses Indikators soll es ermöglichen,
+      Client-Implementierungen zu testen und möglichen Fehlern im
+      Zusammmenspiel der beteiligten Koponenten auf den Grund zu gehen, ohne
+      dabei geschäftliche Transaktionen auszulösen. Damit dies gewährleistet
+      ist, gelten für einen &vc;-konformen Server, bzw. für dessen Betreiber
+      folgende Regeln:
+      </para>
+      <formalpara id="rule-test">
+      <title>Regel: Testbetrieb</title>
+      <para>
+      <orderedlist>
+	  <listitem><simpara>Jedem, der ein berechtigtes Interesse daran hat,
+	      ist in angemessener Zeit ein Zugang zur Benutzung der
+	      &vc;-Schnittstelle zu gewähren. Ob das Interesse berechtigt ist,
+	      entscheidet im Einzelfall der Betreiber des Servers. Die
+	      Entwicklung einer &vc;-Schnittstelle für einen Client begründet
+	      in der Regel ein berechtigtes Interesse. Der Zugang kann auf eine
+	      angemessene Zeit befristet werden und kann voraussetzen, dass
+	      sich der Interessent zur Vertraulichkeit verpflichtet und den
+	      Zugang nur für die angegebenen Zwecke verwendet. </simpara>
+	  </listitem>
+	  <listitem><simpara>Wird in einer Anfrage oder einer Antwort das
+	      Element IsTest nicht benutzt, so ist dies äquivalent zur
+	      Verwendung dieses Elements mit dem Inhalt false.</simpara>
+	  </listitem>
+	  <listitem><simpara>In einer Operation haben die jeweiligen
+	      IsTest-Element in Anfrage und Antwort den gleichen Wert. Ist
+	      dieser Wert <literal>true</literal>, so wird die Operation als
+	      Test betrachtet.</simpara>
+	  </listitem>
+	  <listitem><simpara>In einer Transaktion darf einer Operation, die als
+	      Test durchgeführt wird, weder eine Operation, die nicht als Test
+	      durchgeführt wird, folgen noch vorausgehen. Falls der Client eine
+	      Anfrage schickt, die hierzu in Widerspruch steht, so hat der
+	      Server den Fehlercode 435 zurückzuliefern.</simpara>
+	  </listitem>
+	  <listitem><simpara>Eine Operation, die als Test durchgeführt wird,
+	      darf keine geschäftlichen Transaktionen zwischen Käufer und
+	      Verkäufer auslösen.</simpara>
+	  </listitem>
+	  <listitem><simpara>Die Antworten, die ein Server in einer
+	      Test-Operation zurückgibt, unterscheiden sich nicht von der
+	      gleichen Operation, die nicht als Test durchgeführt wird; es sei
+	      denn, dies ist zur Erfüllung der vorangegangenen Regel
+	      erforderlich.</simpara>
+	  </listitem>
+      </orderedlist>
+      </para>
+    </formalpara>
+    <para>Es sei hier nur kurz skizziert, dass die Implementierung dieser
+      Testfunktion kaum zusätzlichen Aufwand erfordert: Der Testbetrieb erfolgt
+      genauso wie der reguläre Betrieb, nur bei Operationen, die eine
+      geschäftliche Transaktion auslösen, wird intern im Testbetrieb ein
+      Rollback ausgelöst und nach aussen eine fingierte Antwort
+      zurückgeliefert. Beim gegenwärtigen Stand der Spezifikation betrifft dies
+      einzig und allein die Operation FinishOrder.
+    </para>
+  </section>

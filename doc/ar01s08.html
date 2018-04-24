@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>8. Transaktion: OrderInOnlineShop</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s07s06.html" title="7.6. Operation: GetItemDetailsList&#10;      (neu in Version 1.1)" /><link rel="next" href="ar01s09.html" title="9. Katalogdaten (neu in Version 1.1)" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">8. Transaktion: OrderInOnlineShop</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s07s06.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s09.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="transaction-OrderInOnlineShop"></a>8. Transaktion: OrderInOnlineShop</h2></div></div><div></div></div><p>Die Transaktion OrderInOnlineShop verwendet die gleichen Nachrichten
+      und die gleichen Zustände wie die im vorherigen Abschnitt beschriebene
+      Transaktion Order. Ein veloconnect-konformer Server, der diese Transaktion
+      unterstützt, gibt in seinem veloconnect-Profil mit der Eigenschaft
+      OrderInOnlineShop.TransactionID eine feste TransactionID bekannt, die
+      diese spezielle Transaktion von den Transaktionen vom Typ Order
+      unterscheidet. 
+    </p><p>Sinn dieser Transaktion ist es, dem Käufer die Möglichkeit zu geben,
+      einen Warenkorb in einem vorhandenen Online-Shop-System mit einer
+      Bestellung in seinem Warenwirtschaftssystem abzugleichen. Insbesondere
+      folgende Szenarien sollten möglich sein: 
+      </p><div class="itemizedlist"><ul type="disc"><li>Der Käufer füllt den Warenkorb im Onlineshop, da
+	    dieser zum Beispiel eine exzellente Suchmöglichkeit bietet, die
+	    sehr genau auf das angebotenen Sortiment abgestimmt ist. Bevor der
+	    Warenkorb bestellt wird, soll aus den Daten eine Bestellung im
+	    eigenen Warenwirtschaftssystem generiert werden.</li><li>Der Käufer hat eine Bestellung in seinem
+	    Warenwirtschaftssystem generiert und möchte noch einige Artikel
+	    hinzufügen, für die die Bestellnummern noch nicht bekannt sind. Zur
+	    Ermittlung der Bestellnummern soll der Onlineshop des Verkäufers
+	    verwendet werden, um die dort vorhandenen Suchmöglichkeiten
+	    auszunützen.</li></ul></div><p>
+    </p><p>Um hierfür auf Serverseite die Voraussetzungen zu schaffen, muss ein
+      veloconnect-konformer Server, der die Transaktion OrderInOnlineShop
+      implementiert,  folgende Regeln einhalten:
+    </p><p><a id="rule-OrderInOnlineShop-server"></a><b>Regel: OrderInOnlineShop (Server). </b>
+       </p><div class="orderedlist"><ol type="1"><li>Es existiert stets eine Transaktionsinstanz mit der
+	      fixierten TransactionID.</li><li>Bevor ein Request gemäß den Regeln für die
+	      Transaktion Order abgearbeitet wird, wird der Transaktionskontext
+	      mit dem Warenkorb des Käufers im Onlineshop abgeglichen. Dieser
+	      Abgleich ist so zu implementieren, dass der Warenkorb nicht
+	      verändert wird und ein Abschluß der Bestellung im Shopsystem die
+	      gleiche Bestellung auslösen würde, wie ein Abschluß der
+	      Bestellung über die veloconnect-Schnittstelle. Abhängig davon, ob der
+	      Warenkorb leer ist oder nicht, befindet sich danach die
+	      Transaktionsinstanz im Startzustand oder im
+	      Updatezustand.</li><li>Nachdem der Transaktionskontext gemäß der
+	      Verarbeitung der Anfrage des Clients modifiziert wurde, ist der
+	      Warenkorb des Shopsystems mit dem Transaktionskontext
+	      abzugleichen. Dieser Abgleich ist so zu implementieren, dass der
+	      Transaktionskontext nicht verändert wird und ein Abschluß der
+	      Bestellung im Shopsystem die gleiche Bestellung auslösen würde,
+	      wie ein Abschluß der Bestellung über die veloconnect-Schnittstelle. Ist
+	      der Request ein FinishOrderRequest, so bedeutet dieser Abgleich
+	      insbesondere, dass der Warenkorb zu löschen ist. (Die Bestellung
+	      ist ja bereits erfolgt)</li></ol></div><p>
+      </p><p>Welche der Transaktionen Order oder OrderInOnlineShop ein Server
+      implementiert, bleibt der Entscheidung des Verkäufers überlassen.
+      Abhängig von den Voraussetzungen kann es durchaus einfacher sein, die
+      veloconnect-Schnittstelle auf einem vorhandenen Online-Shop aufzusetzen. Für den
+      Implementeur eines veloconnect-Clients bedeutet das, dass er mit den
+      Besonderheiten der Transaktion OrderInOnlineShop zurecht kommen muss. Im
+      einzelnen ist zu beachten:
+      </p><div class="itemizedlist"><ul type="disc"><li>Auch in der Operation CreateOrder muss eine
+	    TransactionID verwendet werden, und zwar die im veloconnect-profil
+	    angegebene. Falls der Server die Transaktion Order nicht
+	    unterstützt, führt ein CreateOrderRequest ohne TransactionID zum
+	    Fehlercode 404.</li><li>Falls aus irgendwelchen Gründen der Warenkorb des
+	    Online-Shops nicht leer ist, schlägt die Operation CreateOrder mit
+	    dem Fehlercode 430 fehl. Analog schlägt die Operation UpdateOrder
+	    bei leerem Warenkorb mit Fehlercode 430 fehl. Es sollte also
+	  mittels der Operation GetStatus oder ViewOrder der Zustand des
+	  Warenkorbs ermittelt werden.
+	</li><li>Die Operation Rollback löscht auch den Warenkorb des
+	    Online-Shops</li><li>Sofern dem Benutzer, die in den obigen Szenarien
+	    ausgeführte Integration des Warenwirtschaftssystems mit dem
+	    Warenkorb des Onlineshops angeboten wird, ist zu beachten: Die
+	    Implementierung des Warenkorbs im Internetbrowser des Benutzers ist
+	    im allgemeinen nicht darauf ausgelegt, dass der Warenkorb auch noch
+	    von anderen Stellen geändert werden kann. Der Benutzer sollte daher
+	    nicht zur gleichen Zeit im Online-Shop eingeloggt sein, wenn er den
+	    Warenkorb mit der Bestellung im Warenwirtschaftssystem
+	    abgleicht.</li></ul></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s07s06.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s09.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">7.6. Operation: GetItemDetailsList
+      (neu in Version 1.1) </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 9. Katalogdaten (neu in Version 1.1)</td></tr></table></div></body></html>

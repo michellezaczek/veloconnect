@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<CreateTextSearchRequest  xmlns="urn:veloconnect:catalog-1.1"
+xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+xmlns:vct="urn:veloconnect:transaction-1.0">
+ <vct:BuyersID>B127645</vct:BuyersID>
+ <vct:Credential>
+    <vct:Password>secret</vct:Password>
+ </vct:Credential>
+ <SearchString>stop emsschuh dual</SearchString>
+</CreateTextSearchRequest>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>12.8. Suche nach Artikeln (Transaktion:TextSearch)</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s12.html" title="12. Beispiele" /><link rel="previous" href="ar01s12s07.html" title="12.7. Bestellung in Verbindung mit Online-Shop &#10;      (Transaktion: OrderInOnlineShop)" /><link rel="next" href="ar01s12s09.html" title="12.9. Klassifikationsschemata" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">12.8. Suche nach Artikeln (Transaktion:TextSearch)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s12s07.html">Zurück</a> </td><th width="60%" align="center">12. Beispiele</th><td width="20%" align="right"> <a accesskey="n" href="ar01s12s09.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="id2525759"></a>12.8. Suche nach Artikeln (Transaktion:TextSearch)</h3></div></div><div></div></div><p>Im Beispiel suchen wir nach allen Artikeln, deren Artikelnummer oder
+      -bezeichnung die Teilzeichenketten stop, emsschuh und dual enthalten.
+   Dazu wird zunächst die Suche  mit Hilfe der folgenden Anfrage (URL-Bindung)
+</p><pre class="programlisting">
+http://shop.beispielserver.com/?BuyersID=127654&amp;Password=secret
+&amp;RequestName=CreateTextSearchRequest&amp;SearchString=stop%20emsschuh%20dual
+</pre><p>
+oder durch den POST einer äquivalenten <a href="examples/search1.xml" target="_top">XML-Datei</a> initialisert.
+     </p><p>Das Suchergebnis wird sieht dann beispielsweise <a href="examples/search2.xml" target="_top">so</a> aus, d.h. es wurden sechs Artikel
+      gefunden. Nun können die
+      Suchergebnisse abgeholt werden.
+     </p><p>Die Anfrage
+</p><pre class="programlisting">
+http://shop.beispielserver.com/?BuyersID=127654&amp;Password=secret
+&amp;RequestName=SearchResultRequest&amp;TransactionID=2
+&amp;StartIndex=3&amp;Count=2&amp;ResultFormat=ITEM_TYPE
+</pre><p>
+    fordert die Treffer mit dem Index 3 und 4 an (also den 4. und den
+      5. Treffer) und zwar im Format ITEM_TYPE. Äquivalent ist der POST der
+      folgenden <a href="examples/search3.xml" target="_top">XML-Datei</a>. Die
+      Treffer werden wie in folgender <a href="examples/search4.xml" target="_top">XML-Datei</a> ausgeliefert.     
+  </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s12s07.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s12.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s12s09.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">12.7. Bestellung in Verbindung mit Online-Shop 
+      (Transaktion: OrderInOnlineShop) </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 12.9. Klassifikationsschemata</td></tr></table></div></body></html>

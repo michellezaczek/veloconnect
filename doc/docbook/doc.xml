@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2006)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen veloconnect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+veloconnect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur veloconnect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" 
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+<!ENTITY vc "veloconnect">
+<!ENTITY einltg SYSTEM "einleitung.xml">
+<!ENTITY dependency SYSTEM "dependency.xml">
+<!ENTITY model SYSTEM "model.xml">
+<!ENTITY schema SYSTEM "schema.xml">
+<!ENTITY basic SYSTEM "basic.xml">
+<!ENTITY profil SYSTEM "profil.xml">
+<!ENTITY operation SYSTEM "operation.xml">
+<!ENTITY order SYSTEM "order.xml">
+<!ENTITY version SYSTEM "version.xml">
+<!ENTITY order_os SYSTEM "order_online_shop.xml">
+<!ENTITY test SYSTEM "test.xml">
+<!ENTITY examples SYSTEM "examples.xml">
+<!ENTITY ref SYSTEM "references.xml">
+<!ENTITY changes SYSTEM "changes.xml">
+<!ENTITY license SYSTEM "license.xml">
+<!ENTITY catalog SYSTEM "catalog.xml">
+]>
+
+<article lang="de">
+<title>&vc; 1.1 - Spezifikation (19.9.2006)</title>
+<articleinfo>
+<author><honorific>Dr</honorific><firstname>Ludwig</firstname>
+<surname>Balke</surname></author>
+<date>19.9.2006</date>
+<copyright><year>2006</year><holder>Verbund Selbstverwalteter Fahrradbetriebe
+	e. V. (VSF)</holder></copyright>
+</articleinfo>
+&einltg;
+&dependency;
+&model;
+&schema;
+&basic;
+&operation;
+&order;
+&order_os;
+&catalog;
+&test;
+&version;
+&examples;
+&license;
+&ref;
+&changes;
+</article>

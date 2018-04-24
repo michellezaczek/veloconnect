@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!--
+******************************************************************************
+Copyright (C) Verbund Selbstverwalteter Fahrradbetriebe e.V. (2005)
+
+Dieses Dokument, sowie Übersetzungen desselben, dürfen uneingeschränkt kopiert
+und verteilt werden, vorausgesetzt, der obige Urheberrechtshinweis und diese
+und die folgenden Bestimmungen sind in jeder Kopie enthalten.
+
+Veränderungen, die über die Erfordernisse einer Übersetzung hinausgehen, sind
+nur erlaubt, wenn die veränderte Version nicht den Namen velo..connect benützt
+und deutliche Hinweise darauf enthält, dass diese geänderte Version auf der
+velo..connect-Spezifikation beruht und inhaltliche Veränderungen vorgenommen
+worden sind. Ferner ist der Urheber dieser Modifikationen zu benennen.
+
+Zweck dieser Spezifikation ist die Implementierung von Software. Der Urheber
+dieser Spezifikation weist ausdrücklich darauf hin, dass sich aus dem
+Urheberrecht an dieser Spezifikation keinerlei Rechte an diesen
+Implementierungen ableiten und umgekehrt aus den Implementierungen keinerlei
+Ansprüche an den Urheber der Spezifikation entstehen. Insbesondere übernimmt
+der Urheber dieser Spezifikation keinerlei Verantwortung für die Konformität
+einer Implementierung zur velo..connect-Spezifikation und verlangt auch keine
+Lizenzgebühren für die Benutzung der Spezifikation.
+
+Der Urheber übernimmt keinerlei Gewährleistung, insbesondere nicht dafür, dass
+diese Spezifikation fehlerfrei oder für einen bestimmten Zweck geeignet
+ist. Die hiermit gewährten Rechte sind unwiderruflich.
+******************************************************************************
+-->
+
+
+  <section id="transaction-OrderInOnlineShop"> 
+     <title>Transaktion: OrderInOnlineShop</title>
+     <para>Die Transaktion OrderInOnlineShop verwendet die gleichen Nachrichten
+      und die gleichen Zustände wie die im vorherigen Abschnitt beschriebene
+      Transaktion Order. Ein &vc;-konformer Server, der diese Transaktion
+      unterstützt, gibt in seinem &vc;-Profil mit der Eigenschaft
+      OrderInOnlineShop.TransactionID eine feste TransactionID bekannt, die
+      diese spezielle Transaktion von den Transaktionen vom Typ Order
+      unterscheidet. 
+    </para>
+    <para>Sinn dieser Transaktion ist es, dem Käufer die Möglichkeit zu geben,
+      einen Warenkorb in einem vorhandenen Online-Shop-System mit einer
+      Bestellung in seinem Warenwirtschaftssystem abzugleichen. Insbesondere
+      folgende Szenarien sollten möglich sein: 
+      <itemizedlist>
+        <listitem><simpara>Der Käufer füllt den Warenkorb im Onlineshop, da
+	    dieser zum Beispiel eine exzellente Suchmöglichkeit bietet, die
+	    sehr genau auf das angebotenen Sortiment abgestimmt ist. Bevor der
+	    Warenkorb bestellt wird, soll aus den Daten eine Bestellung im
+	    eigenen Warenwirtschaftssystem generiert werden.</simpara>
+	</listitem>
+	<listitem><simpara>Der Käufer hat eine Bestellung in seinem
+	    Warenwirtschaftssystem generiert und möchte noch einige Artikel
+	    hinzufügen, für die die Bestellnummern noch nicht bekannt sind. Zur
+	    Ermittlung der Bestellnummern soll der Onlineshop des Verkäufers
+	    verwendet werden, um die dort vorhandenen Suchmöglichkeiten
+	    auszunützen.</simpara>
+	</listitem>
+      </itemizedlist>
+    </para>
+    <para>Um hierfür auf Serverseite die Voraussetzungen zu schaffen, muss ein
+      &vc;-konformer Server, der die Transaktion OrderInOnlineShop
+      implementiert,  folgende Regeln einhalten:
+    </para> 
+    <formalpara id="rule-OrderInOnlineShop-server">
+      <title>Regel: OrderInOnlineShop (Server)</title>
+      <para>
+       <orderedlist>
+         <listitem><simpara>Es existiert stets eine Transaktionsinstanz mit der
+	      fixierten TransactionID.</simpara>
+	  </listitem>
+         <listitem><simpara>Bevor ein Request gemäß den Regeln für die
+	      Transaktion Order abgearbeitet wird, wird der Transaktionskontext
+	      mit dem Warenkorb des Käufers im Onlineshop abgeglichen. Dieser
+	      Abgleich ist so zu implementieren, dass der Warenkorb nicht
+	      verändert wird und ein Abschluß der Bestellung im Shopsystem die
+	      gleiche Bestellung auslösen würde, wie ein Abschluß der
+	      Bestellung über die &vc;-Schnittstelle. Abhängig davon, ob der
+	      Warenkorb leer ist oder nicht, befindet sich danach die
+	      Transaktionsinstanz im Startzustand oder im
+	      Updatezustand.</simpara>
+	 </listitem>
+	 <listitem><simpara>Nachdem der Transaktionskontext gemäß der
+	      Verarbeitung der Anfrage des Clients modifiziert wurde, ist der
+	      Warenkorb des Shopsystems mit dem Transaktionskontext
+	      abzugleichen. Dieser Abgleich ist so zu implementieren, dass der
+	      Transaktionskontext nicht verändert wird und ein Abschluß der
+	      Bestellung im Shopsystem die gleiche Bestellung auslösen würde,
+	      wie ein Abschluß der Bestellung über die &vc;-Schnittstelle. Ist
+	      der Request ein FinishOrderRequest, so bedeutet dieser Abgleich
+	      insbesondere, dass der Warenkorb zu löschen ist. (Die Bestellung
+	      ist ja bereits erfolgt)</simpara>
+	  </listitem>
+	</orderedlist>
+      </para>
+    </formalpara>
+    <para>Welche der Transaktionen Order oder OrderInOnlineShop ein Server
+      implementiert, bleibt der Entscheidung des Verkäufers überlassen.
+      Abhängig von den Voraussetzungen kann es durchaus einfacher sein, die
+      &vc;-Schnittstelle auf einem vorhandenen Online-Shop aufzusetzen. Für den
+      Implementeur eines &vc;-Clients bedeutet das, dass er mit den
+      Besonderheiten der Transaktion OrderInOnlineShop zurecht kommen muss. Im
+      einzelnen ist zu beachten:
+      <itemizedlist>
+        <listitem><simpara>Auch in der Operation CreateOrder muss eine
+	    TransactionID verwendet werden, und zwar die im &vc;-profil
+	    angegebene. Falls der Server die Transaktion Order nicht
+	    unterstützt, führt ein CreateOrderRequest ohne TransactionID zum
+	    Fehlercode 404.</simpara>
+	</listitem>
+        <listitem><simpara>Falls aus irgendwelchen Gründen der Warenkorb des
+	    Online-Shops nicht leer ist, schlägt die Operation CreateOrder mit
+	    dem Fehlercode 430 fehl. Analog schlägt die Operation UpdateOrder
+	    bei leerem Warenkorb mit Fehlercode 430 fehl. Es sollte also
+	  mittels der Operation GetStatus oder ViewOrder der Zustand des
+	  Warenkorbs ermittelt werden.
+	</simpara>
+	</listitem>
+	<listitem><simpara>Die Operation Rollback löscht auch den Warenkorb des
+	    Online-Shops</simpara>
+	</listitem>
+	<listitem><simpara>Sofern dem Benutzer, die in den obigen Szenarien
+	    ausgeführte Integration des Warenwirtschaftssystems mit dem
+	    Warenkorb des Onlineshops angeboten wird, ist zu beachten: Die
+	    Implementierung des Warenkorbs im Internetbrowser des Benutzers ist
+	    im allgemeinen nicht darauf ausgelegt, dass der Warenkorb auch noch
+	    von anderen Stellen geändert werden kann. Der Benutzer sollte daher
+	    nicht zur gleichen Zeit im Online-Shop eingeloggt sein, wenn er den
+	    Warenkorb mit der Bestellung im Warenwirtschaftssystem
+	    abgleicht.</simpara>
+	</listitem>
+      </itemizedlist>
+    </para>
+  </section>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>6.2. ResponseType</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s06.html" title="6. Operationen" /><link rel="previous" href="ar01s06.html" title="6. Operationen" /><link rel="next" href="ar01s06s03.html" title="6.3. Operation: GetStatus" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6.2. ResponseType</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06.html">Zurück</a> </td><th width="60%" align="center">6. Operationen</th><td width="20%" align="right"> <a accesskey="n" href="ar01s06s03.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="vct-ResponseType"></a>6.2. ResponseType</h3></div></div><div></div></div><p>Ein Element vom Typ <a href="xsd/urn_veloconnect_transaction-1.0/complexType/ResponseType.html" target="_top">vct:ResponseType</a> besteht aus folgenden
+	Elementen
+        </p><div class="table"><a id="id2515103"></a><p class="title"><b>Tabelle 6. vct:ResponseType - Elemente</b></p><table summary="vct:ResponseType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vct:BuyersID</td><td>udt:IdentifierType</td><td>Kennzeichnung des Käufers, wie z.B. Kundennummer
+		</td></tr><tr><td>vct:ResponseCode</td><td><a href="xsd/urn_veloconnect_transaction-1.0/simpleType/ResponseCodeType.html" target="_top">vct:ResponseCodeType</a></td><td>Informiert über Erfolg oder Mißerfolg der Operation,
+		  sowie über mögliche Fehlergründe</td></tr><tr><td>vct:ResponseMessage</td><td>xsd:string?</td><td>Optionale Erfolgs- oder Fehlermeldung im
+		  Klartext.</td></tr><tr><td>vct:SellersID</td><td>udt:IdentifierType?</td><td>Kennzeichnung des Verkäufers, nur erforderlich, falls
+		  der Server für mehrere Verkäufer betrieben wird.
+		</td></tr><tr><td>vct:TransactionID</td><td>xsd:normalizedString?</td><td>Zur Identifikation der Transaktionsinstanz</td></tr><tr><td>vct:StatusCode</td><td><a href="xsd/urn_veloconnect_transaction-1.0/simpleType/StatusCodeType.html" target="_top">vct:StatusCodeType</a>?</td><td>Sofern die Operation innerhalb einer Transaktion
+		  durchgeführt wird: Zustand der Transaktion nach dieser
+		  Operation.</td></tr><tr><td>vct:IsTest</td><td>xsd:boolean?</td><td>Indikator, ob die Operation nur testweise ausgeführt
+		  wurde. (vgl. <a href="ar01s10.html" title="10. Testbetrieb">Abschnitt 10, „Testbetrieb“</a>)</td></tr></tbody></table></div><p> Als Einschränkung des Typs vct:ResponseType ist der Typ
+	<a href="xsd/urn_veloconnect_transaction-1.0/complexType/TransactionResponseType.html" target="_top">vct:TransactionResponseType</a> definiert; die
+	Einschränkung besteht darin, dass die Elemente vct:TransactionID und
+	vct:StatusCode verwendet werden müssen. Der Typ <a href="xsd/urn_veloconnect_transaction-1.0/simpleType/StatusCodeType.html" target="_top">vct:StatusCodeType</a> ist
+	eine Einschränkung des Typs xsd:integer auf die Zahlen 1 bis 199. Der
+	Typ <a href="xsd/urn_veloconnect_transaction-1.0/simpleType/ResponseCodeType.html" target="_top">vct:ResponseCodeType</a> ist eine Einschränkung des Typs
+	xsd:positiveInteger auf die folgende Liste von Zahlen:
+	</p><div class="variablelist"><dl><dt><span class="term">200</span></dt><dd>Operation wurde erfolgreich
+		durchgeführt.</dd><dt><span class="term">400</span></dt><dd>Allgemeiner Fehler in der Anfrage. Zu verwenden,
+		wenn aufgrund der Anfrage keine Operation duchgeführt werden
+		kann und der Fehler nicht unter einen der folgenden Fälle zu
+		subsumieren ist.</dd><dt><span class="term">404</span></dt><dd>Anfrage wird nicht unterstützt, d.h. die Anfrage
+		entspricht zwar der Spezifikation, es handelt sich aber um eine
+		optionale Operation, die dieser Server nicht
+		implementiert.</dd><dt><span class="term">405</span></dt><dd>Fehlerhafte Anfrage: Anfrage ist nicht die
+		Serialisierung eines XML-Dokuments, das dem veloconnect-XML-Schema
+		entspricht.</dd><dt><span class="term">406</span></dt><dd>Fehlerhafte Anfrage: Anfrage ist die
+		Serialisierung eines XML-Dokuments, das einem veralteten Stand
+		der veloconnect-Spezifikation entspricht (vgl. <a href="ar01s11.html" title="11. Zukünftige Versionen">Abschnitt 11, „Zukünftige Versionen“</a>).
+	      </dd><dt><span class="term">410</span></dt><dd>Die angegebene
+		BuyersID ist unbekannt.</dd><dt><span class="term">411</span></dt><dd>Authentifzierung
+		ist fehlgeschlagen (Passwort falsch)</dd><dt><span class="term">415</span></dt><dd>Die angegebene
+		SellersID ist unbekannt.</dd><dt><span class="term">420</span></dt><dd>Die angebene
+		TransactionID ist unbekannt, d.h. die in der Anfrage
+		spezifizierte Transaktionsinstanz existiert nicht auf dem
+		Server.</dd><dt><span class="term">421</span></dt><dd>Der Server kann
+		keine weiteren Transaktionsinstanzen zu dieser Anfrage
+		erzeugen.</dd><dt><span class="term">430</span></dt><dd>Die angeforderte
+		Operation ist im momentanen Zustand der Transaktioninstanz
+		nicht anwendbar.</dd><dt><span class="term">435</span></dt><dd>Der Wert des
+		IsTest-Elements ist im gegenwärtigen Zustand der Transaktion
+		nicht erlaubt. (vgl. <a href="ar01s10.html" title="10. Testbetrieb">Abschnitt 10, „Testbetrieb“</a>)</dd><dt><span class="term">500</span></dt><dd>Ein interner Fehler
+		ist aufgetreten, der den Server an der Durchführung der
+		Operation hindert.</dd></dl></div><p> 
+      </p><p>
+	Die folgenden Abschnitte behandeln Operationen, die entweder außerhalb
+	von Transaktionen ausgeführt werden oder aber innerhalb jeder
+	Transaktion erlaubt sind. Jede dieser Operationen ist verbindlich.
+      </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s06.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s06s03.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">6. Operationen </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 6.3. Operation: GetStatus</td></tr></table></div></body></html>

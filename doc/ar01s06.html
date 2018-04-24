@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>6. Operationen</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="previous" href="ar01s05s04.html" title="5.4. Beschreibung von Gegenständen" /><link rel="next" href="ar01s06s02.html" title="6.2. ResponseType" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6. Operationen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s05s04.html">Zurück</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ar01s06s02.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="operation"></a>6. Operationen</h2></div></div><div></div></div><p>Jede Operation besteht aus einer Anfrage des Client an den Server und
+      einer entsprechenden Antwort des Servers an den Client. Die XML-Elemente
+      welche hierbei verwendet werden, werden von den beiden generischen Typen
+      vct:RequestType und vct:ResponseType abgeleitet.
+  </p><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="vct-RequestType"></a>6.1. RequestType</h3></div></div><div></div></div><p>Ein Element vom Typ <a href="xsd/urn_veloconnect_transaction-1.0/complexType/RequestType.html" target="_top">vct:RequestType</a> besteht aus folgenden Elementen
+        </p><div class="table"><a id="id2514837"></a><p class="title"><b>Tabelle 4. vct:RequestType - Elemente</b></p><table summary="vct:RequestType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen
+		</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vct:BuyersID</td><td>udt:IdentifierType</td><td>Kennzeichnung des Käufers, wie z.B. Kundennummer
+		</td></tr><tr><td>vct:Credential</td><td><a href="xsd/urn_veloconnect_transaction-1.0/complexType/CredentialType.html" target="_top">vct:CredentialType</a></td><td>Zur Autorisierung des Client, siehe unten</td></tr><tr><td>vct:SellersID</td><td>udt:IdentifierType?</td><td>Kennzeichnung des Verkäufers, nur erforderlich, falls
+		  der Server für mehrere Verkäufer betrieben wird.
+		</td></tr><tr><td>vct:TransactionID</td><td>xsd:normalizedString?</td><td>Zur Identifikation der Transaktionsinstanz</td></tr><tr><td>vct:IsTest</td><td>xsd:boolean?</td><td>Indikator, ob die Operation nur testweise ausgeführt
+		  werden soll (vgl. <a href="ar01s10.html" title="10. Testbetrieb">Abschnitt 10, „Testbetrieb“</a>)</td></tr></tbody></table></div><p> Die Definition des Typs vct:CredentialType erscheint
+	redundant, ist jedoch so gewählt, um später durch Erweiterung mögliche andere
+	Authentifizierungsmechanismen (wie z.B. Zertifikate) zu unterstützen.
+        </p><div class="table"><a id="vct-CredentialType"></a><p class="title"><b>Tabelle 5. vct:CredentialType - Elemente</b></p><table summary="vct:CredentialType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vct:Password</td><td>xsd:string</td><td>Passwort.
+		</td></tr></tbody></table></div><p> Als Einschränkung des Typs vct:RequestType ist der Typ
+	<a href="xsd/urn_veloconnect_transaction-1.0/complexType/TransactionRequestType.html" target="_top">vct:TransactionRequestType</a> definiert; die
+	Einschränkung besteht darin, dass das Element vct:TransactionID
+	verwendet werden muss.
+      </p><p><a id="serialize-vct-RequestType"></a><b>Serialisierung von Elementen vom Typ RequestType. </b>Zur Serialisierung der URL-Bindung ist eine Anfrage zunächst als
+	  Folge von Parametern darzustellen. Die Namen der Parameter sind wie
+	  folgt: 
+	</p><div class="itemizedlist"><ul type="disc"><li>RequestName</li><li>BuyersID</li><li>Password</li><li>SellersID</li><li>TransactionID</li><li>IsTest</li></ul></div><p> Hinzu kommen eventuell noch weitere Parameter, die
+	  jeweils bei der Definition der einzelnen Operationen angegeben
+	  werden. Als Wert der genannten Parameter ist der Inhalt der
+	  gleichnamigen Unterlemente des jeweiligen Request-Elements zu
+	  verwenden, bzw. beim Parameter "RequestName" der Name dieses Elements
+	  selbst. 
+	</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s05s04.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="index.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s06s02.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">5.4. Beschreibung von Gegenständen </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 6.2. ResponseType</td></tr></table></div></body></html>

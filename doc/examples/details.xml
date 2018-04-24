@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<GetItemDetailsResponse  xmlns="urn:veloconnect:order-1.1"
+xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-1.0"
+xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-1.0"
+xmlns:vct="urn:veloconnect:transaction-1.0">
+  <vct:BuyersID>B127645</vct:BuyersID>
+  <vct:ResponseCode>200</vct:ResponseCode>
+  <cac:Item>
+     <cbc:Description>Speichen DD 2,0x1,8x 263 mm, silber
+Race,Niro, mit Messingnippel</cbc:Description>
+     <cbc:PackQuantity quantityUnitCode="EA">100</cbc:PackQuantity>
+     <cac:SellersItemIdentification>
+       <cac:ID>42213526300</cac:ID>
+     </cac:SellersItemIdentification>
+     <cac:StandardItemIdentification>
+       <cac:ID identificationSchemeID="EAN/UCC-13">4032191511108</cac:ID>
+     </cac:StandardItemIdentification>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">34.90</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+     </cac:BasePrice>
+     <cac:BasePrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">29.50</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="PK">1</cbc:BaseQuantity>
+	<cbc:MinimumQuantity quantityUnitCode="PK">10</cbc:MinimumQuantity>
+     </cac:BasePrice>
+     <cac:RecommendedRetailPrice>
+        <cbc:PriceAmount amountCurrencyID="EUR">0.70</cbc:PriceAmount>
+	<cbc:BaseQuantity quantityUnitCode="EA">1</cbc:BaseQuantity>
+     </cac:RecommendedRetailPrice>
+  </cac:Item>
+  <Availability>
+      <Code>available</Code>
+  </Availability>
+</GetItemDetailsResponse>

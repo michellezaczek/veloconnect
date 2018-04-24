@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>7.3. Operation: FinishOrder</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s07.html" title="7. Transaktion: Order" /><link rel="previous" href="ar01s07s02.html" title="7.2. Operation: UpdateOrder" /><link rel="next" href="ar01s07s04.html" title="7.4. Operation: ViewOrder" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">7.3. Operation: FinishOrder</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s07s02.html">Zurück</a> </td><th width="60%" align="center">7. Transaktion: Order</th><td width="20%" align="right"> <a accesskey="n" href="ar01s07s04.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-FinishOrder"></a>7.3. Operation: FinishOrder</h3></div></div><div></div></div><p>Die Anfrage ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/FinishOrderRequest.html" target="_top">vco:FinishOrderRequest</a>, 
+      die Antwort ist ein Element <a href="xsd/urn_veloconnect_order-1.1/element/FinalOrderResponse.html" target="_top">vco:FinalOrderResponse</a>. 
+      Das Element vco:FinishOrderRequest ist vom Typ TransactionRequestType,
+      das Element vco:FinalOrderResponse erweitert den Typ
+      TransactionResponseType um das Element vco:OrderHeader, sowie um das
+      Element vco:OrderResponseLine, welches beliebig oft vorkommen kann. Das
+      Element OrderHeader hat zwei Kind-Elemente: vco:OrderID und
+      cbc:IssueDate. </p><p><a id="rule-FinishOrder"></a><b>Regel:
+	FinishOrder. </b> Ein veloconnect-konformer Server reagiert auf eine
+	Anfrage FinishOrderRequest wie folgt: </p><div class="orderedlist"><ol type="1"><li>Zur Anfrage wird ermittelt, ob hierzu eine
+	      Transaktionsinstanz existiert. Falls keine existiert wird der
+	      ResponseCode 420 zurückgeliefert. Falls eine solche existiert und
+	      sich diese nicht im Zustand 2 befindet, wird die Bearbeitung der
+	      Anfrage abgebrochen und der ResponseCode 430
+	      zurückgeliefert.</li><li>Die im
+	      Transaktionskontext gespeicherte Bestellung wird an das
+	      Warenwirtschaftssystem des Verkäufers weitergeleitet und dort
+	      wird eine Bestellung ausgelöst. Sofern das Warenwirtschaftssystem
+	      der Bestellung eine Kennzeichnung gibt, die eine Weiterverfolgung
+	      der Bestellung erlaubt, und der Server diese Kennzeichnung in
+	      Erfahrung bringen kann, ist diese als vco:OrderID im Element
+	      vco:OrderHeader zu verwenden. Ferner ist das aktuelle Datum als
+	      Element cbc:IssueDate im Element vco:OrderHeader einzusetzen.
+	    </li><li>Aus dem
+	      Transaktionskontext werden die Elemente OrderResponseLine in die
+	      Antwort eingefügt. Die Antwort wird mit ResponseCode 200 an den
+	      Client ausgeliefert. Die Transaktionsinstanz wechselt in den
+	      Zustand 100 (Endzustand)</li></ol></div><p>
+      </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s07s02.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s07.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s07s04.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">7.2. Operation: UpdateOrder </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 7.4. Operation: ViewOrder</td></tr></table></div></body></html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>9.3. vcc:ItemInformation</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s09.html" title="9. Katalogdaten (neu in Version 1.1)" /><link rel="previous" href="ar01s09s02.html" title="9.2. Operation: GetClassificationScheme" /><link rel="next" href="ar01s10.html" title="10. Testbetrieb" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">9.3. vcc:ItemInformation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s09s02.html">Zurück</a> </td><th width="60%" align="center">9. Katalogdaten (neu in Version 1.1)</th><td width="20%" align="right"> <a accesskey="n" href="ar01s10.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="ItemInformation"></a>9.3. vcc:ItemInformation</h3></div></div><div></div></div><p>
+    Der Typ cac:ItemType besitzt als Kind-Element das Element
+    <a href="xsd/urn_veloconnect_catalog-1.1/element/ItemInformation.html" target="_top">vcc:ItemInformation</a>, um weitergehende Informationen zu einem Artikel zu übermitteln. Dieses Element ist wie folgt aufgebaut:
+      </p><div class="table"><a id="id2522518"></a><p class="title"><b>Tabelle 20. vcc:ItemInformation - Elemente</b></p><table summary="vcc:ItemInformation - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vcc:InformationURL</td><td><a href="xsd/urn_veloconnect_catalog-1.1/complexType/InformationURLType.html" target="_top">vcc:InformationURLType</a>*</td><td>Links auf weiterführende Informationen</td></tr><tr><td>vcc:ClassificationGroupMember</td><td><a href="xsd/urn_veloconnect_catalog-1.1/complexType/ClassificationGroupMemberType.html" target="_top">vcc:ClassificationGroupMemberType</a>*</td><td>Klassifikation nach Klassifikationsschemata, z.B. Warengruppen</td></tr><tr><td>vcc:ScalePriceGroup</td><td><a href="xsd/urn_veloconnect_catalog-1.1/complexType/ClassificationGroupMemberType.html" target="_top">vcc:ClassificationGroupMemberType</a>?</td><td>sofern sich Mengenrabatte auf Artikel einer bestimmten Gruppe und nicht nur auf den einzelnen Artikel beziehen, wird hier diese Gruppe mitgeteilt.</td></tr></tbody></table></div><p>
+    </p><p><a id="rule-ItemInformation"></a><b>Regel: ItemInformation. </b>
+       </p><div class="itemizedlist"><ul type="disc"><li>
+         Bei Verwendung der Elemente vcc:InformationURL ist die Art der
+	angegebenen Links durch Verwendung des Elements vcc:Disposition vom Typ
+	<a href="xsd/urn_veloconnect_catalog-1.1/simpleType/InformationDispositionType.html" target="_top">vcc:InformationDispositionType</a> anzugeben.
+	Eine Tabelle der hierfür zulässigen Werte findet sich im Anschluss.
+	Mehrfachnennungen sind möglich, sofern das verlinkte Dokument verschiedene Arten von Informationen enthält. Bei Verwendung der Art "general" sollte im Element vcc:Description eine prägnante Beschreibung mitteilen, welche Art von Information über den Link erhalten werden kann. 
+      </li><li>Falls Elemente vcc:ClassificationGroupMember oder
+	vcc:ScalePriceGroup verwendet werden, muss die Operation
+	GetClassificationScheme implementiert werden.
+      </li><li>Die Zugehörigkeit zu einer Gruppe eines Klassifikationsschemas wird
+	im Element vcc:ClassificationGroupMember durch die ID des zugehörigen
+	Schemas und die ID der Gruppe mitgeteilt. Sofern Mitgliedschaft in
+	mehreren Gruppen eines Schemas besteht, darf höchstens für eine Gruppe
+	das Attribut primaryGroup den Wert true haben. Bei einer hierarchischen
+	Gruppenstruktur ist jeweils nur die Zugehörigkeit zur jeweils untersten
+	Gruppe in dieser Hierarchie mitzuteilen.
+      </li><li>Wird das Element vcc:ScalePriceGroup verwendet, wird zur Ermittlung
+	des Einzelpreises in einer Bestellung die für diesen Artikel definierte
+	Preisfunktion (vgl. <a href="ar01s05s03.html#rule-BasePriceType" title="Regel: BasePriceType">Regel: BasePriceType</a>) nicht auf die
+	Bestellmenge dieses Artikels angewendet, sondern auf die Summe der
+	Bestellmengen aller Artikel, deren Element vcc:ScalePriceGroup den
+	gleichen Inhalt hat.
+      </li></ul></div><p>
+     </p><div class="table"><a id="vcc-InformationDispositionType"></a><p class="title"><b>Tabelle 21. vcc:InformationDispositionType</b></p><table summary="vcc:InformationDispositionType" border="1"><colgroup><col /><col /></colgroup><thead><tr><th>Inhalt</th><th>Bedeutung</th></tr></thead><tbody><tr><td>picture</td><td>Foto, Bild</td></tr><tr><td>detail_picture</td><td>Detailaufnahme</td></tr><tr><td>exploded_drawing</td><td>Explosionzeichnung</td></tr><tr><td>technical_drawing</td><td>technische Zeichnung</td></tr><tr><td>manual</td><td>Einbau-, Betriebs-, Wartungs-, Pflegeanleitung</td></tr><tr><td>manual_professional</td><td>Einbau-, Betriebs-, Wartungs-, Pflegeanleitung für
+		fackundige Leser</td></tr><tr><td>manual_customer</td><td>Einbau-, Betriebs-, Wartungs-, Pflegeanleitung für Endkunden</td></tr><tr><td>tech_spec</td><td>Technische Spezifikation</td></tr><tr><td>general</td><td>allgemeine Informationen</td></tr></tbody></table></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s09s02.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s09.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s10.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">9.2. Operation: GetClassificationScheme </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 10. Testbetrieb</td></tr></table></div></body></html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>6.5. Operation: GetProfile</title><meta name="generator" content="DocBook XSL Stylesheets V1.65.1" /><link rel="home" href="index.html" title="veloconnect 1.1 - Spezifikation (19.9.2006)" /><link rel="up" href="ar01s06.html" title="6. Operationen" /><link rel="previous" href="ar01s06s04.html" title="6.4. Operation: Rollback" /><link rel="next" href="ar01s07.html" title="7. Transaktion: Order" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6.5. Operation: GetProfile</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ar01s06s04.html">Zurück</a> </td><th width="60%" align="center">6. Operationen</th><td width="20%" align="right"> <a accesskey="n" href="ar01s07.html">Weiter</a></td></tr></table><hr /></div><div class="section" lang="de" xml:lang="de"><div class="titlepage"><div><div><h3 class="title"><a id="operation-GetProfile"></a>6.5. Operation: GetProfile</h3></div></div><div></div></div><p>Die Operation GetProfile muss von jedem veloconnect-konformen Server in
+      der URL-Bindung oder der URL-S-Bindung implementiert werden. Auf eine
+      Anfrage <a href="xsd/urn_veloconnect_profile-1.1/element/GetProfileRequest.html" target="_top">vcp:GetProfileRequest</a> vom Typ <a href="ar01s06.html#vct-RequestType" title="6.1. RequestType">vct:RequestType</a> liefert ein
+      veloconnect-konformer Server die Antwort <a href="xsd/urn_veloconnect_profile-1.1/element/GetProfileResponse.html" target="_top">vcp:GetProfileResponse</a> zurück. Diese
+      erweitert den Typ <a href="ar01s06s02.html" title="6.2. ResponseType">vct:ResponseType</a> um die beiden
+    optionalen Elemente vcp:SellerName und vcp:Message und das Pflicht-Element <a href="xsd/urn_veloconnect_profile-1.1/element/VeloconnectProfile.html" target="_top">vcp:VeloconnectProfile</a>.
+    </p><p>
+    Im Element vcp:SellerName soll der Name des Lieferanten im Klartext
+    angegeben werden, vcp:Message kann dazu benutzt werden eine kurze
+    Information an den Benutzer des Client zu übergeben. Vor Benutzung der
+    anderen Operationen und Transaktionen sollte der Client, die Angaben in
+    vcp:VeloconnectProfile auswerten, da die dortigen Informationen Einfluss
+    auf die Aufbereitung der Daten für den Endbenutzer haben können. Es kann
+    davon ausgegangen werden, dass die Informationen im Profil 24 Stunden
+    gültig bleiben.
+    </p><p>
+Das Element <a href="xsd/urn_veloconnect_profile-1.1/element/VeloconnectProfile.html" target="_top">vcp:VeloconnectProfile</a> ist wie folgt definiert:
+      </p><div class="table"><a id="vcp-VeloconnectProfile"></a><p class="title"><b>Tabelle 7. vcp:VeloconnectProfile - Elemente</b></p><table summary="vcp:VeloconnectProfile - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vcp:Implements</td><td>vcp:ImplementsType*</td><td>Information über implementierte Operationen, Transaktionen
+		und ihre Bindungen</td></tr><tr><td>vcp:Property</td><td>vcp:PropertyType*</td><td>Eigenschaften 
+		des Servers als Schlüssel-Wert-Paare</td></tr></tbody></table></div><p>
+      </p><div class="table"><a id="vcp-ImplementsType"></a><p class="title"><b>Tabelle 8. vcp:ImplementsType - Elemente</b></p><table summary="vcp:ImplementsType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>entweder:
+		vcp:Transaction</td><td>vcp:TransactionType</td><td>Name 
+		der Transaktion</td></tr><tr><td>oder:
+		vcp:Operation</td><td>vcp:OperationType</td><td>Name 
+		der Operation</td></tr><tr><td>vcp:Binding</td><td>vcp:BindingType</td><td>Bindung</td></tr><tr><td>vcp:URI</td><td>xsd:anyURI?</td><td>URL, unter
+		der die Transaktion bzw. Operation zu erreichen ist, falls
+		diese von der Standard-URL abweicht.</td></tr></tbody></table></div><p>
+      </p><div class="table"><a id="vcp-PropertyType"></a><p class="title"><b>Tabelle 9. vcp:PropertyType - Elemente</b></p><table summary="vcp:PropertyType - Elemente" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th>Name</th><th>Typ/Vorkommen</th><th>Beschreibung</th></tr></thead><tbody><tr><td>vcp:Key</td><td>vcp:PropertyKeyType</td><td>Schlüssel</td></tr><tr><td>vcp:Value</td><td>xsd:normalizedString</td><td>Wert</td></tr></tbody></table></div><p> Die zulässigen Inhalte der Typen
+      <a href="xsd/urn_veloconnect_profile-1.1/simpleType/BindingType.html" target="_top">vcp:BindingType</a>, <a href="xsd/urn_veloconnect_profile-1.1/simpleType/OperationType.html" target="_top">vcp:OperationType</a>, <a href="xsd/urn_veloconnect_profile-1.1/simpleType/TransactionType.html" target="_top">vcp:TransactionType</a> und
+      <a href="xsd/urn_veloconnect_profile-1.1/simpleType/PropertyKeyType.html" target="_top">vcp:PropertyKeyType</a> sind folgenden Listen zu entnehmen:
+      </p><div class="variablelist"><a id="vcp-BindingType"></a><p class="title"><b>vcp:BindingType</b></p><dl><dt><span class="term">URL</span></dt><dd><a href="ar01s03.html#binding" title="3.1. Bindungen">Abschnitt 3.1, „Bindungen“</a>
+	    </dd><dt><span class="term">URL-S</span></dt><dd><a href="ar01s03.html#binding" title="3.1. Bindungen">Abschnitt 3.1, „Bindungen“</a>
+	    </dd><dt><span class="term">XML-POST</span></dt><dd><a href="ar01s03.html#binding" title="3.1. Bindungen">Abschnitt 3.1, „Bindungen“</a>
+	    </dd><dt><span class="term">XML-POST-S</span></dt><dd><a href="ar01s03.html#binding" title="3.1. Bindungen">Abschnitt 3.1, „Bindungen“</a>
+	    </dd></dl></div><p>
+	</p><div class="variablelist"><a id="vcp-OperationType"></a><p class="title"><b>vcp:OperationType</b></p><dl><dt><span class="term">GetItemDetails</span></dt><dd><a href="ar01s07s05.html" title="7.5. Operation: GetItemDetails">Abschnitt 7.5, „Operation: GetItemDetails“</a>
+	    </dd><dt><span class="term">GetItemDetailsList</span></dt><dd><a href="ar01s07s06.html" title="7.6. Operation: GetItemDetailsList&#10;      (neu in Version 1.1)">Abschnitt 7.6, „Operation: GetItemDetailsList
+      (neu in Version 1.1)“</a>
+	    </dd><dt><span class="term">GetClassificationScheme</span></dt><dd><a href="ar01s09s02.html" title="9.2. Operation: GetClassificationScheme">Abschnitt 9.2, „Operation: GetClassificationScheme“</a>
+	    </dd><dt><span class="term">GetStatus</span></dt><dd><a href="ar01s06s03.html" title="6.3. Operation: GetStatus">Abschnitt 6.3, „Operation: GetStatus“</a>
+	    </dd><dt><span class="term">Rollback</span></dt><dd><a href="ar01s06s04.html" title="6.4. Operation: Rollback">Abschnitt 6.4, „Operation: Rollback“</a>
+	    </dd></dl></div><p>
+	</p><div class="variablelist"><a id="vcp-TransactionType"></a><p class="title"><b>vcp:TransactionType</b></p><dl><dt><span class="term">Order</span></dt><dd><a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a>
+	    </dd><dt><span class="term">OrderInOnlineShop</span></dt><dd><a href="ar01s08.html" title="8. Transaktion: OrderInOnlineShop">Abschnitt 8, „Transaktion: OrderInOnlineShop“</a>
+	    </dd><dt><span class="term">TextSearch</span></dt><dd><a href="ar01s09.html#transaction-TextSearch" title="9.1. Transaktion: TextSearch">Abschnitt 9.1, „Transaktion: TextSearch“</a>
+	    </dd></dl></div><p>
+	</p><div class="variablelist"><a id="vcp-PropertyKeyType"></a><p class="title"><b>vcp:PropertyKeyType</b></p><dl><dt><span class="term">OrderInOnlineShop.TransactionID</span></dt><dd>Feste TransactionID zur Kennzeichnung der
+	      Transaktion OrderInOnlineShop (<a href="ar01s08.html" title="8. Transaktion: OrderInOnlineShop">Abschnitt 8, „Transaktion: OrderInOnlineShop“</a>)
+	    </dd><dt><span class="term">Order.Availability</span></dt><dd><p>Indikator, ob Informationen zur Lieferbarkeit
+	  bereitgestellt werden. Mögliche Werte: 
+	      </p><div class="variablelist"><dl><dt><span class="term">true</span></dt><dd>Lieferbarkeit wird grundsätzlich
+		      mitgeteilt</dd><dt><span class="term">false</span></dt><dd>grundsätzlich keine Angaben zur
+		      Lieferbarkeit</dd></dl></div><p>
+	      </p></dd><dt><span class="term">Order.DeliveryDate</span></dt><dd><p>Indikator, ob und wie terminierte Bestellungen
+	      möglich sind. Mögliche Werte: 
+	      </p><div class="variablelist"><dl><dt><span class="term">false</span></dt><dd>terminierte Bestellung nicht
+		      möglich</dd><dt><span class="term">order</span></dt><dd>das Lieferdatum bezieht sich auf die
+		      gesamte Bestellung</dd><dt><span class="term">line</span></dt><dd>für jede Bestellzeile kann ein
+		      individuelles Datum angegeben werden</dd></dl></div><p> (vgl. <a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a>)
+	    </p></dd><dt><span class="term">Order.ExpectingDelivery</span></dt><dd><p>Falls der Server die Verfügbarkeit von Artikeln
+	      mitteilt, hierbei den Code expecting_delivery verwendet, aber
+	      keine Angaben zum erwarteten Lieferdatum macht, so wird mit
+	      dieser Eigenschaft die Anzahl von Tagen mitgeteilt, innnerhalb
+	      derer mit einer Lieferung zu rechnen ist. (vgl. <a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a>)
+	    </p></dd><dt><span class="term">Order.Backlog</span></dt><dd><p>Indikator, ob und wie die Nachlieferung gesteuert
+	      werden kann. Mögliche Werte:
+	      </p><div class="variablelist"><dl><dt><span class="term">false</span></dt><dd>keine Steuerung möglich</dd><dt><span class="term">order</span></dt><dd>einheitliche Steuerung für die gesamte
+		      Bestellung</dd><dt><span class="term">line</span></dt><dd>für jede Bestellzeile kann die
+		      Nachlieferung gesteuert werden</dd></dl></div><p> (vgl. <a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a>)
+	    </p></dd><dt><span class="term">Order.BacklogDefault</span></dt><dd><p>Indikator zum grundsätzlichen Verhalten bei 
+	    nicht lieferbaren Artikeln. Mögliche Werte: 
+	      </p><div class="variablelist"><dl><dt><span class="term">false</span></dt><dd>keine Nachlieferung</dd><dt><span class="term">true</span></dt><dd>Nachlieferung</dd></dl></div><p> (vgl. <a href="ar01s07.html" title="7. Transaktion: Order">Abschnitt 7, „Transaktion: Order“</a>)
+	    </p></dd><dt><span class="term">RecommendedRetailPrice.Netto</span></dt><dd><p>Indikator, ob die empfohlenen Verkaufspreise als
+	      Nettopreise angegeben sind. Mögliche Werte:
+	    </p><div class="variablelist"><dl><dt><span class="term">false</span></dt><dd>empfohlene Verkauspreise sind
+		    brutto</dd><dt><span class="term">true</span></dt><dd>empfohlene Verkaufspreise sind
+		    netto</dd></dl></div><p>
+	    </p></dd><dt><span class="term">quantityUnitCode.EA</span></dt><dd>Indikator, ob grundsätzlich nur Stück als Einheit
+	      verwendet wird. Mögliche Werte: false, true. (vgl. Regel:
+	    Benutzung von Einheiten in <a href="ar01s05s04.html" title="5.4. Beschreibung von Gegenständen">Abschnitt 5.4, „Beschreibung von Gegenständen“</a>)
+	    </dd></dl></div><p> Ein veloconnect-konformer Server muss nicht zu jedem Schlüssel
+      einen Wert angeben. Falls für die Werte eine Auswahliste angegeben ist,
+      kann ein veloconnect-Client, davon ausgehen, dass der entsprechende Schlüssel
+      den ersten Wert in dieser Liste hat, wenn im Profil dieser Schlüssel
+      nicht aufgeführt wird oder der Wert nicht mit einem Wert aus der Liste
+      übereinstimmt.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ar01s06s04.html">Zurück</a> </td><td width="20%" align="center"><a accesskey="u" href="ar01s06.html">Nach oben</a></td><td width="40%" align="right"> <a accesskey="n" href="ar01s07.html">Weiter</a></td></tr><tr><td width="40%" align="left" valign="top">6.4. Operation: Rollback </td><td width="20%" align="center"><a accesskey="h" href="index.html">Zum Anfang</a></td><td width="40%" align="right" valign="top"> 7. Transaktion: Order</td></tr></table></div></body></html>
